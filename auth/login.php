@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="pass" id="pass" placeholder="Password" />
+                                <input type="password" name="pass" id="pass" placeholder="Password" required/>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit" value="Log in"/>
