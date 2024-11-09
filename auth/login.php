@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <!-- Main css -->
     <link rel="stylesheet" href="./auth/css/style.css">
 </head>
+
 <body>
 
     <div class="main">
@@ -27,7 +29,7 @@
                     <div class="signin-form">
                         <h2 class="form-title">Sign in</h2>
                         <form action="./?act=login" method="POST" class="register-form" id="login-form">
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                                 <input type="email" name="email" id="email" placeholder="Your Email" />
                             </div>
@@ -36,7 +38,7 @@
                                 <input type="password" name="pass" id="pass" placeholder="Password" required />
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="submit" id="submit" class="form-submit" value="Log in"/>
+                                <input type="submit" name="submit" id="submit" class="form-submit" value="Log in" />
                             </div>
                         </form>
                         <div class="social-login">
@@ -58,4 +60,5 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
