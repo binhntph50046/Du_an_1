@@ -44,7 +44,7 @@ class Category
         try {
             $sql = 'SELECT * FROM danh_muc WHERE danh_muc_id = :danh_muc_id';
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['danh_muc_id' => $danh_muc_id]);
+            $stmt->execute([':danh_muc_id' => $danh_muc_id]);
             return $stmt->fetch();
         } catch (PDOException $e) {
             echo "Lỗi: " . $e->getMessage();
@@ -73,9 +73,20 @@ class Category
     public function deleteCategory($danh_muc_id)
     {
         try {
+            // Lấy thông tin của danh mục để lấy đường dẫn ảnh
+            $category = $this->inforCategory($danh_muc_id);
+            $imagePath = $category['hinh'] ?? null;
+
+            // Xóa danh mục trong database
             $sql = 'DELETE FROM danh_muc WHERE danh_muc_id = :danh_muc_id';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':danh_muc_id' => $danh_muc_id]);
+
+            // Xóa ảnh nếu có đường dẫn
+            if ($imagePath) {
+                deleteFile($imagePath);
+            }
+
             return true;
         } catch (Exception $e) {
             echo "Lỗi: " . $e->getMessage();
