@@ -12,7 +12,6 @@ include '../admin/controllers/OrderController.php';
 include 'views/layout/header.php';
 include 'views/layout/sidebar.php';
 $userController = new UserController();
-$commentController = new CommentController();
 $orderController = new OrderController();
 
 switch ($act) {
@@ -30,19 +29,6 @@ switch ($act) {
         break;
     case 'delete':
         $userController->delete($_GET['id']);
-        break;
-    case 'comments':
-        $commentController->index();
-        include "views/comments/listComment.php";
-        break;
-    case 'approveComment':
-        $commentController->approve();
-        break;
-    case 'rejectComment':
-        $commentController->reject();
-        break;
-    case 'deleteComment':
-        $commentController->delete();
         break;
     case 'orders':
         $orderController->index();
