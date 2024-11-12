@@ -9,10 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .dashboard-container {
-<<<<<<< HEAD
-            width: 1250px;
-=======
->>>>>>> b8a5d73962ac88c939774b1a5f2dfabb88a626f9
+            min-width: 80%;
+            margin: 0 auto;
         }
         .card {
             margin-bottom: 20px;
