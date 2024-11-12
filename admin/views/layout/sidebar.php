@@ -10,6 +10,11 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>Dashboard</span></li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="?act=static">
+                        <i class="ri-shopping-cart-line"></i> <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarProducts">
                         <i class="ri-shopping-cart-line"></i> <span>Products</span>
                     </a>

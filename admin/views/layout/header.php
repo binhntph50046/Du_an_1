@@ -7,9 +7,52 @@
     <title>Dashboard | iPhone Store Admin Panel</title>
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/libs/jsvectormap/css/jsvectormap.min.css" />
     <link rel="stylesheet" href="assets/css/icons.min.css" />
     <link rel="stylesheet" href="assets/css/app.min.css" />
+    <style>
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            color: #333;
+            border-radius: 8px;
+            /* Bo tròn các góc của bảng */
+            overflow: hidden;
+            /* Để bo tròn các góc của bảng */
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            /* Độ dày và màu sắc của đường viền */
+            text-align: center;
+            /* Căn giữa theo chiều ngang */
+            vertical-align: middle;
+            /* Căn giữa theo chiều dọc */
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+            /* Màu nền tiêu đề */
+            color: #333;
+            font-weight: bold;
+        }
+
+        .table tr {
+            transition: background-color 0.3s ease;
+            /* Hiệu ứng chuyển màu mượt */
+        }
+
+        .table tr:hover {
+            background-color: #f1f1f1;
+            /* Màu nền khi rê chuột qua dòng */
+        }
+    </style>
 </head>
 
 <body>
@@ -50,3 +93,9 @@
                 </nav>
             </div>
         </header>
+
+        <?php include './views/layout/sidebar.php'; ?>
+
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid"></div>

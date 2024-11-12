@@ -28,7 +28,7 @@ class CategoryController
             $mo_ta = $_POST['mo_ta'];
             $trang_thai = $_POST['trang_thai'];
 
-            $hinh_path = uploadFile($hinh, 'Upload/Category/');
+            $hinh_path = uploadFile($hinh, '../Upload/Category/');
             if ($hinh_path !== null && $this->modelCategory->addCategory($ten_danh_muc, $hinh_path, $mo_ta, $trang_thai)) {
                 header('Location:./?act=list-category');
                 exit();
@@ -50,7 +50,7 @@ class CategoryController
                 if (!empty($_POST['old_img'])) {
                     deleteFile($_POST['old_img']);
                 }
-                $new_img = uploadFile($_FILES['hinh'], 'Upload/Category/');
+                $new_img = uploadFile($_FILES['hinh'], '../Upload/Category/');
             } else {
                 $new_img = $_POST['old_img'];
             }

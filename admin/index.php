@@ -1,16 +1,18 @@
 <?php
-$act = isset($_GET['act']) ? $_GET['act'] : '/';
+$act = isset($_GET['act']) ? $_GET['act'] : 'static';
 
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
 include '../admin/controllers/CategoryController.php';
 include '../admin/models/Category.php';
 include './views/layout/header.php';
-include './views/layout/sidebar.php';
 
 $categoryController = new CategoryController();
 
 switch ($act) {
+    case 'static':
+        include './views/layout/static.php';
+        break;
     case 'list-category':
         $categoryController->listCategory();
         break;
