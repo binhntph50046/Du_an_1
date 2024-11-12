@@ -1,10 +1,9 @@
 <style>
     .containerr {
         margin-top: 20px;
-        max-width: 1280px;
+        width: 1400px;
         margin: 0 auto;
         padding: 20px;
-        margin-left: 268px;
         
     }
     
@@ -25,12 +24,10 @@
         margin-right: 5px;
     }
 </style>
-
 <div class="containerr">
     <div class="page-header">
         <h4 class="mb-0">Quản lý đơn hàng</h4>
     </div>
-
     <!-- Bộ lọc -->
     <div class="card mb-4">
         <div class="card-body">

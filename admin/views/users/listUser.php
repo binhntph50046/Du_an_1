@@ -8,13 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .container {
-            width: 1200px;
-            margin-left: 280px;
+            width: 1400px;
+            
             padding: 20px;
         }
         
         .page-header {
-            margin-top: 80px;
             margin-bottom: 30px;
             border-bottom: 2px solid #eee;
             padding-bottom: 15px;

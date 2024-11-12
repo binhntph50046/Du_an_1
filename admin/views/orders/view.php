@@ -21,7 +21,6 @@
         object-fit: cover;
     }
 </style>
-
 <div class="container">
     <div class="mb-4">
         <h4>Chi tiết đơn hàng #<?= $order['don_hang_id'] ?></h4>
