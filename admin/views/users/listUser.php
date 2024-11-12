@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .container {
-            width: 1400px;
-            
-            padding: 20px;
+            max-width: 100%; 
+            padding: 10px;
         }
         
         .page-header {
