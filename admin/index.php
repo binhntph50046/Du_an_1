@@ -1,50 +1,62 @@
 <?php
-$act = isset($_GET['act']) ? $_GET['act'] : 'thongke';
+$act = isset($_GET['act']) ? $_GET['act'] : 'static';
+
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
-include '../admin/models/users.php';
-include '../admin/models/CommentModel.php';
-include '../admin/models/ProductModel.php';
-include '../admin/models/OrderModel.php';
-include '../admin/controllers/userController.php';
-include '../admin/controllers/CommentController.php';
-include '../admin/controllers/OrderController.php';
-include 'views/layout/header.php';
-include 'views/layout/sidebar.php';
-$userController = new UserController();
-$orderController = new OrderController();
+include '../admin/controllers/CategoryController.php';
+include '../admin/models/Category.php';
+include '../admin/models/products.php';
+include '../admin/controllers/productsController.php';
+include '../views/layout/header.php';
+
+$productsController = new ProductsController();
+$categoryController = new CategoryController();
 
 switch ($act) {
-    case 'thongke':
-        include "views/layout/thongke.php";
+    case 'static':
+        include './views/layout/static.php';
         break;
-    case 'listUser':
-        $userController->listUser();
+    case 'list-category':
+        $categoryController->listCategory();
         break;
-    case 'create':
-        $userController->create();
+    case 'form-add-category':
+        $categoryController->formAddCategory();
         break;
-    case 'updateUser':
-        $userController->edit($_GET['id']);
+    case 'post-add-category':
+        $categoryController->postAddCategory();
         break;
-    case 'delete':
-        $userController->delete($_GET['id']);
+    case 'form-edit-category':
+        $categoryController->formEditCategory();
         break;
-    case 'orders':
-        $orderController->index();
+    case 'post-edit-category':
+        $categoryController->postEditCategory();
         break;
-    case 'viewOrder':
-        $orderController->view($_GET['id']);
+    case 'delete-category':
+        $categoryController->postDeleteCategory();
         break;
-    case 'updateOrderStatus':
-        $orderController->updateStatus();
+    case 'listProducts':
+        $productsController->listProducts();
         break;
-    case 'deleteOrder':
-        $orderController->delete($_GET['id']);
+    case 'formAddProducts':
+        $productsController->formAddProducts();
+        break;
+
+    case 'postFormAdd':
+        $productsController->postFormAdd();
+        break;
+
+    case 'deleteProduct':
+        $productsController->deleteProduct();
+        break;
+    case 'formEditProducts':
+        $productsController->formEditProducts();
+        break;
+    case 'updateProduct':
+        $productsController->updateProduct();
         break;
     default:
-        include "views/layout/main.php";
-        echo "Trang không tồn tại.";
+        include './views/layout/main.php';
         break;
 }
 
+include './views/layout/footer.php';
