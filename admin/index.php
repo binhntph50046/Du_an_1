@@ -7,7 +7,7 @@ include '../admin/controllers/CategoryController.php';
 include '../admin/models/Category.php';
 include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
-include '../views/layout/header.php';
+include './views/layout/header.php';
 
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
@@ -56,7 +56,6 @@ switch ($act) {
       $productsController->updateProduct();
       break;
    default:
-      include './views/layout/main.php';
       break;
 }
 
