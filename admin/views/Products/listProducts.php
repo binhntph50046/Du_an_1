@@ -2,7 +2,7 @@
     <div class="col">
         <div class="h-100">
             <div class="container" style="max-width:100%">
-                <h1 style="">Danh Sách Sản Phẩm</h1>
+                <h1>Danh Sách Sản Phẩm</h1>
                 <a href="./?act=formAddProducts" class="btn btn-primary" style="margin: 10px 0px;">Thêm </a>
                 <div class="card">
                     <div class="card-body">
