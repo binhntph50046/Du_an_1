@@ -3,8 +3,10 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'static';
 
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
-include '../admin/controllers/CategoryController.php';
+include '../admin/controllers/categoryController.php';
 include '../admin/models/Category.php';
+include '../admin/controllers/slideController.php';
+include '../admin/models/Slide.php';
 include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
 include '../admin/controllers/userController.php';
@@ -19,6 +21,7 @@ $userController = new UserController();
 $orderController = new OrderController();
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
+$slideController = new SlideController();
 
 switch ($act) {
    case 'static':
@@ -42,18 +45,34 @@ switch ($act) {
    case 'delete-category':
       $categoryController->postDeleteCategory();
       break;
-
+      
+      case 'list-slide':
+         $slideController->listSlide();
+         break;
+      case 'form-add-slide':
+         $slideController->formAddSlide();
+         break;
+      case 'post-add-slide':
+         $slideController->postAddSlide();
+         break;
+      case 'form-edit-slide':
+         $slideController->formEditSlide();
+         break;
+      case 'post-edit-slide':
+         $slideController->postEditSlide();
+         break;
+      case 'delete-slide':
+         $slideController->postDeleteSlide();
+         break;
    case 'listProducts':
       $productsController->listProducts();
       break;
    case 'formAddProducts':
       $productsController->formAddProducts();
       break;
-
    case 'postFormAdd':
       $productsController->postFormAdd();
       break;
-
    case 'deleteProduct':
       $productsController->deleteProduct();
       break;
@@ -63,6 +82,7 @@ switch ($act) {
    case 'updateProduct':
       $productsController->updateProduct();
       break;
+
    case 'listUser':
         $userController->listUser();
         break;
@@ -90,5 +110,4 @@ switch ($act) {
    default:
       break;
 }
-
 include './views/layout/footer.php';
