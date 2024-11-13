@@ -3,8 +3,10 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'static';
 
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
-include '../admin/controllers/CategoryController.php';
+include '../admin/controllers/categoryController.php';
 include '../admin/models/Category.php';
+include '../admin/controllers/slideController.php';
+include '../admin/models/Slide.php';
 include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
 include '../admin/controllers/userController.php';
@@ -19,6 +21,7 @@ $userController = new UserController();
 $orderController = new OrderController();
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
+$slideController = new SlideController();
 
 switch ($act) {
    case 'static':
@@ -42,6 +45,25 @@ switch ($act) {
    case 'delete-category':
       $categoryController->postDeleteCategory();
       break;
+      
+      case 'list-slide':
+         $slideController->listSlide();
+         break;
+      case 'form-add-slide':
+         $slideController->formAddSlide();
+         break;
+      case 'post-add-slide':
+         $slideController->postAddSlide();
+         break;
+      case 'form-edit-slide':
+         $slideController->formEditSlide();
+         break;
+      case 'post-edit-slide':
+         $slideController->postEditSlide();
+         break;
+      case 'delete-slide':
+         $slideController->postDeleteSlide();
+         break;
 
    case 'listProducts':
       $productsController->listProducts();
@@ -49,11 +71,9 @@ switch ($act) {
    case 'formAddProducts':
       $productsController->formAddProducts();
       break;
-
    case 'postFormAdd':
       $productsController->postFormAdd();
       break;
-
    case 'deleteProduct':
       $productsController->deleteProduct();
       break;
@@ -63,43 +83,45 @@ switch ($act) {
    case 'updateProduct':
       $productsController->updateProduct();
       break;
+
    case 'listUser':
-        $userController->listUser();
-        break;
-    case 'create':
-        $userController->create();
-        break;
-    case 'updateUser':
-        $userController->edit($_GET['id']);
-        break;
-    case 'delete':
-        $userController->delete($_GET['id']);
-        break;
-    case 'comments':
-        $commentController->index();
-        include "views/comments/listComment.php";
-        break;
-    case 'approveComment':
-        $commentController->approve();
-        break;
-    case 'rejectComment':
-        $commentController->reject();
-        break;
-    case 'deleteComment':
-        $commentController->delete();
-        break;
-    case 'orders':
-        $orderController->index();
-        break;
-    case 'viewOrder':
-        $orderController->view($_GET['id']);
-        break;
-    case 'updateOrderStatus':
-        $orderController->updateStatus();
-        break;
-    case 'deleteOrder':
-        $orderController->delete($_GET['id']);
-        break;
+      $userController->listUser();
+      break;
+   case 'create':
+      $userController->create();
+      break;
+   case 'updateUser':
+      $userController->edit($_GET['id']);
+      break;
+   case 'delete':
+      $userController->delete($_GET['id']);
+      break;
+   
+   case 'comments':
+      $commentController->index();
+      include "views/comments/listComment.php";
+      break;
+   case 'approveComment':
+      $commentController->approve();
+      break;
+   case 'rejectComment':
+      $commentController->reject();
+      break;
+   case 'deleteComment':
+      $commentController->delete();
+      break;
+   case 'orders':
+      $orderController->index();
+      break;
+   case 'viewOrder':
+      $orderController->view($_GET['id']);
+      break;
+   case 'updateOrderStatus':
+      $orderController->updateStatus();
+      break;
+   case 'deleteOrder':
+      $orderController->delete($_GET['id']);
+      break;
    default:
       break;
 }
