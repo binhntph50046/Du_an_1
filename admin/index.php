@@ -13,50 +13,51 @@ $productsController = new ProductsController();
 $categoryController = new CategoryController();
 
 switch ($act) {
-    case 'static':
-        include './views/layout/static.php';
-        break;
-    case 'list-category':
-        $categoryController->listCategory();
-        break;
-    case 'form-add-category':
-        $categoryController->formAddCategory();
-        break;
-    case 'post-add-category':
-        $categoryController->postAddCategory();
-        break;
-    case 'form-edit-category':
-        $categoryController->formEditCategory();
-        break;
-    case 'post-edit-category':
-        $categoryController->postEditCategory();
-        break;
-    case 'delete-category':
-        $categoryController->postDeleteCategory();
-        break;
+   case 'static':
+      include './views/layout/static.php';
+      break;
+   case 'list-category':
+      $categoryController->listCategory();
+      break;
+   case 'form-add-category':
+      $categoryController->formAddCategory();
+      break;
+   case 'post-add-category':
+      $categoryController->postAddCategory();
+      break;
+   case 'form-edit-category':
+      $categoryController->formEditCategory();
+      break;
+   case 'post-edit-category':
+      $categoryController->postEditCategory();
+      break;
+   case 'delete-category':
+      $categoryController->postDeleteCategory();
+      break;
 
-    case 'listProducts':
-        $productsController->listProducts();
-        break;
-    case 'formAddProducts':
-        $productsController->formAddProducts();
-        break;
+   case 'listProducts':
+      $productsController->listProducts();
+      break;
+   case 'formAddProducts':
+      $productsController->formAddProducts();
+      break;
 
-    case 'postFormAdd':
-        $productsController->postFormAdd();
-        break;
+   case 'postFormAdd':
+      $productsController->postFormAdd();
+      break;
 
-    case 'deleteProduct':
-        $productsController->deleteProduct();
-        break;
-    case 'formEditProducts':
-        $productsController->formEditProducts();
-        break;
-    case 'updateProduct':
-        $productsController->updateProduct();
-        break;
-    default:
-        break;
+   case 'deleteProduct':
+      $productsController->deleteProduct();
+      break;
+   case 'formEditProducts':
+      $productsController->formEditProducts();
+      break;
+   case 'updateProduct':
+      $productsController->updateProduct();
+      break;
+   default:
+      
+      break;
 }
 
 include './views/layout/footer.php';
