@@ -14,7 +14,7 @@
         <div class="top-bar">
             <div class="top-bar-child">
                 <div class="logo">
-                    <img src="https://fptshop.com.vn/Content/v5d/images/fpt-shop-icon.png" alt="FPT Shop Logo">
+                    <img src="../Upload/Img/logoip.png" alt="">
                 </div>
                 <div class="menu-button"><i class="fa-solid fa-list"></i> Danh mục</div>
                 <div class="content1">
