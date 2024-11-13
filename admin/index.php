@@ -7,8 +7,16 @@ include '../admin/controllers/CategoryController.php';
 include '../admin/models/Category.php';
 include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
+include '../admin/controllers/userController.php';
+include '../admin/controllers/OrderController.php';
+include '../admin/models/users.php';
+include '../admin/models/OrderModel.php';
 include './views/layout/header.php';
 
+
+$userController = new UserController();
+
+$orderController = new OrderController();
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
 
