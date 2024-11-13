@@ -113,3 +113,33 @@ body {
     border-radius: 50%;
     font-weight: bold;
 }
+
+.content2 {
+    display: flex;
+    position: relative;
+  }
+  
+  .user-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    padding: 15px;
+    border-radius: 25px;
+    top: 37px;
+    right: 50px;
+    width: 140px;
+    height: 60px;
+    text-align: center;
+  }
+  .user-dropdown a {
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px; 
+    border-radius: 5px; 
+  }
+  .content2:hover .user-dropdown,
+  .user-dropdown:hover {
+    display: block;
+  }
