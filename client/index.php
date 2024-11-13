@@ -1,13 +1,17 @@
 <?php
 session_start();
-include "./models/user.php";
+include '../admin/commons/env.php';
+include '../admin/commons/function.php';
 include "./models/pdo.php";
+include "./controllers/HomeController.php";
+include "./models/ProductModel.php";
+
+$conn = pdo_get_connection();
+$controller = new HomeController($conn);
+$controller->index();
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
-        // case '/':
-        //     include "./views/home.php";
-        //     break;
         case 'register':
             if (isset($_POST['submit'])) {
                 $name = $_POST['name'];
@@ -51,9 +55,6 @@ if (isset($_GET['act'])) {
             include "./views/login.php";
             break;
         default:
-            include "./views/home.php";
             break;
     }
-} else {
-    include "./views/home.php";
 }
