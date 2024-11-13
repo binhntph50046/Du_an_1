@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="./?act=listProducts">
+                    <a class="nav-link menu-link" href="./?act=listProduct">
                         <i class="ri-shopping-cart-line"></i> <span>Products</span>
                     </a>
                 </li>

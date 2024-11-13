@@ -8,12 +8,7 @@ include '../admin/models/Category.php';
 include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
 include './views/layout/header.php';
-include '../admin/models/users.php';
-include '../admin/models/OrderModel.php';
-include '../admin/controllers/userController.php';
-include '../admin/controllers/OrderController.php';
-$userController = new UserController();
-$orderController = new OrderController();
+
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
 
@@ -60,30 +55,6 @@ switch ($act) {
     case 'updateProduct':
         $productsController->updateProduct();
         break;
-        case 'listUser':
-            $userController->listUser();
-            break;
-        case 'create':
-            $userController->create();
-            break;
-        case 'updateUser':
-            $userController->edit($_GET['id']);
-            break;
-        case 'delete':
-            $userController->delete($_GET['id']);
-            break;
-        case 'orders':
-            $orderController->index();
-            break;
-        case 'viewOrder':
-            $orderController->view($_GET['id']);
-            break;
-        case 'updateOrderStatus':
-            $orderController->updateStatus();
-            break;
-        case 'deleteOrder':
-            $orderController->delete($_GET['id']);
-            break;
     default:
         break;
 }
