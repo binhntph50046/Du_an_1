@@ -9,6 +9,7 @@ include '../admin/models/products.php';
 include '../admin/controllers/productsController.php';
 include './views/layout/header.php';
 
+
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
 
