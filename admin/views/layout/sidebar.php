@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarOrders">
+                    <a class="nav-link menu-link" href="?act=orders">
                         <i class="ri-file-list-3-line"></i> <span>Orders</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarOrders">
@@ -35,7 +35,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarUsers">
+                    <a class="nav-link menu-link" href="?act=listUser">
                         <i class="ri-user-line"></i> <span>Users</span>
                     </a>
                 </li>

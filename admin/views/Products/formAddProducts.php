@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 
+=======
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+>>>>>>> d53563b10b54194a7309a8464036d29ca28552c7
             <div class="row">
                 <div class="col">
                     <div class="h-100">
@@ -64,3 +70,9 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+=======
+        </div>
+    </div>
+</div>
+>>>>>>> d53563b10b54194a7309a8464036d29ca28552c7

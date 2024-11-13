@@ -9,9 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .dashboard-container {
-            width: 1170px;
+            min-width: 80%;
+            margin: 0 auto;
         }
-
         .card {
             margin-bottom: 20px;
             transition: transform 0.3s;
