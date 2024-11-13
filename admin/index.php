@@ -75,19 +75,6 @@ switch ($act) {
     case 'delete':
         $userController->delete($_GET['id']);
         break;
-    case 'comments':
-        $commentController->index();
-        include "views/comments/listComment.php";
-        break;
-    case 'approveComment':
-        $commentController->approve();
-        break;
-    case 'rejectComment':
-        $commentController->reject();
-        break;
-    case 'deleteComment':
-        $commentController->delete();
-        break;
     case 'orders':
         $orderController->index();
         break;
