@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="deal-bar">
-            <span class="deal-icon">⚡</span>
+            <span class="deal-icon">⚡</span>   
             <span>Deal chớp nhoáng</span>
             <span>|</span>
             <span>Săn iPhone 16 Pro Max từ 33.490K tại TikTok Shop</span>
