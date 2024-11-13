@@ -7,14 +7,23 @@
     <title>Header FPT Shop</title>
     <link rel="stylesheet" href="./assets/css/client/Header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .logo{
+            width: 100px;
+            height: 80px;
+        }
+        .top-bar{
+            background-color: #66CDAA	;
+        }
+    </style>
 </head>
 
 <body>
     <div class="header">
         <div class="top-bar">
             <div class="top-bar-child">
-                <div class="logo">
-                    <img src="../Upload/Img/logoip.png" alt="">
+                <div>
+                    <img src="../Upload/Img/logoip.png" alt="" class="logo">
                 </div>
                 <div class="menu-button"><i class="fa-solid fa-list"></i> Danh mục</div>
                 <div class="content1">
