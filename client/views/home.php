@@ -11,7 +11,7 @@
 </head>
 <body>
     <?php 
-    include "header.php";
+    include ("header.php");
     ?>
     <div class="category-list">
         <div class="banner">
@@ -173,7 +173,7 @@
             </div>
         </div>
     </div>
-    <?php require_once("footer.php"); ?>
+    <?php require_once("Footer.php"); ?>
     <script src="./assets/js/slideShow.js"></script>
 </body>
 </html>

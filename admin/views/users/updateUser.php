@@ -82,7 +82,7 @@
                     <button type="submit" class="btn btn-primary px-5">
                         <i class="fas fa-save me-2"></i>Cập Nhật
                     </button>
-                    <a href="index.php?act=listUsers" class="btn btn-secondary px-5 ms-2">
+                    <a href="index.php?act=listUser" class="btn btn-secondary px-5 ms-2">
                         <i class="fas fa-arrow-left me-2"></i>Quay Lại
                     </a>
                 </div>
