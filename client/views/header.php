@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="content1">
-                    <input type="text" class="search-bar" placeholder="Nhập tên điện thoại cần tìm ...">
+                    <input type="text" class="search-bar" placeholder="Nhập tên điện thoại, máy tính, phụ kiện... cần tìm">
                     <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
 

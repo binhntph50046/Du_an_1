@@ -13,7 +13,7 @@
                     <form action="./?act=post-edit-category" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="editCategoryID" class="form-label">ID Danh Mục</label>
-                            <input type="text" class="form-control" name="danh_muc_id" id="editCategoryID" value="<?php echo $Category['danh_muc_id']; ?>" required hidden>
+                            <input type="text" class="form-control" name="danh_muc_id" id="editCategoryID" value="<?php echo $Category['danh_muc_id']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="editCategoryName" class="form-label">Tên Danh Mục</label>

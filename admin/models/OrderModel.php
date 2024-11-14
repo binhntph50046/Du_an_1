@@ -86,12 +86,10 @@ class OrderModel {
 
     public function delete($id) {
         try {
-            // Xóa chi tiết đơn hàng trước
             $sql = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = don_hang_id";
             $statement = $this->conn->prepare($sql);
             $statement->execute([$id]);
-            
-            // Sau đó xóa đơn hàng
+            //  xóa đơn hàng
             $sql = "DELETE FROM don_hang WHERE don_hang_id = don_hang_id";
             $statement = $this->conn->prepare($sql);
             return $statement->execute([$id]);
