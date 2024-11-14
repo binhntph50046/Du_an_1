@@ -1,17 +1,13 @@
 <?php
 session_start();
-include '../admin/commons/env.php';
-include '../admin/commons/function.php';
+include "./models/user.php";
 include "./models/pdo.php";
-include "./controllers/HomeController.php";
-include "./models/ProductModel.php";
-
-$conn = pdo_get_connection();
-$controller = new HomeController($conn);
-$controller->index();
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
+            // case '/':
+            //     include "./views/home.php";
+            //     break;
         case 'register':
             if (isset($_POST['submit'])) {
                 $name = $_POST['name'];
@@ -33,12 +29,13 @@ if (isset($_GET['act'])) {
             include "./views/register.php";
             break;
         case 'login':
-            if (isset($_POST['submit'])) {
+            if (isset($_POST['submit']) && ($_POST['submit'])) {
                 $email = $_POST['email'];
                 $pass = $_POST['pass'];
                 $check_email = check_user($email, $pass);
                 if (is_array($check_email)) {
                     $_SESSION['email'] = $check_email;
+                    // var_dump($_SESSION['email']);die();
                     $thongbao1 = "Đăng nhập thành công!!";
                     echo "
                         <script>
@@ -54,7 +51,16 @@ if (isset($_GET['act'])) {
             }
             include "./views/login.php";
             break;
+        case 'logout':
+            // session_unset('email');
+            unset($_SESSION["email"]);
+            // session_destroy();
+            header('Location: index.php');
+            break;
         default:
+            include "./views/home.php";
             break;
     }
+} else {
+    include "./views/home.php";
 }

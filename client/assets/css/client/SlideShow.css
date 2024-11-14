@@ -7,14 +7,11 @@
     overflow: hidden;
 }
 
-.mySlides {
-    display: none;
-}
-
 .mySlides img {
     border-radius: 8px;
     width: 1230px;
     height: auto;
+    object-fit: cover;
 }
 
 .prev, .next {
