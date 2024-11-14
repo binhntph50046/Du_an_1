@@ -28,7 +28,7 @@
                 </div>
                 <div class="menu-button"><i class="fa-solid fa-list"></i> Danh mục</div>
                 <div class="content1">
-                    <input type="text" class="search-bar" placeholder="Nhập tên điện thoại, máy tính, phụ kiện... cần tìm">
+                    <input type="text" class="search-bar" placeholder="Hôm nay bạn cần gì ?">
                     <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
 
