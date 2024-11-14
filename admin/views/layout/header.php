@@ -85,7 +85,15 @@
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown">
                                 <span class="d-flex align-items-center">
                                     <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
-                                    <span class="text-start ms-xl-2 d-none d-xl-inline-block fw-medium">Anna Adame</span>
+                                    <span class="text-start ms-xl-2 d-none d-xl-inline-block fw-medium">
+                                        <?php
+                                        session_start();
+                                            if (isset($_SESSION['email']) && is_array($_SESSION['email'])){
+                                                $username = $_SESSION['email']['ho_va_ten']; 
+                                                echo htmlspecialchars($username);
+                                            }
+                                        ?>
+                                    </span>
                                 </span>
                             </button>
                         </div>
