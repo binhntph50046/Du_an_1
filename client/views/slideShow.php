@@ -18,29 +18,33 @@
 
         <!-- Image slides -->
         <div class="mySlides">
-            <img src="../Upload/Slides/64d4f79e86895.jpg">
+            <img src="../Upload/Slides/banner6.jpeg">
         </div>
         <div class="mySlides">
-            <img src="../Upload/Slides/64d4f951e34f9.png">
+            <img src="../Upload/Slides/banner7.jpg">
         </div>
         <div class="mySlides">
-            <img src="../Upload/Slides/64d4fab909de9.jpg">
-        </div>
-
-        <div class="mySlides">
-            <img src="../Upload/Slides/64d4ffdbaa30f.jpg">
+            <img src="../Upload/Slides/banner3.jpg">
         </div>
 
         <div class="mySlides">
-            <img src="../Upload/Slides/64d50d9ae5f64.jpg">
+            <img src="../Upload/Slides/banner4.jpg">
         </div>
 
         <div class="mySlides">
-            <img src="../Upload/Slides/64d5197fec88c.png">
+            <img src="../Upload/Slides/banner6.jpeg">
         </div>
 
         <div class="mySlides">
-            <img src="../Upload/Slides/64d51c558f749.jpg">
+            <img src="../Upload/Slides/banner7.jpg">
+        </div>
+
+        <div class="mySlides">
+            <img src="../Upload/Slides/banner3.jpg">
+        </div>
+
+        <div class="mySlides">
+            <img src="../Upload/Slides/banner4.jpg">
         </div>
 
         <!-- Nút next -->
