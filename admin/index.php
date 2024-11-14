@@ -13,15 +13,17 @@ include '../admin/controllers/userController.php';
 include '../admin/controllers/OrderController.php';
 include '../admin/models/users.php';
 include '../admin/models/OrderModel.php';
+include '../admin/controllers/commentController.php';
+include '../admin/models/comment.php';
 include './views/layout/header.php';
 
 
 $userController = new UserController();
-
 $orderController = new OrderController();
 $productsController = new ProductsController();
 $categoryController = new CategoryController();
 $slideController = new SlideController();
+$commentController = new commentController();
 
 switch ($act) {
    case 'static':
@@ -45,25 +47,25 @@ switch ($act) {
    case 'delete-category':
       $categoryController->postDeleteCategory();
       break;
-      
-      case 'list-slide':
-         $slideController->listSlide();
-         break;
-      case 'form-add-slide':
-         $slideController->formAddSlide();
-         break;
-      case 'post-add-slide':
-         $slideController->postAddSlide();
-         break;
-      case 'form-edit-slide':
-         $slideController->formEditSlide();
-         break;
-      case 'post-edit-slide':
-         $slideController->postEditSlide();
-         break;
-      case 'delete-slide':
-         $slideController->postDeleteSlide();
-         break;
+
+   case 'list-slide':
+      $slideController->listSlide();
+      break;
+   case 'form-add-slide':
+      $slideController->formAddSlide();
+      break;
+   case 'post-add-slide':
+      $slideController->postAddSlide();
+      break;
+   case 'form-edit-slide':
+      $slideController->formEditSlide();
+      break;
+   case 'post-edit-slide':
+      $slideController->postEditSlide();
+      break;
+   case 'delete-slide':
+      $slideController->postDeleteSlide();
+      break;
    case 'listProducts':
       $productsController->listProducts();
       break;
@@ -84,29 +86,33 @@ switch ($act) {
       break;
 
    case 'listUser':
-        $userController->listUser();
-        break;
-    case 'create':
-        $userController->create();
-        break;
-    case 'updateUser':
-        $userController->edit($_GET['id']);
-        break;
-    case 'delete':
-        $userController->delete($_GET['id']);
-        break;
-    case 'orders':
-        $orderController->index();
-        break;
-    case 'viewOrder':
-        $orderController->view($_GET['id']);
-        break;
-    case 'updateOrderStatus':
-        $orderController->updateStatus();
-        break;
-    case 'deleteOrder':
-        $orderController->delete($_GET['id']);
-        break;
+      $userController->listUser();
+      break;
+   case 'create':
+      $userController->create();
+      break;
+   case 'updateUser':
+      $userController->edit($_GET['id']);
+      break;
+   case 'delete':
+      $userController->delete($_GET['id']);
+      break;
+   case 'orders':
+      $orderController->index();
+      break;
+   case 'viewOrder':
+      $orderController->view($_GET['id']);
+      break;
+   case 'updateOrderStatus':
+      $orderController->updateStatus();
+      break;
+   case 'deleteOrder':
+      $orderController->delete($_GET['id']);
+      break;
+
+   case 'listComments':
+      $commentController->listComment();
+      break;
    default:
       break;
 }

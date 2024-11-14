@@ -56,6 +56,9 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    ?>
     <div id="layout-wrapper">
         <header id="page-topbar">
             <div class="layout-width">
@@ -77,21 +80,21 @@
                     </form>
                     <div class="d-flex align-items-center ms-auto">
                         <div class="dropdown ms-1 topbar-head-dropdown header-item">
-                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="dropdown">
-                                <img id="header-lang-img" src="assets/images/flags/us.svg" alt="Header Language" height="20" class="rounded">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle d-flex align-items-center justify-content-center">
+                                <img id="header-lang-img" src="assets/images/flags/vn.svg" alt="Header Language" height="28" class="rounded-3">
                             </button>
                         </div>
+
                         <div class="dropdown ms-1 header-item topbar-user">
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                    <img class="rounded-circle header-profile-user" src="<?php echo $_SESSION['email']['hinh']; ?>" alt="Header Avatar">
                                     <span class="text-start ms-xl-2 d-none d-xl-inline-block fw-medium">
                                         <?php
-                                        session_start();
-                                            if (isset($_SESSION['email']) && is_array($_SESSION['email'])){
-                                                $username = $_SESSION['email']['ho_va_ten']; 
-                                                echo htmlspecialchars($username);
-                                            }
+                                        if (isset($_SESSION['email']) && is_array($_SESSION['email'])) {
+                                            $username = $_SESSION['email']['ho_va_ten'];
+                                            echo htmlspecialchars($username);
+                                        }
                                         ?>
                                     </span>
                                 </span>
