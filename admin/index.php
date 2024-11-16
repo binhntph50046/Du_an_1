@@ -55,7 +55,7 @@ switch ($act) {
       break;
 
    case 'deleteProduct':
-      $productsController->deleteProduct();
+      $productsController->deleteProduct($_GET['id']);
       break;
    case 'formEditProducts':
       $productsController->formEditProducts();
