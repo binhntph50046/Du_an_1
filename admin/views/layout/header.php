@@ -120,7 +120,7 @@
                             </button>
                         </div>
                         <div class="dropdown-menu  dropdown-menu-end">
-                            <a class="dropdown-item" href="../client/index.php">Đăng xuất</a>
+                            <a class="dropdown-item" href="../client/index.php">Trở lại trang chủ</a>
                         </div>
 
                     </div>

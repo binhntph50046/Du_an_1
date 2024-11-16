@@ -110,8 +110,12 @@ switch ($act) {
       $orderController->delete($_GET['id']);
       break;
 
+      // Comment
    case 'listComments':
       $commentController->listComment();
+      break;
+   case 'deleteComments':
+      $commentController->deleteComments($_GET['id']);
       break;
    default:
       break;
