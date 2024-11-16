@@ -238,7 +238,7 @@
                     total: "2,300,000đ",
                     status: "Đang giao",
                     date: "2024-03-19"
-                },
+                },  
                 {
                     id: "DH003",
                     customer: "Lê Văn C",
