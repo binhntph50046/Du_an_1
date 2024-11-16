@@ -39,10 +39,9 @@ if (isset($_GET['act'])) {
                     $thongbao1 = "Đăng nhập thành công!!";
                     echo "
                         <script>
-                            alert('$thongbao1');
                             setTimeout( function() {
                                 window.location.href = 'index.php';
-                            }, 500)
+                            }, 900)
                         </script>";
                 } else {
                     $thongbao2 = "Sai email hoặc mật khẩu chưa đúng!!";
