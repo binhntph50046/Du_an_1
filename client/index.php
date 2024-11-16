@@ -5,9 +5,9 @@ include "./models/pdo.php";
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
-        // case '/':
-        //     include "./views/home.php";
-        //     break;
+            // case '/':
+            //     include "./views/home.php";
+            //     break;
         case 'register':
             if (isset($_POST['submit'])) {
                 $name = $_POST['name'];
@@ -15,7 +15,8 @@ if (isset($_GET['act'])) {
                 $pass = $_POST['pass'];
                 $address = $_POST['address'];
                 $phonenumber = $_POST['phonenumber'];
-                insert_taikhoan($name, $email, $pass, $address, $phonenumber);
+                $defaultImage = '../Upload/User/nam.jpg';
+                insert_taikhoan($name, $email, $pass, $address, $phonenumber, $defaultImage);
                 $thongbao = "Đăng ký thành công. Vui lòng đăng nhập!!";
 
                 // Hiển thị thông báo và chuyển hướng
@@ -29,19 +30,19 @@ if (isset($_GET['act'])) {
             include "./views/register.php";
             break;
         case 'login':
-            if (isset($_POST['submit'])) {
+            if (isset($_POST['submit']) && ($_POST['submit'])) {
                 $email = $_POST['email'];
                 $pass = $_POST['pass'];
                 $check_email = check_user($email, $pass);
                 if (is_array($check_email)) {
                     $_SESSION['email'] = $check_email;
+                    // var_dump($_SESSION['email']);die();
                     $thongbao1 = "Đăng nhập thành công!!";
                     echo "
                         <script>
-                            alert('$thongbao1');
                             setTimeout( function() {
                                 window.location.href = 'index.php';
-                            }, 500)
+                            }, 900)
                         </script>";
                 } else {
                     $thongbao2 = "Sai email hoặc mật khẩu chưa đúng!!";
@@ -49,6 +50,12 @@ if (isset($_GET['act'])) {
                 }
             }
             include "./views/login.php";
+            break;
+        case 'logout':
+            // session_unset('email');
+            unset($_SESSION["email"]);
+            // session_destroy();
+            header('Location: index.php');
             break;
         default:
             include "./views/home.php";

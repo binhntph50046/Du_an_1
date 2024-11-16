@@ -11,12 +11,7 @@
                 <li class="menu-title"><span>Dashboard</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="?act=static">
-                        <i class="ri-shopping-cart-line"></i> <span>Home</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="./?act=listProducts">
-                        <i class="ri-shopping-cart-line"></i> <span>Products</span>
+                        <i class="fa-solid fa-house"></i><span>Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -25,14 +20,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="./?act=listProducts">
+                        <i class="ri-shopping-cart-line"></i> <span>Products</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="?act=orders">
                         <i class="ri-file-list-3-line"></i> <span>Orders</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarOrders">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item"><a href="orders.html" class="nav-link">Manage Orders</a></li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="?act=listUser">
@@ -40,7 +35,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarComments">
+                    <a class="nav-link menu-link" href="?act=list-slide">
+                        <i class="fa-regular fa-image"></i> <span>Slides</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="?act=listComments">
                         <i class="ri-chat-3-line"></i> <span>Comments</span>
                     </a>
                 </li>
