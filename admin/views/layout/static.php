@@ -63,7 +63,6 @@
                         <i class="fas fa-users stat-icon"></i>
                         <h5 class="card-title">Tổng số người dùng</h5>
                         <h2 class="card-text" id="userCount">230</h2>
-                        <p class="mb-0"><small>Tăng 12% so với tháng trước</small></p>
                     </div>
                 </div>
             </div>
@@ -73,7 +72,6 @@
                         <i class="fas fa-shopping-cart stat-icon"></i>
                         <h5 class="card-title">Tổng số đơn hàng</h5>
                         <h2 class="card-text" id="orderCount">120</h2>
-                        <p class="mb-0"><small>Tăng 5% so với tháng trước</small></p>
                     </div>
                 </div>
             </div>
@@ -83,7 +81,6 @@
                         <i class="fas fa-dollar-sign stat-icon"></i>
                         <h5 class="card-title">Tổng doanh thu</h5>
                         <h2 class="card-text" id="revenue">12,345,000đ</h2>
-                        <p class="mb-0"><small>Tăng 8% so với tháng trước</small></p>
                     </div>
                 </div>
             </div>
@@ -93,7 +90,6 @@
                         <i class="fas fa-eye stat-icon"></i>
                         <h5 class="card-title">Lượt truy cập</h5>
                         <h2 class="card-text" id="visitCount">200</h2>
-                        <p class="mb-0"><small>Tăng 15% so với tháng trước</small></p>
                     </div>
                 </div>
             </div>
