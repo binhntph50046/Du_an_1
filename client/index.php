@@ -15,7 +15,8 @@ if (isset($_GET['act'])) {
                 $pass = $_POST['pass'];
                 $address = $_POST['address'];
                 $phonenumber = $_POST['phonenumber'];
-                insert_taikhoan($name, $email, $pass, $address, $phonenumber);
+                $defaultImage = '../Upload/User/nam.jpg';
+                insert_taikhoan($name, $email, $pass, $address, $phonenumber, $defaultImage);
                 $thongbao = "Đăng ký thành công. Vui lòng đăng nhập!!";
 
                 // Hiển thị thông báo và chuyển hướng
@@ -39,10 +40,9 @@ if (isset($_GET['act'])) {
                     $thongbao1 = "Đăng nhập thành công!!";
                     echo "
                         <script>
-                            alert('$thongbao1');
                             setTimeout( function() {
                                 window.location.href = 'index.php';
-                            }, 500)
+                            }, 900)
                         </script>";
                 } else {
                     $thongbao2 = "Sai email hoặc mật khẩu chưa đúng!!";

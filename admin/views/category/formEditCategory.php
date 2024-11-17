@@ -4,8 +4,9 @@
             <div class="row mb-3 pb-1">
                 <div class="col-12">
                     <h4 class="fs-16 mb-1">Sửa Danh Mục</h4>
-                    <p class="text-muted mb-0">Chỉnh sửa thông tin danh mục sản phẩm
-                        <?php echo $Category['ten_danh_muc']; ?>.</p>
+                    <p class="text-muted mb-0" style="font-size: 20px;">Chỉnh sửa thông tin danh mục sản phẩm
+                        <span style="font-weight: 700;"><?php echo $Category['ten_danh_muc']; ?></span>.
+                    </p>
                 </div>
             </div>
             <div class="card">
@@ -13,7 +14,7 @@
                     <form action="./?act=post-edit-category" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="editCategoryID" class="form-label">ID Danh Mục</label>
-                            <input type="text" class="form-control" name="danh_muc_id" id="editCategoryID" value="<?php echo $Category['danh_muc_id']; ?>" required hidden>
+                            <input type="text" class="form-control" name="danh_muc_id" id="editCategoryID" value="<?php echo $Category['danh_muc_id']; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="editCategoryName" class="form-label">Tên Danh Mục</label>

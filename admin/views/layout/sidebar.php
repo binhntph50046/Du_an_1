@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarComments">
+                    <a class="nav-link menu-link" href="?act=listComments">
                         <i class="ri-chat-3-line"></i> <span>Comments</span>
                     </a>
                 </li>

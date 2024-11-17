@@ -13,56 +13,80 @@ include '../admin/controllers/userController.php';
 include '../admin/controllers/OrderController.php';
 include '../admin/models/users.php';
 include '../admin/models/OrderModel.php';
+include '../admin/controllers/commentController.php';
+include '../admin/models/comment.php';
+include '../admin/controllers/DashboardController.php';
 include './views/layout/header.php';
-
 
 $userController = new UserController();
 $orderController = new OrderController();
-//$productsController = new ProductsController();
+$productsController = new ProductsController();
 $categoryController = new CategoryController();
 $slideController = new SlideController();
+$commentController = new commentController();
+$dashboardController = new DashboardController();
 
 switch ($act) {
-   case 'static':
-      include './views/layout/static.php';
-      break;
-   case 'list-category':
-      $categoryController->listCategory();
-      break;
-   case 'form-add-category':
-      $categoryController->formAddCategory();
-      break;
-   case 'post-add-category':
-      $categoryController->postAddCategory();
-      break;
-   case 'form-edit-category':
-      $categoryController->formEditCategory();
-      break;
-   case 'post-edit-category':
-      $categoryController->postEditCategory();
-      break;
-   case 'delete-category':
-      $categoryController->postDeleteCategory();
-      break;
-      case 'list-slide':
-         $slideController->listSlide();
-         break;
-      case 'form-add-slide':
-         $slideController->formAddSlide();
-         break;
-      case 'post-add-slide':
-         $slideController->postAddSlide();
-         break;
-      case 'form-edit-slide':
-         $slideController->formEditSlide();
-         break;
-      case 'post-edit-slide':
-         $slideController->postEditSlide();
-         break;
-      case 'delete-slide':
-         $slideController->postDeleteSlide();
-         break;
-   case 'listUser':
+    case 'static':
+        $dashboardController->index();
+        break;
+    case 'list-category':
+        $categoryController->listCategory();
+        break;
+    case 'form-add-category':
+        $categoryController->formAddCategory();
+        break;
+    case 'post-add-category':
+        $categoryController->postAddCategory();
+        break;
+    case 'form-edit-category':
+        $categoryController->formEditCategory();
+        break;
+    case 'post-edit-category':
+        $categoryController->postEditCategory();
+        break;
+    case 'delete-category':
+        $categoryController->postDeleteCategory();
+        break;
+      
+    case 'list-slide':
+        $slideController->listSlide();
+        break;
+    case 'form-add-slide':
+        $slideController->formAddSlide();
+        break;
+    case 'post-add-slide':
+        $slideController->postAddSlide();
+        break;
+    case 'form-edit-slide':
+        $slideController->formEditSlide();
+        break;
+    case 'post-edit-slide':
+        $slideController->postEditSlide();
+        break;
+    case 'delete-slide':
+        $slideController->postDeleteSlide();
+        break;
+    case 'listProducts':
+        $productsController->listProducts();
+        break;
+    case 'formAddProducts':
+        $productsController->formAddProducts();
+        break;
+    case 'postFormAdd':
+        $productsController->postFormAdd();
+        break;
+    case 'deleteProduct':
+        $productsController->deleteProduct($_GET['id']);
+        break;
+    case 'formEditProducts':
+        $productsController->formEditProducts($_GET['id']);
+        break;
+    case 'updateProduct':
+        $productsController->updateProduct();
+        break;
+
+    case 'listUser':
         $userController->listUser();
         break;
     case 'create':
@@ -74,19 +98,21 @@ switch ($act) {
     case 'delete':
         $userController->delete($_GET['id']);
         break;
-        case 'list-orders':
-         $orderController->listOrders();
-         break;
-     case 'view-order':
-         $orderController->viewOrder();
-         break;
-   case 'update-order-status':
-      $orderController->updateOrderStatus();
-      break;
-   case 'delete-order':
-      $orderController->deleteOrder();
-      break;
-   default:
-      break;
+    case 'list-orders':
+        $orderController->index();
+        break;
+    case 'view-order':
+        if(isset($_GET['id'])) {
+            $orderController->view($_GET['id']);
+        }
+        break;
+    case 'update-order-status':
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $orderController->updateStatus();
+        }
+        break;
+    default:
+        break;
 }
+
 include './views/layout/footer.php';

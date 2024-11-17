@@ -6,6 +6,7 @@ body {
 
 .header {
     width: 100%;
+    margin: 0 auto;
 }
 
 .top-bar {
@@ -15,7 +16,7 @@ body {
     align-items: center;
     padding: 10px;
     color: white;
-
+    /* width: 100%; */
 }
 
 .top-bar-child {
@@ -23,7 +24,7 @@ body {
     margin: 0 auto;
     /* background-color: #442525; */
     height: 50px;
-    width: 1530px;
+    width: 90%;
     display: flex;
     align-items: center;
     padding: 10px 0px;
@@ -61,7 +62,7 @@ body {
 }
 
 .content1 {
-    margin-left: 140px;
+    margin-left: 120px;
 }
 
 .search-bar {
@@ -148,7 +149,7 @@ body {
     padding: 15px;
     border-radius: 25px;
     top: 20px;
-    right: 80px;
+    right: 157px;
     width: 160px;
     height: 60px;
 

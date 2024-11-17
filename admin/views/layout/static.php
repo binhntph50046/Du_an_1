@@ -139,15 +139,31 @@
                                 <thead>
                                     <tr>
                                         <th>Mã đơn hàng</th>
-                                        <th>Khách hàng</th>
                                         <th>Sản phẩm</th>
+                                        <th>Khách hàng</th>
                                         <th>Tổng tiền</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày đặt</th>
                                     </tr>
                                 </thead>
-                                <tbody id="recentOrders">
-                                    <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+                                <tbody>
+                                    <?php foreach ($recentOrders as $order): ?>
+                                    <tr>
+                                        <td><?php echo $order['id']; ?></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="<?php echo $order['product_image']; ?>" 
+                                                     alt="Product" 
+                                                     style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                                <span><?php echo $order['product']; ?></span>
+                                            </div>
+                                        </td>
+                                        <td><?php echo $order['customer_name']; ?></td>
+                                        <td><?php echo $order['total_amount']; ?></td>
+                                        <td><span class="badge bg-<?php echo $order['status_class']; ?>"><?php echo $order['status']; ?></span></td>
+                                        <td><?php echo $order['created_at']; ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -238,7 +254,7 @@
                     total: "2,300,000đ",
                     status: "Đang giao",
                     date: "2024-03-19"
-                },
+                },  
                 {
                     id: "DH003",
                     customer: "Lê Văn C",

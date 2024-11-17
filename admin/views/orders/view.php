@@ -1,118 +1,125 @@
 <div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng #<?= $orderData['order']['don_hang_id'] ?></h1>
+        <a href="index.php?act=list-orders" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+    
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">Chi tiết đơn hàng #<?= $order['don_hang_id'] ?></h4>
-                    <a href="index.php?act=list-orders" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Quay lại
-                    </a>
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Thông tin đơn hàng</h6>
                 </div>
                 <div class="card-body">
-                    <?php if (isset($_SESSION['success'])): ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $_SESSION['success'] ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php unset($_SESSION['success']); ?>
-                    <?php endif; ?>
-
-                    <?php if (isset($_SESSION['error'])): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $_SESSION['error'] ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <?php unset($_SESSION['error']); ?>
-                    <?php endif; ?>
-
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h5>Thông tin khách hàng</h5>
-                            <p><strong>Họ tên:</strong> <?= $order['ho_va_ten'] ?></p>
-                            <p><strong>Email:</strong> <?= $order['email'] ?></p>
-                            <p><strong>Số điện thoại:</strong> <?= $order['so_dien_thoai'] ?></p>
-                            <p><strong>Địa chỉ:</strong> <?= $order['dia_chi'] ?></p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Thông tin đơn hàng</h5>
-                            <p><strong>Ngày đặt:</strong> <?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></p>
-                            <p><strong>Phương thức thanh toán:</strong> 
-                                <?= $order['phuong_thuc_thanh_toan'] == 1 ? 'Thanh toán khi nhận hàng' : 'Chuyển khoản' ?>
-                            </p>
-                            <p><strong>Trạng thái:</strong> 
-                                <?php
-                                switch($order['trang_thai']) {
-                                    case 1: 
-                                        echo '<span class="badge bg-warning">Chờ xử lý</span>';
-                                        break;
-                                    case 2:
-                                        echo '<span class="badge bg-info">Đang xử lý</span>';
-                                        break;
-                                    case 3:
-                                        echo '<span class="badge bg-success">Đã giao</span>';
-                                        break;
-                                    case 4:
-                                        echo '<span class="badge bg-danger">Đã hủy</span>';
-                                        break;
-                                }
-                                ?>
-                            </p>
-                            <form action="index.php?act=update-order-status" method="POST" class="d-flex align-items-center">
-                                <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
-                                <select name="status" class="form-select me-2" style="width: 200px;">
-                                    <option value="1" <?= $order['trang_thai'] == 1 ? 'selected' : '' ?>>Chờ xử lý</option>
-                                    <option value="2" <?= $order['trang_thai'] == 2 ? 'selected' : '' ?>>Đang xử lý</option>
-                                    <option value="3" <?= $order['trang_thai'] == 3 ? 'selected' : '' ?>>Đã giao</option>
-                                    <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hủy</option>
-                                </select>
-                                <button type="submit" name="update_status" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> Cập nhật trạng thái
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <h5>Chi tiết sản phẩm</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Khách hàng:</th>
+                            <td><?= $orderData['order']['ho_va_ten'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td><?= $orderData['order']['email'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại:</th>
+                            <td><?= $orderData['order']['so_dien_thoai'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Địa chỉ:</th>
+                            <td><?= $orderData['order']['dia_chi'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày đặt:</th>
+                            <td><?= date('d/m/Y', strtotime($orderData['order']['ngay_dat'])) ?></td>
+                        </tr>
+                        <?php if($orderData['order']['trang_thai'] != 4): ?>
+                        <tr>
+                            <th>Phương thức thanh toán:</th>
+                            <td>
+                                <?= $orderData['order']['phuong_thuc_thanh_toan'] == 'online' ? 
+                                    '<span class="btn btn-danger">Thanh toán Online</span>' : 
+                                    '<span class="btn btn-info">Thanh toán khi nhận hàng (COD)</span>' ?>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <th>Trạng thái:</th>
+                            <td>
+                                <form action="index.php?act=update-order-status" method="POST">
+                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
+                                    <select name="status" class="form-control" onchange="this.form.submit()">
+                                        <option value="1" <?= $orderData['order']['trang_thai'] == 1 ? 'selected' : '' ?>>
+                                            Chờ xử lý
+                                        </option>
+                                        <option value="2" <?= $orderData['order']['trang_thai'] == 2 ? 'selected' : '' ?>>
+                                            Đang xử lý
+                                        </option>
+                                        <option value="3" <?= $orderData['order']['trang_thai'] == 3 ? 'selected' : '' ?>>
+                                            Đã hoàn thành
+                                        </option>
+                                        <option value="4" <?= $orderData['order']['trang_thai'] == 4 ? 'selected' : '' ?>>
+                                            Đã hủy
+                                        </option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php if($orderData['order']['trang_thai'] == 4): ?>
+                        <tr>
+                            <th>Thao tác:</th>
+                            <td>
+                                <form action="index.php?act=delete-order" method="POST" 
+                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
+                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i> Xóa đơn hàng
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Chi tiết sản phẩm</h6>
+                </div>
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Sản phẩm</th>
-                                    <th>Giá</th>
                                     <th>Số lượng</th>
-                                    <th>Khuyến mãi</th>
+                                    <th>Đơn giá</th>
+                                    <th>Giảm giá</th>
                                     <th>Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $tongCong = 0;
-                                foreach ($orderDetails as $item): 
-                                    $giaSauKM = $item['gia_san_pham'] * (1 - ($item['khuyen_mai'] / 100));
-                                    $thanhTien = $item['tong_tien'];
-                                    $tongCong += $thanhTien;
-                                    
-                                ?>
+                                <?php foreach ($orderData['items'] as $item): ?>
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="<?= $item['hinh_sp'] ?>" 
-                                                 alt="Product Image" 
-                                                 class="img-thumbnail me-2" 
-                                                 style="width: 50px; height: 50px; object-fit: cover;"
-                                                 onerror="this.src='../Upload/Product/default.jpg'">
-                                            <span><?= $item['ten_san_pham'] ?></span>
+                                            <img src="<?= $item['hinh'] ?>" alt="" style="width: 50px; margin-right: 10px;">
+                                            <?= $item['ten_san_pham'] ?>
                                         </div>
                                     </td>
-                                    <td><?= number_format($item['gia_san_pham'], 0, ',', '.') ?>đ</td>
                                     <td><?= $item['so_luong'] ?></td>
+                                    <td><?= number_format($item['gia']) ?>đ</td>
                                     <td><?= $item['khuyen_mai'] ?>%</td>
-                                    <td><?= number_format($thanhTien, 0, ',', '.') ?>đ</td>
+                                    <td><?= number_format($item['tong_tien']) ?>đ</td>
                                 </tr>
                                 <?php endforeach; ?>
                                 <tr>
-                                    <td colspan="4" class="text-end"><strong>Tổng cộng:</strong></td>
-                                    <td><strong><?= number_format($tongCong, 0, ',', '.') ?>đ</strong></td>
+                                    <td colspan="4" class="text-right"><strong>Tổng cộng:</strong></td>
+                                    <td><strong><?= number_format($orderData['order']['tong_tien']) ?>đ</strong></td>
                                 </tr>
                             </tbody>
                         </table>
