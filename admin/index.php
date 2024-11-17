@@ -76,7 +76,7 @@ switch ($act) {
       $productsController->postFormAdd();
       break;
    case 'deleteProduct':
-      $productsController->deleteProduct();
+      $productsController->deleteProduct($_GET['id']);
       break;
    case 'formEditProducts':
       $productsController->formEditProducts();
@@ -110,8 +110,12 @@ switch ($act) {
       $orderController->delete($_GET['id']);
       break;
 
+      // Comment
    case 'listComments':
       $commentController->listComment();
+      break;
+   case 'deleteComments':
+      $commentController->deleteComments($_GET['id']);
       break;
    default:
       break;
