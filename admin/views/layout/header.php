@@ -52,10 +52,33 @@
             background-color: #f1f1f1;
             /* Màu nền khi rê chuột qua dòng */
         }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            z-index: 1;
+            right: 0;
+            width: 55%;
+            top: 70px;
+        }
+
+        .dropdown-menu a {
+            color: #000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
+    <?php
+    session_start();
+    ?>
     <div id="layout-wrapper">
         <header id="page-topbar">
             <div class="layout-width">
@@ -75,28 +98,31 @@
                             <span class="mdi mdi-magnify search-widget-icon"></span>
                         </div>
                     </form>
-                    <div class="d-flex align-items-center ms-auto">
-                        <div class="dropdown ms-1 topbar-head-dropdown header-item">
-                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="dropdown">
-                                <img id="header-lang-img" src="assets/images/flags/us.svg" alt="Header Language" height="20" class="rounded">
+                    <div class="dropdown d-flex align-items-center ms-auto">
+                        <div class=" ms-1 topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle d-flex align-items-center justify-content-center">
+                                <img id="header-lang-img" src="assets/images/flags/vn.svg" alt="Header Language" height="28" class="rounded-3">
                             </button>
                         </div>
+
                         <div class="dropdown ms-1 header-item topbar-user">
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                    <img class="rounded-circle header-profile-user" src="<?php echo $_SESSION['email']['hinh']; ?>" alt="Header Avatar">
                                     <span class="text-start ms-xl-2 d-none d-xl-inline-block fw-medium">
                                         <?php
-                                        session_start();
-                                            if (isset($_SESSION['email']) && is_array($_SESSION['email'])){
-                                                $username = $_SESSION['email']['ho_va_ten']; 
-                                                echo htmlspecialchars($username);
-                                            }
+                                        if (isset($_SESSION['email']) && is_array($_SESSION['email'])) {
+                                            echo htmlspecialchars($_SESSION['email']['ho_va_ten']);
+                                        }
                                         ?>
                                     </span>
                                 </span>
                             </button>
                         </div>
+                        <div class="dropdown-menu  dropdown-menu-end">
+                            <a class="dropdown-item" href="../client/index.php">Đăng xuất</a>
+                        </div>
+
                     </div>
                 </nav>
             </div>
