@@ -50,7 +50,14 @@
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="./auth/images/dangki.jpg" alt=""></figure>
+                        <figure>
+                            <?php
+                            $defaultImage = "./auth/images/default.png"; // Ảnh mặc định
+                            $registerImage = "./auth/images/dangki.jpg";
+                            $imagePath = file_exists($registerImage) ? $registerImage : $defaultImage;
+                            ?>
+                            <img src="<?php echo $imagePath; ?>" alt="sign up image" onerror="this.src='<?php echo $defaultImage; ?>'">
+                        </figure>
                         <a href="?act=login" class="signup-image-link">I am already member</a>
                     </div>
                 </div>

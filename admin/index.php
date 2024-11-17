@@ -17,9 +17,8 @@ include './views/layout/header.php';
 
 
 $userController = new UserController();
-
 $orderController = new OrderController();
-$productsController = new ProductsController();
+//$productsController = new ProductsController();
 $categoryController = new CategoryController();
 $slideController = new SlideController();
 
@@ -45,7 +44,6 @@ switch ($act) {
    case 'delete-category':
       $categoryController->postDeleteCategory();
       break;
-      
       case 'list-slide':
          $slideController->listSlide();
          break;
@@ -64,25 +62,6 @@ switch ($act) {
       case 'delete-slide':
          $slideController->postDeleteSlide();
          break;
-   case 'listProducts':
-      $productsController->listProducts();
-      break;
-   case 'formAddProducts':
-      $productsController->formAddProducts();
-      break;
-   case 'postFormAdd':
-      $productsController->postFormAdd();
-      break;
-   case 'deleteProduct':
-      $productsController->deleteProduct();
-      break;
-   case 'formEditProducts':
-      $productsController->formEditProducts();
-      break;
-   case 'updateProduct':
-      $productsController->updateProduct();
-      break;
-
    case 'listUser':
         $userController->listUser();
         break;
@@ -95,18 +74,18 @@ switch ($act) {
     case 'delete':
         $userController->delete($_GET['id']);
         break;
-    case 'orders':
-        $orderController->index();
-        break;
-    case 'viewOrder':
-        $orderController->view($_GET['id']);
-        break;
-    case 'updateOrderStatus':
-        $orderController->updateStatus();
-        break;
-    case 'deleteOrder':
-        $orderController->delete($_GET['id']);
-        break;
+        case 'list-orders':
+         $orderController->listOrders();
+         break;
+     case 'view-order':
+         $orderController->viewOrder();
+         break;
+   case 'update-order-status':
+      $orderController->updateOrderStatus();
+      break;
+   case 'delete-order':
+      $orderController->deleteOrder();
+      break;
    default:
       break;
 }

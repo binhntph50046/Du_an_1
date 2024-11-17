@@ -4,7 +4,7 @@
         pdo_execute($sql);
     }
     function check_user($email, $pass) {
-        $sql = "SELECT * FROM tai_khoan WHERE email='".$email."' AND mat_khau='".$pass."' ";
+        $sql = "SELECT * FROM tai_khoan WHERE email='".$email."' AND mat_khau='".$pass."' AND trang_thai=1";
         $sp = pdo_query_one($sql);
         return $sp;
     }
