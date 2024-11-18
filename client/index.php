@@ -2,11 +2,31 @@
 session_start();
 include "./models/user.php";
 include "./models/pdo.php";
+include "./models/sanpham.php";
+
+
+$products = loadAll_sanpham_home();
+
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
             // case '/':
             //     include "./views/home.php";
+            //     break;
+            // case 'sanpham':
+            //     if (isset($_POST['kyw']) && $_POST['kyw'] != "") {
+            //         $kyw = $_POST['kyw'];
+            //     } else {
+            //         $kyw = "";
+            //     }
+            //     if (isset($_GET['iddm']) && $_GET['iddm'] > 0) {
+            //         $iddm = $_GET['iddm'];
+            //     } else {
+            //         $iddm = 0;
+            //     }
+            //     $dssp = loadAll_sanpham($kyw, $iddm);
+            //     $tendm = load_ten_dm($iddm);
+            //     include "./view/home.php";
             //     break;
         case 'register':
             if (isset($_POST['submit'])) {
@@ -57,6 +77,7 @@ if (isset($_GET['act'])) {
             // session_destroy();
             header('Location: index.php');
             break;
+        
         default:
             include "./views/home.php";
             break;
