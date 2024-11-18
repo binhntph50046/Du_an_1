@@ -48,7 +48,7 @@ switch ($act) {
     case 'delete-category':
         $categoryController->postDeleteCategory();
         break;
-      
+
     case 'list-slide':
         $slideController->listSlide();
         break;
@@ -102,15 +102,23 @@ switch ($act) {
         $orderController->index();
         break;
     case 'view-order':
-        if(isset($_GET['id'])) {
+        if (isset($_GET['id'])) {
             $orderController->view($_GET['id']);
         }
         break;
     case 'update-order-status':
-        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $orderController->updateStatus();
         }
         break;
+
+    case 'listComments':
+        $commentController->listComment();
+        break;
+    case 'deleteComments':
+        $commentController->deleteComments();
+        break;
+
     default:
         break;
 }
