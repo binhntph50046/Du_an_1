@@ -12,6 +12,7 @@
             min-width: 80%;
             margin: 0 auto;
         }
+
         .card {
             margin-bottom: 20px;
             transition: transform 0.3s;
@@ -135,15 +136,15 @@
                                 <thead>
                                     <tr>
                                         <th>Mã đơn hàng</th>
-                                        <th>Khách hàng</th>
                                         <th>Sản phẩm</th>
+                                        <th>Khách hàng</th>
                                         <th>Tổng tiền</th>
                                         <th>Trạng thái</th>
                                         <th>Ngày đặt</th>
                                     </tr>
                                 </thead>
-                                <tbody id="recentOrders">
-                                    <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+                                <tbody>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -234,7 +235,7 @@
                     total: "2,300,000đ",
                     status: "Đang giao",
                     date: "2024-03-19"
-                },  
+                },
                 {
                     id: "DH003",
                     customer: "Lê Văn C",
