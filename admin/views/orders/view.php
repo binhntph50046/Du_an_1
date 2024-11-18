@@ -114,7 +114,7 @@
                                     <td><?= $item['so_luong'] ?></td>
                                     <td><?= number_format($item['gia']) ?>đ</td>
                                     <td><?= $item['khuyen_mai'] ?>%</td>
-                                    <td><?= number_format($item['tong_tien']) ?>đ</td>
+                                    <td><?= number_format($item['tong_tien'] ?? 0) ?>đ</td>
                                 </tr>
                                 <?php endforeach; ?>
                                 <tr>

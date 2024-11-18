@@ -54,17 +54,23 @@ class OrderModel {
         $order = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($order) {
-            // Lấy chi tiết sản phẩm của đơn hàng
             $sql = "SELECT ctdh.*, sp.ten_san_pham, MIN(hasp.hinh_sp) as hinh
                     FROM chi_tiet_don_hang ctdh
                     JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
                     LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
                     WHERE ctdh.don_hang_id = ?
-                    GROUP BY sp.san_pham_id";
+                    GROUP BY ctdh.chi_tiet_don_hang_id, ctdh.don_hang_id, ctdh.san_pham_id, 
+                             ctdh.so_luong, ctdh.gia, ctdh.khuyen_mai, sp.ten_san_pham";
                     
             $stmt = $this->db->prepare($sql);
             $stmt->execute([$id]);
             $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Tính tổng tiền cho từng item
+            foreach ($items as &$item) {
+                $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
+                $item['tong_tien'] = $giaSauKM * $item['so_luong'];
+            }
             
             return [
                 'order' => $order,
