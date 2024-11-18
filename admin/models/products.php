@@ -201,4 +201,13 @@ class Products
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function checkProductInOrders($productId) {
+        $sql = "SELECT COUNT(*) as count FROM chi_tiet_don_hang WHERE san_pham_id = :productId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['productId' => $productId]);
+        $result = $stmt->fetch();
+        return $result['count'] > 0;
+    }
 }
+

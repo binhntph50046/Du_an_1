@@ -93,4 +93,16 @@ class Category
             return false;
         }
     }
+
+    public function getAllCategories() {
+        try {
+            $sql = "SELECT * FROM danh_muc WHERE trang_thai = 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+            return [];
+        }
+    }
 }

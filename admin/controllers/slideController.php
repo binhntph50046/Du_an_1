@@ -68,7 +68,6 @@ class SLideController
         $Slide = $this->modelSlide->inforSlide($slide_id);
         require_once './views/slide/formEditSlide.php';
     }
-
     public function postDeleteSlide()
     {
         $slide_id = $_GET['slide_id'];

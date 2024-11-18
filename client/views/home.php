@@ -17,18 +17,20 @@
     ?>
     <div class="category-list">
         <div class="banner">
-            <?php include "./views/slideShow.php"; ?>
-        </div>
-        <div class="category-item">
-            <h3>SẢN PHẨM MỚI</h3>
-            <div class="product-list">
-                <!-- <div class="product-box">
+            <?php 
+            // Truyền biến $listSlides vào view slideShow
+            include "./views/slideShow.php"; 
+            ?>
+            <div class="category-item">
+                <h3>SẢN PHẨM MỚI</h3>
+                <div class="product-list">
+                    <div class="product-box">
                         <img src="../Upload/Product/a1.jpg" alt="">
                         <div class="product-infor">
                             <div class="product-name">Iphone 13</div>
                             <div class="product-price">13.990.000<span>₫</span></div>
                         </div>
-                    </div> -->
+                    </div> 
                 <?php foreach ($products as $product): ?>
                     <div class="product-box">
                         <img src="<?= htmlspecialchars($product['hinh_sp'] ?? 'kh có ảnh') ?>">
