@@ -171,7 +171,7 @@ class ProductsController
         if ($result) {
             echo "<script>alert('Cập nhật thành công'); window.location.href='index.php?act=listProducts';</script>";
         } else {
-            echo "<script>alert('Cập nhật thất bại'); window.location.href='index.php?act=listProducts';</script>";
+            echo "<script>alert('Cập nhật thất b��i'); window.location.href='index.php?act=listProducts';</script>";
         }
     }
     public function deleteProduct($id)
@@ -180,15 +180,23 @@ class ProductsController
             throw new \Exception('ID không hợp lệ');
         }
 
-        // Gọi model để xóa sản phẩm
-        $result = $this->modelProducts->deleteProductAndImages($id);
+        // Kiểm tra sản phẩm có trong đơn hàng không
+        $orderCheck = $this->modelProducts->checkProductInOrders($id);
+        if ($orderCheck) {
+            $_SESSION['error'] = "Không thể xóa sản phẩm đang có trong đơn hàng!";
+            header('Location: ./?act=listProducts');
+            exit();
+        }
 
+        // Nếu không có trong đơn hàng thì xóa
+        $result = $this->modelProducts->deleteProductAndImages($id);
         if ($result) {
-            // Điều hướng sau khi xóa thành công
+            $_SESSION['success'] = "Xóa sản phẩm thành công!";
             header('Location: ./?act=listProducts');
         } else {
-            // Xử lý lỗi
-            throw new \Exception('Không thể xóa sản phẩm');
+            $_SESSION['error'] = "Không thể xóa sản phẩm!";
+            header('Location: ./?act=listProducts');
         }
+        exit();
     }
 }

@@ -44,10 +44,62 @@
 
 /* Animation */
 @keyframes fade {
-    from {opacity: .3} 
+    from {opacity: .4}
     to {opacity: 1}
 } 
 /* Thêm vào file SlideShow.css */
 .fade {
-    animation: fade 1.5s ease-in-out;
+    animation: fade 1.35s ease-in-out;
+}
+
+@media (max-width: 1200px) {
+    .slideshow-container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .mySlides img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .slideshow-container {
+        max-height: 300px;
+        margin-bottom: 15px;
+    }
+    
+    .prev, .next {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .prev i, .next i {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slideshow-container {
+        max-height: 200px;
+        margin-bottom: 10px;
+    }
+    
+    .prev, .next {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .prev i, .next i {
+        font-size: 20px;
+    }
+    
+    .prev {
+        left: 10px;
+    }
+    
+    .next {
+        right: 10px;
+    }
 }
