@@ -6,9 +6,9 @@
     <title>IPHONE STORE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/client/Header.css">
+    <link rel="stylesheet" href="./assets/css/client/Header.css">
     <link rel="stylesheet" href="../assets/css/client/Footer.css">
-    <link rel="stylesheet" href="../assets/css/client/Home.css">
+    <link rel="stylesheet" href="./assets/css/client/Home.css">
 </head>
 <body>
     <?php include "views/header.php"; ?>
