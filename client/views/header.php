@@ -14,34 +14,7 @@
 </style>
 
 <body>
-<<<<<<< HEAD
-    <div class="header">
 
-        <div class="top-bar">
-            <div class="top-bar-child">
-                <div class="content">
-                    <img src="../Upload/Img/logoip.png" alt="" class="logo">
-                    <div class="menu-button"><i class="fa-solid fa-list"></i> Danh mục</div>
-                </div>
-                <div class="content1">
-                    <input type="text" class="search-bar" placeholder="Nhập tên điện thoại cần tìm ...">
-                    <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-
-                <div class="content2">
-                    <div class="content3">
-                        <a href="#" class="user-button user-container"><i class="fa-solid fa-user"></i>
-                            <?php
-                            if (isset($_SESSION['email']) && is_array($_SESSION['email'])) {
-                                $email = $_SESSION['email']['email'];
-                                $username = $_SESSION['email']['ho_va_ten'];
-                                $role = $_SESSION['email']['vai_tro'];
-                                echo htmlspecialchars($username);
-                            } else {
-                                $role = null;
-                            }
-                            ?>
-=======
     <header>
         <div class="header-top">
             <div class="container">
@@ -50,7 +23,6 @@
                     <div class="col-md-3 d-flex align-items-center">
                         <a href="index.php" class="logo me-3">
                             <img src="../Upload/Img/logoip.png" alt="Logo">
->>>>>>> 53265b36dcbf0da203a10a66a64a196a7c168679
                         </a>
                         <div class="category-dropdown">
                             <button class="category-btn" onclick="toggleCategoryMenu(event)">
