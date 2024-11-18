@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="./?act=updateProduct" method="post" enctype="multipart/form-data">
-                        
+
                         <?php if (!isset($product) || !is_array($product)): ?>
                             <div class="alert alert-danger">Không có dữ liệu sản phẩm</div>
                         <?php else: ?>
@@ -59,11 +59,17 @@
                             </div>
                             <div class="mb-3">
                                 <label for="categoryStatus" class="form-label">Danh Mục</label>
-                                <input type="hidden" name="danh_muc_id" value="<?= $product['danh_muc_id'] ?>"  >
+                                <input type="hidden" name="danh_muc_id" value="<?= $product['danh_muc_id'] ?>">
                                 <?php
-                                echo '<select name="danh_muc"  class="form-select" aria-label="Default select example">';
+                                // Giả sử $currentCategoryId là ID của danh mục hiện tại của sản phẩm
+                                // kiểm tra xem danh_muc_id hiện tại có tôn tại và khác null k
+                                $currentCategoryId = $product['danh_muc_id'] ?? null; // ID danh mục của sản phẩm hiện tại
+
+                                echo '<select name="danh_muc" class="form-select" aria-label="Default select example">';
                                 foreach ($categories as $item) {
-                                    echo '<option value="' . htmlspecialchars($item['danh_muc_id']) . '">'
+                                    // Kiểm tra nếu ID của danh mục hiện tại khớp với danh mục sản phẩm
+                                    $selected = ($item['danh_muc_id'] == $currentCategoryId) ? 'selected' : '';
+                                    echo '<option value="' . htmlspecialchars($item['danh_muc_id']) . '" ' . $selected . '>'
                                         . htmlspecialchars($item['ten_danh_muc']) .
                                         '</option>';
                                 }
