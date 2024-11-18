@@ -1,11 +1,4 @@
-<div class="row">
-    <div class="col">
-        <div class="h-100">
-            <div class="row mb-3 pb-1">
-                <div class="col-12">
-                    <h4 class="fs-16 mb-1">Cập Nhật Sản Phẩm</h4>
-                </div>
-            </div>
+
             <div class="card">
                 <div class="card-body">
                     <form action="./?act=updateProduct" method="post" enctype="multipart/form-data">
@@ -86,3 +79,4 @@
         </div>
     </div>
 </div>
+

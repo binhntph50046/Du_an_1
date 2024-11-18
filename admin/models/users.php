@@ -75,5 +75,18 @@ class User {
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute(['tai_khoan_id' => $id]);
     }
+    public function login($email, $mat_khau) {
+        try {
+            $sql = "SELECT * FROM tai_khoan WHERE email = :email AND mat_khau = :mat_khau AND trang_thai = 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                'email' => $email,
+                'mat_khau' => $mat_khau
+            ]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
 ?>

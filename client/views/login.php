@@ -22,7 +22,14 @@
             <div class="container">
                 <div class="signin-content">
                     <div class="signin-image">
-                        <figure><img src="./auth/images/signin-image.jpg" alt="sing up image"></figure>
+                        <figure>
+                            <?php
+                            $defaultImage = "./auth/images/default.png"; // Ảnh mặc định
+                            $loginImage = "./auth/images/signin-image.jpg";
+                            $imagePath = file_exists($loginImage) ? $loginImage : $defaultImage;
+                            ?>
+                            <img src="<?php echo $imagePath; ?>" alt="sign in image" onerror="this.src='<?php echo $defaultImage; ?>'">
+                        </figure>
                         <a href="./?act=register" class="signup-image-link">Create an account</a>
                     </div>
 

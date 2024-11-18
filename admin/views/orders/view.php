@@ -1,95 +1,131 @@
-<style>
-    .container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-        margin-left: 268px;
-    }
-    .order-details {
-        background: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .product-item {
-        border-bottom: 1px solid #eee;
-        padding: 10px 0;
-    }
-    .product-image {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-    }
-</style>
-<div class="container">
-    <div class="mb-4">
-        <h4>Chi tiết đơn hàng #<?= $order['don_hang_id'] ?></h4>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng #<?= $orderData['order']['don_hang_id'] ?></h1>
+        <a href="index.php?act=list-orders" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
     </div>
-
-    <div class="order-details">
-        <!-- Thông tin khách hàng -->
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <h5>Thông tin khách hàng</h5>
-                <p>Họ tên: <?= $order['ho_va_ten'] ?></p>
-                <p>Email: <?= $order['email'] ?></p>
-                <p>Số điện thoại: <?= $order['so_dien_thoai'] ?></p>
-            </div>
-            <div class="col-md-6">
-                <h5>Thông tin đơn hàng</h5>
-                <p>Ngày đặt: <?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></p>
-                <p>Phương thức thanh toán: <?= $order['phuong_thuc_thanh_toan'] == 1 ? 'Tiền mặt' : 'Thẻ' ?></p>
-                <p>Trạng thái: 
-                    <?php if($order['trang_thai'] == 1): ?>
-                        <span class="badge bg-warning">Đang xử lý</span>
-                    <?php else: ?>
-                        <span class="badge bg-success">Đã hoàn thành</span>
-                    <?php endif; ?>
-                </p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Thông tin đơn hàng</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>Khách hàng:</th>
+                            <td><?= $orderData['order']['ho_va_ten'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td><?= $orderData['order']['email'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại:</th>
+                            <td><?= $orderData['order']['so_dien_thoai'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Địa chỉ:</th>
+                            <td><?= $orderData['order']['dia_chi'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày đặt:</th>
+                            <td><?= date('d/m/Y', strtotime($orderData['order']['ngay_dat'])) ?></td>
+                        </tr>
+                        <?php if($orderData['order']['trang_thai'] != 4): ?>
+                        <tr>
+                            <th>Phương thức thanh toán:</th>
+                            <td>
+                                <?= $orderData['order']['phuong_thuc_thanh_toan'] == 'online' ? 
+                                    '<span class="btn btn-danger">Thanh toán Online</span>' : 
+                                    '<span class="btn btn-info">Thanh toán khi nhận hàng (COD)</span>' ?>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <th>Trạng thái:</th>
+                            <td>
+                                <form action="index.php?act=update-order-status" method="POST">
+                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
+                                    <select name="status" class="form-control" onchange="this.form.submit()">
+                                        <option value="1" <?= $orderData['order']['trang_thai'] == 1 ? 'selected' : '' ?>>
+                                            Chờ xử lý
+                                        </option>
+                                        <option value="2" <?= $orderData['order']['trang_thai'] == 2 ? 'selected' : '' ?>>
+                                            Đang xử lý
+                                        </option>
+                                        <option value="3" <?= $orderData['order']['trang_thai'] == 3 ? 'selected' : '' ?>>
+                                            Đã hoàn thành
+                                        </option>
+                                        <option value="4" <?= $orderData['order']['trang_thai'] == 4 ? 'selected' : '' ?>>
+                                            Đã hủy
+                                        </option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php if($orderData['order']['trang_thai'] == 4): ?>
+                        <tr>
+                            <th>Thao tác:</th>
+                            <td>
+                                <form action="index.php?act=delete-order" method="POST" 
+                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
+                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash"></i> Xóa đơn hàng
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endif; ?>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <!-- Danh sách sản phẩm -->
-        <h5>Sản phẩm đã đặt</h5>
-        <?php foreach ($orderDetails as $item): ?>
-        <div class="product-item row align-items-center">
-            <div class="col-md-2">
-                <img src="../uploads/products/<?= $item['hinh'] ?>" 
-                     class="img-fluid rounded" 
-                     alt="<?= $item['ten_san_pham'] ?>"
-                     style="max-width: 100px;">
+        
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Chi tiết sản phẩm</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Giảm giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($orderData['items'] as $item): ?>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="<?= $item['hinh'] ?>" alt="" style="width: 50px; margin-right: 10px;">
+                                            <?= $item['ten_san_pham'] ?>
+                                        </div>
+                                    </td>
+                                    <td><?= $item['so_luong'] ?></td>
+                                    <td><?= number_format($item['gia']) ?>đ</td>
+                                    <td><?= $item['khuyen_mai'] ?>%</td>
+                                    <td><?= number_format($item['tong_tien']) ?>đ</td>
+                                </tr>
+                                <?php endforeach; ?>
+                                <tr>
+                                    <td colspan="4" class="text-right"><strong>Tổng cộng:</strong></td>
+                                    <td><strong><?= number_format($orderData['order']['tong_tien']) ?>đ</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h6><?= $item['ten_san_pham'] ?></h6>
-                <small class="text-muted">Đơn giá: <?= number_format($item['gia']) ?>đ</small>
-            </div>
-            <div class="col-md-2 text-center">
-                x<?= $item['so_luong'] ?>
-            </div>
-            <div class="col-md-4 text-end">
-                <strong><?= number_format($item['gia'] * $item['so_luong']) ?>đ</strong>
-            </div>
-        </div>
-        <?php endforeach; ?>
-
-        <!-- Tổng tiền -->
-        <div class="row mt-4">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-                <table class="table">
-                    <tr>
-                        <td><strong>Tổng tiền:</strong></td>
-                        <td class="text-end"><?= number_format($order['tong_tien']) ?>đ</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <!-- Nút quay lại -->
-        <div class="mt-4">
-            <a href="index.php?act=orders" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Quay lại
-            </a>
         </div>
     </div>
-</div> 
+</div>

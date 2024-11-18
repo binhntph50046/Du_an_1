@@ -15,7 +15,10 @@
     ?>
     <div class="category-list">
         <div class="banner">
-            <?php include "./views/slideShow.php"; ?>
+            <?php 
+            // Truyền biến $listSlides vào view slideShow
+            include "./views/slideShow.php"; 
+            ?>
             <div class="category-item">
                 <h3>SẢN PHẨM MỚI</h3>
                 <div class="product-list">

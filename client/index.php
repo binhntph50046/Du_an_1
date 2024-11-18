@@ -2,6 +2,11 @@
 session_start();
 include "./models/user.php";
 include "./models/pdo.php";
+include "./models/slide.php";
+
+// Lấy danh sách slides hoạt động
+$listSlides = getSlides();
+
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
@@ -52,10 +57,9 @@ if (isset($_GET['act'])) {
             include "./views/login.php";
             break;
         case 'logout':
-            // session_unset('email');
-            unset($_SESSION["email"]);
-            // session_destroy();
+            unset($_SESSION['email']);
             header('Location: index.php');
+            exit();
             break;
         default:
             include "./views/home.php";

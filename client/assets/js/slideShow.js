@@ -1,4 +1,4 @@
- let slideIndex = 1;
+let slideIndex = 1;
         showSlides(slideIndex);
 
         function plusSlides(n) {
@@ -18,13 +18,15 @@
             
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
+                slides[i].classList.remove("fade");
             }
             
-            slides[slideIndex-1].classList.add("fade");
             slides[slideIndex-1].style.display = "block";
+            slides[slideIndex-1].classList.add("fade");
         }
 
         // Auto slide
         setInterval(function() {
             plusSlides(1);
-        }, 3500); // Thay đổi slide mỗi 3.5 giây
+        }, 1500);
+        

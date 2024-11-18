@@ -76,4 +76,95 @@
     .product-list {
         grid-template-columns: 1fr;
     }
+}
+
+/* Màn hình lớn (desktop) */
+@media (min-width: 1200px) {
+    .category-list {
+        max-width: 1230px;
+    }
+    
+    .product-list {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Màn hình trung bình (tablet landscape) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .category-list {
+        max-width: 960px;
+    }
+    
+    .product-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Màn hình tablet portrait */
+@media (max-width: 991px) and (min-width: 768px) {
+    .category-list {
+        max-width: 720px;
+    }
+    
+    .product-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .product-box img {
+        height: 180px;
+    }
+}
+
+/* Màn hình điện thoại lớn */
+@media (max-width: 767px) {
+    .category-list {
+        max-width: 540px;
+        padding: 10px;
+    }
+    
+    .product-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .product-box img {
+        height: 160px;
+    }
+    
+    .category-item h3, 
+    .category-item h4 {
+        font-size: 20px;
+    }
+}
+
+/* Màn hình điện thoại nhỏ */
+@media (max-width: 480px) {
+    .category-list {
+        padding: 5px;
+    }
+    
+    .product-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .product-box {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .product-box img {
+        height: 200px;
+    }
+    
+    .product-infor {
+        padding: 10px;
+    }
+    
+    .product-name {
+        font-size: 14px;
+    }
+    
+    .product-price {
+        font-size: 16px;
+    }
 } 

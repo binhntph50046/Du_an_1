@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="?act=orders">
+                    <a class="nav-link menu-link" href="?act=list-orders">
                         <i class="ri-file-list-3-line"></i> <span>Orders</span>
                     </a>
                 </li>

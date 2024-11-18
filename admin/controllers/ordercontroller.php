@@ -5,47 +5,38 @@ class OrderController {
     public function __construct() {
         $this->orderModel = new OrderModel();
     }
-   // Tạo mảng $filters chứa các điều kiện lọc từ $GET
+
+    // Hiển thị danh sách đơn hàng
     public function index() {
-        $filters = [
-            'status' => $_GET['status'] ?? '',
-            'date_from' => $_GET['date_from'] ?? '',
-            'date_to' => $_GET['date_to'] ?? ''
-        ];
-        
-        $orders = $this->orderModel->getAll($filters);
-        include './views/orders/list.php';
+        $orders = $this->orderModel->getAllOrders();
+        include 'views/orders/list.php';
     }
 
+    // Xem chi tiết đơn hàng
     public function view($id) {
-        $order = $this->orderModel->getById($id);
-        $orderDetails = $this->orderModel->getOrderDetails($id);
-        include './views/orders/view.php';
+        $orderData = $this->orderModel->getOrderDetail($id);
+        include 'views/orders/view.php';
     }
 
+    // Cập nhật trạng thái đơn hàng
     public function updateStatus() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if(isset($_POST['order_id']) && isset($_POST['status'])) {
             $orderId = $_POST['order_id'];
             $status = $_POST['status'];
             
-            if ($this->orderModel->updateStatus($orderId, $status)) {
-                $_SESSION['success'] = "Cập nhật trạng thái đơn hàng thành công!";
-            } else {
-                $_SESSION['error'] = "Có lỗi xảy ra khi cập nhật trạng thái!";
-            }
+            $this->orderModel->updateOrderStatus($orderId, $status);
         }
-        header("Location: index.php?act=orders");
+        header("Location: index.php?act=list-orders");
         exit();
     }
 
-    public function delete($id) {
-        if ($this->orderModel->delete($id)) {
-            $_SESSION['success'] = "Xóa đơn hàng thành công!";
-        } else {
-            $_SESSION['error'] = "Có lỗi xảy ra khi xóa đơn hàng!";
+    // Xóa đơn hàng
+    public function deleteOrder() {
+        if(isset($_POST['order_id'])) {
+            $orderId = $_POST['order_id'];
+            $this->orderModel->deleteOrder($orderId);
+            header("Location: index.php?act=list-orders");
+            exit();
         }
-        header("Location: index.php?act=orders");
-        exit();
     }
 }
-?>
