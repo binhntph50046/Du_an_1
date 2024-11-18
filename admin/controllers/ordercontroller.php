@@ -8,7 +8,14 @@ class OrderController {
 
     // Hiển thị danh sách đơn hàng
     public function index() {
-        $orders = $this->orderModel->getAllOrders();
+        $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+        
+        if (!empty($keyword)) {
+            $orders = $this->orderModel->searchOrders($keyword);
+        } else {
+            $orders = $this->orderModel->getAllOrders();
+        }
+        
         include 'views/orders/list.php';
     }
 

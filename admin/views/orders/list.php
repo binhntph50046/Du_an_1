@@ -2,7 +2,31 @@
     <h1 class="h3 mb-2 text-gray-800">Quản lý đơn hàng</h1>
     
     <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <form action="index.php" method="GET" class="form-inline justify-content-end">
+                <input type="hidden" name="act" value="list-orders">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" 
+                           placeholder="Tìm theo mã đơn, tên, email, SĐT..." 
+                           value="<?= isset($_GET['keyword']) ? ($_GET['keyword']) : '' ?>">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i> Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="card-body">
+            <?php if(isset($_GET['keyword']) && !empty($_GET['keyword'])): ?>
+                <div class="mb-3">
+                    <p class="mb-0">Kết quả tìm kiếm cho: <strong><?= ($_GET['keyword']) ?></strong></p>
+                    <a href="index.php?act=list-orders" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-times"></i> Xóa bộ lọc
+                    </a>
+                </div>
+            <?php endif; ?>
+            
             <div class="table-responsive">
                 <table class="table table-bordered" id="orderTable" width="100%" cellspacing="0">
                     <thead>

@@ -115,6 +115,15 @@ function uploadFile($file, $folderUpload) {
             unlink($path);
         }
     }
+    public function viewDetail($id) {
+        $user = $this->userModel->getById($id);
+        
+        // Get user's orders if needed
+        $orderModel = new OrderModel();
+        $userOrders = $orderModel->getOrdersByUserId($id);
+        
+        include './views/users/userDetail.php';
+    }
 }
 ob_end_flush();
 ?>

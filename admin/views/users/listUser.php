@@ -159,6 +159,11 @@
                                 </span>
                             </td>
                             <td>
+                                <a href="index.php?act=viewDetail&id=<?= $user['tai_khoan_id'] ?>"
+                                    class="btn btn-info btn-action"
+                                    title="Chi tiết">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <a href="index.php?act=updateUser&id=<?= $user['tai_khoan_id'] ?>"
                                     class="btn btn-warning btn-action"
                                     title="Sửa">
