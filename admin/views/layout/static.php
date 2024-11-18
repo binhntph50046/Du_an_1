@@ -12,6 +12,7 @@
             min-width: 80%;
             margin: 0 auto;
         }
+
         .card {
             margin-bottom: 20px;
             transition: transform 0.3s;
@@ -250,7 +251,7 @@
                     total: "2,300,000đ",
                     status: "Đang giao",
                     date: "2024-03-19"
-                },  
+                },
                 {
                     id: "DH003",
                     customer: "Lê Văn C",
