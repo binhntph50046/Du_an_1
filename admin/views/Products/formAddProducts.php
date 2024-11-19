@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -75,4 +73,3 @@
         </div>
     </div>
 </div>
->>>>>>> 528858ebcb0bb7afa66e3ce5901356629062a1bd

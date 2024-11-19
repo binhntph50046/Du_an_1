@@ -21,7 +21,7 @@ class ProductsController
         $listProducts = $this->modelProducts->getAllProducts();
         // var_dump($listProducts);
         echo "<!-- Debug: ";
-        var_dump($listProducts);
+        // var_dump($listProducts);
         echo " -->";
 
         // Đảm bảo $listProducts là một mảng
@@ -57,7 +57,7 @@ class ProductsController
             $mo_ta = $_POST['mo_ta'];
             $trang_thai = $_POST['trang_thai'];
             $danh_muc_id = isset($_POST['danh_muc']) ? $_POST['danh_muc'] : NULL;
-            var_dump("hinh", $hinh);
+            // var_dump("hinh", $hinh);
 
             // $hinhPath = uploadFile($hinh,'../Upload/Product/');
 
@@ -74,7 +74,7 @@ class ProductsController
                 ];
 
                 $url = uploadFile($file, '../Upload/Product/');
-                var_dump($url);
+                // var_dump($url);
                 $san_pham_id = $result['san_pham_id'];
                 $this->modelProducts->addProductImage($url, $san_pham_id);
             }
@@ -144,7 +144,7 @@ class ProductsController
         $trang_thai = (int)$_POST['trang_thai'];
         $danh_muc_id = (int)$_POST['danh_muc_id'];
         $hinh_id = $_POST['hinh_anh_id'];
-        var_dump($_POST);
+        // var_dump($_POST);
 
         
 
