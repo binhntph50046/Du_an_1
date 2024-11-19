@@ -46,7 +46,6 @@
                                     <th>ID User</th>
                                     <th>ID Product</th>
                                     <th>Date Comment</th>
-                                    <th>Condition</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -58,12 +57,6 @@
                                         <td><?= $Comment['tai_khoan_id'] ?></td>
                                         <td><?= $Comment['san_pham_id'] ?></td>
                                         <td><?= $Comment['ngay_binh_luan'] ?></td>
-                                        <td>
-                                            <span class="status-badge <?= $Comment['trang_thai'] == 1 ? 'status-active' : 'status-locked' ?>">
-                                                <?= $Comment['trang_thai'] == 1 ? 'Hoạt động' : 'Chưa duyệt' ?>
-                                            </span>
-
-                                        </td>
                                         <td>
                                             <a href="?act=deleteComments&binh_luan_id=<?php echo $Comment['binh_luan_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this comment !?')"><i class="fas fa-trash"></i></a>
                                         </td>
