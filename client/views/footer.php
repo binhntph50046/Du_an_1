@@ -59,7 +59,7 @@
                     <div class="newsletter">
                         <p>Đăng ký để nhận thông tin mới nhất về sản phẩm và khuyến mãi</p>
                         <form class="newsletter-form">
-                            <input type="email" placeholder="Email của bạn">
+                            <input type="email" placeholder="Email của bạn" class="custom-input">
                             <button type="submit"><i class="fas fa-paper-plane"></i></button>
                         </form>
                     </div>

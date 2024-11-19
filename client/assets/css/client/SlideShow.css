@@ -1,15 +1,16 @@
 .slideshow-container {
-    max-width: 1230px;
+    max-width: 1200px;
     max-height: 375px ;
     margin: auto;
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .mySlides img {
-    border-radius: 8px;
-    width: 1230px;
+    /* border-radius: 15px; */
+    width: 1200px;
     height: auto;
     object-fit: cover;
 }
@@ -44,12 +45,12 @@
 
 /* Animation */
 @keyframes fade {
-    from {opacity: .4}
+    from {opacity: .3}
     to {opacity: 1}
 } 
 /* Thêm vào file SlideShow.css */
 .fade {
-    animation: fade 1.35s ease-in-out;
+    animation: fade 1.8s ease-in-out;
 }
 
 @media (max-width: 1200px) {
