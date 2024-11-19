@@ -245,8 +245,6 @@ body {
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
-    background: #cd1818;
-    color: white;
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -255,7 +253,10 @@ body {
     justify-content: center;
     border: none;
 }
-
+.btn-search:hover{
+background: #cd1818;
+    color: white;
+}
 .user-actions {
     display: flex;
     justify-content: flex-end;

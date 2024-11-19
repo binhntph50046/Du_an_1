@@ -128,7 +128,9 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     background: #38bdf8;
 }
-
+.custom-input::placeholder {
+    color: white; 
+}
 .social-links {
     display: flex;
     gap: 15px;
