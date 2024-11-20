@@ -1,89 +1,80 @@
+<?php
+// Kiểm tra và lấy dữ liệu từ biến $data
+$order = $data['order'] ?? null;
+$items = $data['items'] ?? [];
+
+if (!$order || empty($items)) {
+    echo "Không có dữ liệu đơn hàng";
+    return;
+}
+?>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng #<?= $orderData['order']['don_hang_id'] ?></h1>
+        <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng #<?= $order['don_hang_id'] ?></h1>
         <a href="index.php?act=list-orders" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
     <div class="row">
+        <!-- Thông tin đơn hàng -->
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Thông tin đơn hàng</h6>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <tr>
-                            <th>Khách hàng:</th>
-                            <td><?= $orderData['order']['ho_va_ten'] ?></td>
+                            <th width="35%">Khách hàng:</th>
+                            <td><?= $order['ho_va_ten'] ?></td>
                         </tr>
                         <tr>
                             <th>Email:</th>
-                            <td><?= $orderData['order']['email'] ?></td>
+                            <td><?= $order['email'] ?></td>
                         </tr>
                         <tr>
                             <th>Số điện thoại:</th>
-                            <td><?= $orderData['order']['so_dien_thoai'] ?></td>
+                            <td><?= $order['so_dien_thoai'] ?></td>
                         </tr>
                         <tr>
                             <th>Địa chỉ:</th>
-                            <td><?= $orderData['order']['dia_chi'] ?></td>
+                            <td><?= $order['dia_chi'] ?></td>
                         </tr>
                         <tr>
                             <th>Ngày đặt:</th>
-                            <td><?= date('d/m/Y', strtotime($orderData['order']['ngay_dat'])) ?></td>
+                            <td><?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></td>
                         </tr>
-                        <?php if($orderData['order']['trang_thai'] != 4): ?>
                         <tr>
                             <th>Phương thức thanh toán:</th>
                             <td>
-                                <?= $orderData['order']['phuong_thuc_thanh_toan'] == 'online' ? 
-                                    '<span class="btn btn-danger">Thanh toán Online</span>' : 
-                                    '<span class="btn btn-info">Thanh toán khi nhận hàng (COD)</span>' ?>
+                                <?php if($order['phuong_thuc_thanh_toan'] == 'online'): ?>
+                                    <span class="btn btn-success">Thanh toán Online</span>
+                                <?php else: ?>
+                                    <span class="btn btn-info">Thanh toán khi nhận hàng (COD)</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
-                        <?php endif; ?>
                         <tr>
                             <th>Trạng thái:</th>
                             <td>
-                                <form action="index.php?act=update-order-status" method="POST">
-                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
+                                <form action="index.php?act=update-order-status" method="POST" class="d-inline">
+                                    <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
                                     <select name="status" class="form-control" onchange="this.form.submit()">
-                                        <option value="1" <?= $orderData['order']['trang_thai'] == 1 ? 'selected' : '' ?>>
-                                            Chờ xử lý
-                                        </option>
-                                        <option value="2" <?= $orderData['order']['trang_thai'] == 2 ? 'selected' : '' ?>>
-                                            Đang xử lý
-                                        </option>
-                                        <option value="3" <?= $orderData['order']['trang_thai'] == 3 ? 'selected' : '' ?>>
-                                            Đã hoàn thành
-                                        </option>
-                                        <option value="4" <?= $orderData['order']['trang_thai'] == 4 ? 'selected' : '' ?>>
-                                            Đã hủy
-                                        </option>
+                                        <option value="1" <?= $order['trang_thai'] == 1 ? 'selected' : '' ?>>Chờ xử lý</option>
+                                        <option value="2" <?= $order['trang_thai'] == 2 ? 'selected' : '' ?>>Đang xử lý</option>
+                                        <option value="3" <?= $order['trang_thai'] == 3 ? 'selected' : '' ?>>Đã hoàn thành</option>
+                                        <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hủy</option>
                                     </select>
                                 </form>
                             </td>
                         </tr>
-                        <?php if($orderData['order']['trang_thai'] == 4): ?>
-                        <tr>
-                            <th>Thao tác:</th>
-                            <td>
-                                <form action="index.php?act=delete-order" method="POST" 
-                                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
-                                    <input type="hidden" name="order_id" value="<?= $orderData['order']['don_hang_id'] ?>">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="fas fa-trash"></i> Xóa đơn hàng
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
                     </table>
                 </div>
             </div>
         </div>
-        
+
+        <!-- Chi tiết sản phẩm -->
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -91,104 +82,113 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Sản phẩm</th>
                                     <th>Số lượng</th>
                                     <th>Đơn giá</th>
-                                    <th>Giảm giá</th>
                                     <th>Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($orderData['items'] as $item): ?>
+                                <?php foreach ($items as $item): ?>
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="<?= $item['hinh'] ?>" alt="" style="width: 50px; margin-right: 10px;">
-                                            <?= $item['ten_san_pham'] ?>
+                                            <?php if (!empty($item['hinh'])): ?>
+                                                <img src="<?= $item['hinh'] ?>" class="product-img mr-2" alt="<?= $item['ten_san_pham'] ?>">
+                                            <?php endif; ?>
+                                            <div>
+                                                <div class="font-weight-bold"><?= $item['ten_san_pham'] ?></div>
+                                                <?php if (!empty($item['phan_tram_giam'])): ?>
+                                                    <small class="text-danger">Giảm <?= $item['phan_tram_giam'] ?>%</small>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td><?= $item['so_luong'] ?></td>
-<<<<<<< HEAD
+                                    <td class="text-center"><?= $item['so_luong'] ?></td>
                                     <td class="text-right">
-                                        <?php if ($item['phan_tram_giam'] > 0): ?>
-                                            <div class="original-price">
-                                                <?= number_format($item['gia_goc'], 0, ',', '.') ?> đ
-                                            </div>
-                                            <div class="discounted-price">
-                                                <?= number_format($item['gia_ap_dung'], 0, ',', '.') ?> đ
-                                            </div>
+                                        <?php if (!empty($item['gia_sau_khuyen_mai']) && $item['gia_sau_khuyen_mai'] != $item['gia_goc']): ?>
+                                            <del class="text-muted small"><?= number_format($item['gia_goc'], 0, ',', '.') ?>đ</del><br>
+                                            <?= number_format($item['gia_sau_khuyen_mai'], 0, ',', '.') ?>đ
                                         <?php else: ?>
-                                            <?= number_format($item['gia_goc'], 0, ',', '.') ?> đ
+                                            <?= number_format($item['gia_goc'], 0, ',', '.') ?>đ
                                         <?php endif; ?>
                                     </td>
-                                    <td class="text-right">
-                                        <?php if ($item['phan_tram_giam'] > 0): ?>
-                                            <div class="discount-tag">
-                                                -<?= $item['phan_tram_giam'] ?>%
-                                            </div>
-                                        <?php elseif ($item['giam_gia'] > 0): ?>
-                                            <div class="discount-tag">
-                                                -<?= number_format($item['giam_gia'], 0, ',', '.') ?>đ
-                                            </div>
-                                        <?php else: ?>
-                                            <span class="no-discount">Không có</span>
-                                        <?php endif; ?>
-                                        
-                                        <?php if (!empty($item['ten_khuyen_mai'])): ?>
-                                            <div class="promotion-name">
-                                                <?= $item['ten_khuyen_mai'] ?>
-                                            </div>
-                                        <?php endif; ?>
+                                    <td class="text-right font-weight-bold">
+                                        <?= number_format($item['thanh_tien'], 0, ',', '.') ?>đ
                                     </td>
-                                    <td class="text-right">
-                                        <strong class="<?= $item['phan_tram_giam'] > 0 ? 'discounted-price' : '' ?>">
-                                            <?= number_format($item['thanh_tien'], 0, ',', '.') ?> đ
-                                        </strong>
-                                    </td>
-=======
-                                    <td><?= number_format($item['gia']) ?>đ</td>
-                                    <td><?= $item['khuyen_mai'] ?>%</td>
-                                    <td><?= number_format($item['tong_tien'] ?? 0) ?>đ</td>
->>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                                 </tr>
                                 <?php endforeach; ?>
-                                <tr>
-                                    <td colspan="4" class="text-right"><strong>Tổng cộng:</strong></td>
-                                    <td><strong><?= number_format($orderData['order']['tong_tien']) ?>đ</strong></td>
-                                </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Tổng cộng:</strong></td>
+                                    <td class="text-right">
+                                        <strong class="text-primary"><?= number_format($order['tong_tien'], 0, ',', '.') ?>đ</strong>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
+            <?php if($order['trang_thai'] == 4): ?>
+            <div class="text-right">
+                <form action="index.php?act=delete-order" method="POST" class="d-inline" 
+                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
+                    <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Xóa đơn hàng
+                    </button>
+                </form>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
 
 <style>
-    .discount-tag {
-        color: #ff4646;
-        font-weight: 600;
-    }
-    .promotion-name {
-        color: #666;
-        font-size: 0.85em;
-        font-style: italic;
-    }
-    .original-price {
-        color: #999;
-        text-decoration: line-through;
-        font-size: 0.9em;
-    }
-    .discounted-price {
-        color: #ff4646;
-        font-weight: 600;
-    }
-    .no-discount {
-        color: #666;
-        font-style: italic;
-    }
+.product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.btn {
+    padding: 8px 12px;
+    font-weight: 500;
+}
+
+.table-borderless td, 
+.table-borderless th {
+    border: 0;
+    padding: 12px 8px;
+}
+
+.form-control {
+    border-radius: 4px;
+}
+
+tfoot tr td {
+    border-top: 2px solid #dee2e6;
+}
+
+.text-primary {
+    color: #4e73df !important;
+}
+
+.btn-secondary {
+    background-color: #858796;
+    border-color: #858796;
+}
+
+
 </style>

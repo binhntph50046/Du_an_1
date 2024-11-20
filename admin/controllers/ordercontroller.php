@@ -17,8 +17,20 @@ class OrderController {
     }
     // Xem chi tiết đơn hàng
     public function view($id) {
-        $orderData = $this->orderModel->getOrderDetail($id);
-        include 'views/orders/view.php';
+        $orderModel = new OrderModel();
+        $orderData = $orderModel->getOrderDetail($id);
+        
+        if ($orderData) {
+            // Truyền dữ liệu sang view
+            $data = [
+                'order' => $orderData['order'],
+                'items' => $orderData['items']
+            ];
+            include_once 'views/orders/view.php';
+        } else {
+            // Xử lý khi không tìm thấy đơn hàng
+            echo "Không tìm thấy đơn hàng";
+        }
     }
     public function updateStatus() {
         if(isset($_POST['order_id']) && isset($_POST['status'])) {
