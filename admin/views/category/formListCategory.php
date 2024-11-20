@@ -1,5 +1,16 @@
 <div class="row">
     <div class="col">
+        <?php if(isset($_SESSION['message'])): ?>
+            <div class="alert alert-<?= $_SESSION['message_type'] ?> alert-dismissible fade show">
+                <?= $_SESSION['message'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php 
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+            ?>
+        <?php endif; ?>
+        
         <div class="h-100">
             <div class="row mb-3 pb-1">
                 <div class="col-12">
