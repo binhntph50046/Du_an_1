@@ -22,7 +22,6 @@ function connectDB()
         echo ("Connection failed: " . $e->getMessage());
     }
 }
-
 function uploadFile($file, $folderUpload): string|null
 {
     // Chuẩn hóa tên tệp để tránh các ký tự đặc biệt

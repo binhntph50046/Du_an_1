@@ -19,10 +19,10 @@ class ProductsController
 
         // Lấy dữ liệu từ model và debug
         $listProducts = $this->modelProducts->getAllProducts();
-        // var_dump($listProducts);
-        echo "<!-- Debug: ";
-        var_dump($listProducts);
-        echo " -->";
+    //     var_dump($listProducts);
+    //    echo "<!-- Debug: ";
+    //    var_dump($listProducts);
+    //    echo " -->";
 
         // Đảm bảo $listProducts là một mảng
         if (!is_array($listProducts)) {
@@ -144,7 +144,7 @@ class ProductsController
         $trang_thai = (int)$_POST['trang_thai'];
         $danh_muc_id = (int)$_POST['danh_muc_id'];
         $hinh_id = $_POST['hinh_anh_id'];
-        var_dump($_POST);
+        //var_dump($_POST);
 
         
 

@@ -104,14 +104,31 @@
 
 <body>
 
-    <div class="container">
+  <div class="container">
+        
+     
         <div class="page-header">
             <h4 class="mb-0">Quản lý người dùng</h4>
             <a href="index.php?act=create" class="btn btn-primary add-user-btn">
                 <i class="fas fa-user-plus"></i> Thêm
             </a>
         </div>
+        
+        <?php if(isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= $_SESSION['error'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
 
+        <?php if(isset($_SESSION['success'])): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?= $_SESSION['success'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
         <div class="table-responsive">
             <table class="table">
                 <thead>

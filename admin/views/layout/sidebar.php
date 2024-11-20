@@ -44,6 +44,12 @@
                         <i class="ri-chat-3-line"></i> <span>Comments</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?act=list-promotions">
+                        <i class="fas fa-percentage"></i>
+                        <span>Promotion</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -206,22 +206,7 @@
             }
         });
 
-        // Animation cho các số liệu thống kê
-        // function animateValue(id, start, end, duration) {
-        //     let current = start;
-        //     const range = end - start;
-        //     const increment = end > start ? 1 : -1;
-        //     const stepTime = Math.abs(Math.floor(duration / range));
-        //     const obj = document.getElementById(id);
 
-        //     const timer = setInterval(() => {
-        //         current += increment;
-        //         obj.innerHTML = current.toLocaleString();
-        //         if (current == end) {
-        //             clearInterval(timer);
-        //         }
-        //     }, stepTime);
-        // }
 
         // Khởi tạo animation khi trang tải xong
         document.addEventListener('DOMContentLoaded', () => {
@@ -235,32 +220,7 @@
                 currency: 'VND'
             }).format(12345000);
 
-            // Thêm dữ liệu mẫu cho bảng đơn hàng
-            const orders = [{
-                    id: "DH001",
-                    customer: "Nguyễn Văn A",
-                    product: "Sản phẩm 1",
-                    total: "1,200,000đ",
-                    status: "Đã giao",
-                    date: "2024-03-20"
-                },
-                {
-                    id: "DH002",
-                    customer: "Trần Thị B",
-                    product: "Sản phẩm 2",
-                    total: "2,300,000đ",
-                    status: "Đang giao",
-                    date: "2024-03-19"
-                },
-                {
-                    id: "DH003",
-                    customer: "Lê Văn C",
-                    product: "Sản phẩm 3",
-                    total: "3,400,000đ",
-                    status: "Chờ xử lý",
-                    date: "2024-03-18"
-                },
-            ];
+           
 
             const tbody = document.getElementById('recentOrders');
             orders.forEach(order => {

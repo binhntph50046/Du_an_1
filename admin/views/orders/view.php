@@ -5,7 +5,6 @@
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
-    
     <div class="row">
         <div class="col-md-6">
             <div class="card shadow mb-4">
@@ -112,9 +111,42 @@
                                         </div>
                                     </td>
                                     <td><?= $item['so_luong'] ?></td>
-                                    <td><?= number_format($item['gia']) ?>đ</td>
-                                    <td><?= $item['khuyen_mai'] ?>%</td>
-                                    <td><?= number_format($item['tong_tien']) ?>đ</td>
+                                    <td class="text-right">
+                                        <?php if ($item['phan_tram_giam'] > 0): ?>
+                                            <div class="original-price">
+                                                <?= number_format($item['gia_goc'], 0, ',', '.') ?> đ
+                                            </div>
+                                            <div class="discounted-price">
+                                                <?= number_format($item['gia_ap_dung'], 0, ',', '.') ?> đ
+                                            </div>
+                                        <?php else: ?>
+                                            <?= number_format($item['gia_goc'], 0, ',', '.') ?> đ
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-right">
+                                        <?php if ($item['phan_tram_giam'] > 0): ?>
+                                            <div class="discount-tag">
+                                                -<?= $item['phan_tram_giam'] ?>%
+                                            </div>
+                                        <?php elseif ($item['giam_gia'] > 0): ?>
+                                            <div class="discount-tag">
+                                                -<?= number_format($item['giam_gia'], 0, ',', '.') ?>đ
+                                            </div>
+                                        <?php else: ?>
+                                            <span class="no-discount">Không có</span>
+                                        <?php endif; ?>
+                                        
+                                        <?php if (!empty($item['ten_khuyen_mai'])): ?>
+                                            <div class="promotion-name">
+                                                <?= $item['ten_khuyen_mai'] ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong class="<?= $item['phan_tram_giam'] > 0 ? 'discounted-price' : '' ?>">
+                                            <?= number_format($item['thanh_tien'], 0, ',', '.') ?> đ
+                                        </strong>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                                 <tr>
@@ -129,3 +161,28 @@
         </div>
     </div>
 </div>
+
+<style>
+    .discount-tag {
+        color: #ff4646;
+        font-weight: 600;
+    }
+    .promotion-name {
+        color: #666;
+        font-size: 0.85em;
+        font-style: italic;
+    }
+    .original-price {
+        color: #999;
+        text-decoration: line-through;
+        font-size: 0.9em;
+    }
+    .discounted-price {
+        color: #ff4646;
+        font-weight: 600;
+    }
+    .no-discount {
+        color: #666;
+        font-style: italic;
+    }
+</style>

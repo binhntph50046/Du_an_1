@@ -16,6 +16,7 @@ include '../admin/models/OrderModel.php';
 include '../admin/controllers/commentController.php';
 include '../admin/models/comment.php';
 include '../admin/controllers/DashboardController.php';
+include '../admin/controllers/PromotionController.php';
 include './views/layout/header.php';
 
 $userController = new UserController();
@@ -25,6 +26,7 @@ $categoryController = new CategoryController();
 $slideController = new SlideController();
 $commentController = new commentController();
 $dashboardController = new DashboardController();
+$promotionController = new PromotionController();
 
 switch ($act) {
     case 'static':
@@ -123,6 +125,24 @@ switch ($act) {
         if (isset($_GET['id'])) {
             $userController->viewDetail($_GET['id']);
         }
+        break;
+
+    case 'list-promotions':
+        $promotionController->index();
+        break;
+
+    case 'add-promotion':
+        $promotionController->add();
+        break;
+
+    case 'edit-promotion':
+        $id = $_GET['id'] ?? 0;
+        $promotionController->edit($id);
+        break;
+
+    case 'delete-promotion':
+        $id = $_GET['id'] ?? 0;
+        $promotionController->delete($id);
         break;
 
     default:

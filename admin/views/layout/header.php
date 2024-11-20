@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/libs/jsvectormap/css/jsvectormap.min.css" />
     <link rel="stylesheet" href="assets/css/icons.min.css" />
     <link rel="stylesheet" href="assets/css/app.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
     <style>
         .table {
             width: 100%;
@@ -42,7 +43,6 @@
             color: #333;
             font-weight: bold;
         }
-
         .table tr {
             transition: background-color 0.3s ease;
             /* Hiệu ứng chuyển màu mượt */
@@ -133,3 +133,4 @@
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid"></div>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>

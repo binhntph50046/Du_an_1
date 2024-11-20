@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -20,8 +19,8 @@
                             <?php
                             echo '<select name="danh_muc"  class="form-select" aria-label="Default select example">';
                             foreach ($categories as $item) {
-                                echo '<option value="' . htmlspecialchars($item['danh_muc_id']) . '">'
-                                    . htmlspecialchars($item['ten_danh_muc']) .
+                                echo '<option value="' . ($item['danh_muc_id']) . '">'
+                                    . ($item['ten_danh_muc']) .
                                     '</option>';
                             }
                             echo '</select>';
@@ -75,4 +74,3 @@
         </div>
     </div>
 </div>
->>>>>>> 528858ebcb0bb7afa66e3ce5901356629062a1bd
