@@ -1,16 +1,16 @@
 <div class="row">
     <div class="col">
-        <?php if(isset($_SESSION['message'])): ?>
+        <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-<?= $_SESSION['message_type'] ?> alert-dismissible fade show">
                 <?= $_SESSION['message'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php 
+            <?php
             unset($_SESSION['message']);
             unset($_SESSION['message_type']);
             ?>
         <?php endif; ?>
-        
+
         <div class="h-100">
             <div class="row mb-3 pb-1">
                 <div class="col-12">
@@ -20,6 +20,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
+                    <a href="?act=form-add-category" class="btn btn-primary mb-3">Thêm Danh Mục</a>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -47,7 +48,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <a href="?act=form-add-category" class="btn btn-primary mb-3">Thêm Danh Mục</a>
                 </div>
             </div>
         </div>
