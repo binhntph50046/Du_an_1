@@ -1,5 +1,14 @@
 <div class="row">
     <div class="col">
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="message <?= $_SESSION['message_type'] ?>" style="display: block">
+                <?= $_SESSION['message'] ?>
+            </div>
+            <?php
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+            ?>
+        <?php endif; ?>
         <div class="h-100">
             <div class="row mb-3 pb-1">
                 <div class="col-12">
@@ -9,6 +18,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
+                    <a href="?act=form-add-slide" class="btn btn-primary mb-3">Thêm slide</a>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -32,7 +42,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <a href="?act=form-add-slide" class="btn btn-primary mb-3">Thêm slide</a>
                 </div>
             </div>
         </div>

@@ -1,4 +1,11 @@
-
+<div class="row">
+    <div class="col">
+        <div class="h-100">
+            <div class="row mb-3 pb-1">
+                <div class="col-12">
+                    <h3 class="fs-16 mb-1">Sửa Sản Phẩm</h3>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <form action="./?act=updateProduct" method="post" enctype="multipart/form-data">
@@ -23,9 +30,9 @@
 
                             <div class="mb-3">
                                 <label for="categoryName" class="form-label">Ngày Nhập</label>
-                                <input type="date" class="form-control" id="categoryName"
-                                    name="ngay_nhap" required value="<?= $product['ngay_nhap'] ?>">
+                                <input type="date" class="form-control" id="categoryName" name="ngay_nhap" style="width: 150px;" required value="<?= $product['ngay_nhap'] ?>">
                             </div>
+
                             <div class="mb-3">
                                 <label for="categoryDescription" class="form-label">Mô Tả</label>
                                 <textarea class="form-control" id="categoryDescription" name="mo_ta" rows="3"><?= htmlspecialchars($product['mo_ta']) ?></textarea>
@@ -79,4 +86,3 @@
         </div>
     </div>
 </div>
-

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -40,15 +43,14 @@
 
                         <div class="mb-3">
                             <label for="productName" class="form-label">Ngày Nhập</label>
-                            <input type="date" class="form-control" id="productName"
-                                name="ngay_nhap" required>
+                            <input type="date" class="form-control" id="productName" style="width: 150px;" name="ngay_nhap" style="width: 150px;" required>
                         </div>
                         <div class="mb-3">
                             <label for="categoryDescription" class="form-label">Mô Tả</label>
                             <textarea class="form-control" id="categoryDescription" name="mo_ta"
                                 rows="3" required></textarea>
                         </div>
-                       
+
                         <div class="mb-3">
                             <label for="productName" class="form-label">Hình Ảnh</label>
                             <input type="file" class="form-control" id="productName"
@@ -60,7 +62,7 @@
                                 required>
                                 <option value="2">Trạng thái</option>
                                 <option value="1">Còn</option>
-                                
+
                                 <option value="0">Hết</option>
                             </select>
                         </div>
@@ -73,4 +75,11 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 </div>
+<<<<<<< HEAD
+=======
+=======
+</div>
+>>>>>>> e1bc79c7f1c1e44278b9a73f75f51a776ede202d
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11

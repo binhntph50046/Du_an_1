@@ -18,21 +18,33 @@
                         <div class="row mb-3">
                             <label for="ho_va_ten" class="col-md-4 col-form-label">Họ và Tên</label>
                             <div class="col-md-8">
+<<<<<<< HEAD
                                 <input type="text" class="form-control" id="ho_va_ten" name="ho_va_ten" value="<?= $user['ho_va_ten'] ?>" required disabled >
+=======
+                                <input type="text" class="form-control" id="ho_va_ten" name="ho_va_ten" value="<?= $user['ho_va_ten'] ?>" required disabled>
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label">Email</label>
                             <div class="col-md-8">
+<<<<<<< HEAD
                                 <input type="email" class="form-control" id="email" name="email" value="<?= $user['email'] ?>" required disabled>
+=======
+                                <input type="email" class="form-control" id="email" name="email" value="<?= $user['email'] ?>" required disabled >
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="mat_khau" class="col-md-4 col-form-label">Mật Khẩu</label>
                             <div class="col-md-8">
+<<<<<<< HEAD
                                 <input type="password" class="form-control" id="mat_khau" name="mat_khau" value="<?= $user['mat_khau'] ?>" required disabled>
+=======
+                                <input type="password" class="form-control" id="mat_khau" name="mat_khau" value="<?= $user['mat_khau'] ?>" required disabled >
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                             </div>
                         </div>
 
@@ -46,14 +58,18 @@
                         <div class="row mb-3">
                             <label for="so_dien_thoai" class="col-md-4 col-form-label">Số Điện Thoại</label>
                             <div class="col-md-8">
+<<<<<<< HEAD
                                 <input type="text" disabled class="form-control" id="so_dien_thoai" name="so_dien_thoai" value="<?= $user['so_dien_thoai'] ?>" >
+=======
+                                <input disabled type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai" value="<?= $user['so_dien_thoai'] ?>" >
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="vai_tro" class="col-md-4 col-form-label">Vai Trò</label>
                             <div class="col-md-8">
-                                <select class="form-select" id="vai_tro" name="vai_tro" required>
+                                <select disabled class="form-select" id="vai_tro" name="vai_tro" required>
                                     <option value="1" <?= $user['vai_tro'] == 1 ? 'selected' : '' ?>>Quản trị viên</option>
                                     <option value="0" <?= $user['vai_tro'] == 0 ? 'selected' : '' ?>>Khách hàng</option>
                                 </select>

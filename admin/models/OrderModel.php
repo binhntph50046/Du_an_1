@@ -30,49 +30,23 @@ class OrderModel {
         $order = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($order) {
-            $sql = "SELECT 
-                    ctdh.*,
-                    sp.ten_san_pham,
-                    sp.gia as gia_goc,
-                    km.phan_tram_giam,
-                    km.giam_gia,
-                    km.ten_khuyen_mai,
-                    CASE 
-                        WHEN km.khuyen_mai_id IS NOT NULL 
-                        AND CURRENT_DATE BETWEEN km.ngay_bat_dau AND km.ngay_ket_thuc 
-                        THEN 
-                            CASE 
-                                WHEN km.phan_tram_giam > 0 AND km.giam_gia > 0
-                                THEN GREATEST((sp.gia * (1 - km.phan_tram_giam/100)) - km.giam_gia, 0)
-                                WHEN km.phan_tram_giam > 0 
-                                THEN sp.gia * (1 - km.phan_tram_giam/100)
-                                WHEN km.giam_gia > 0 
-                                THEN GREATEST(sp.gia - km.giam_gia, 0)
-                                ELSE sp.gia
-                            END
-                        ELSE sp.gia
-                    END as gia_ap_dung,
-                    MIN(hasp.hinh_sp) as hinh
+            $sql = "SELECT ctdh.*, sp.ten_san_pham, MIN(hasp.hinh_sp) as hinh
                     FROM chi_tiet_don_hang ctdh
                     JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
                     LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
-                    LEFT JOIN san_pham_khuyen_mai spkm ON sp.san_pham_id = spkm.san_pham_id
-                    LEFT JOIN khuyen_mai km ON spkm.khuyen_mai_id = km.khuyen_mai_id
-                        AND CURRENT_DATE BETWEEN km.ngay_bat_dau AND km.ngay_ket_thuc
-                    WHERE ctdh.don_hang_id = :id
-                    GROUP BY ctdh.chi_tiet_don_hang_id";
-            
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id' => $id]);
+                    WHERE ctdh.don_hang_id = ?
+                    GROUP BY ctdh.chi_tiet_don_hang_id, ctdh.don_hang_id, ctdh.san_pham_id, 
+                             ctdh.so_luong, ctdh.gia, ctdh.khuyen_mai, sp.ten_san_pham";
+                    
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$id]);
             $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            $tongTien = 0;
+            // Tính tổng tiền cho từng item
             foreach ($items as &$item) {
-                $item['thanh_tien'] = $item['gia_ap_dung'] * $item['so_luong'];
-                $tongTien += $item['thanh_tien'];
+                $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
+                $item['tong_tien'] = $giaSauKM * $item['so_luong'];
             }
-            
-            $order['tong_tien'] = $tongTien;
             
             return [
                 'order' => $order,
@@ -128,6 +102,7 @@ class OrderModel {
                 FROM don_hang dh
                 LEFT JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
                 LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id
+      
                 WHERE dh.don_hang_id LIKE :keyword 
                 OR tk.ho_va_ten LIKE :keyword 
                 OR tk.email LIKE :keyword

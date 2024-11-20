@@ -111,6 +111,7 @@
                                         </div>
                                     </td>
                                     <td><?= $item['so_luong'] ?></td>
+<<<<<<< HEAD
                                     <td class="text-right">
                                         <?php if ($item['phan_tram_giam'] > 0): ?>
                                             <div class="original-price">
@@ -147,6 +148,11 @@
                                             <?= number_format($item['thanh_tien'], 0, ',', '.') ?> đ
                                         </strong>
                                     </td>
+=======
+                                    <td><?= number_format($item['gia']) ?>đ</td>
+                                    <td><?= $item['khuyen_mai'] ?>%</td>
+                                    <td><?= number_format($item['tong_tien'] ?? 0) ?>đ</td>
+>>>>>>> 47bffd1087d271b2484e6012eeb7ba8ae3c1cb11
                                 </tr>
                                 <?php endforeach; ?>
                                 <tr>

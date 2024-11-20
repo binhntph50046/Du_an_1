@@ -38,15 +38,26 @@
                         <form action="./?act=login" method="POST" class="register-form" id="login-form">
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required />
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="pass" id="pass" placeholder="Password" required />
                             </div>
+                            <div class="form-group form-remember">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                                <label for="remember-me" class="label-agree-term">
+                                    <span><span></span></span>Remember me
+                                </label>
+                                <a href="?act=forgot-password" class="text-primary forgot-password-link">Forgot Password?</a>
+                            </div>
+
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit" value="Log in" />
                             </div>
+                            <!-- <div class="form-group">
+                                <a href="?act=forgot-password" class="text-primary">Quên mật khẩu?</a>
+                            </div> -->
                         </form>
                         <div class="social-login">
                             <span class="social-label">Or login with</span>

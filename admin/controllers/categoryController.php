@@ -22,18 +22,23 @@ class CategoryController
 
     public function postAddCategory()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST)) {
             $ten_danh_muc = $_POST['ten_danh_muc'];
-            $hinh = $_FILES['hinh'];
             $mo_ta = $_POST['mo_ta'];
             $trang_thai = $_POST['trang_thai'];
-
-            $hinh_path = uploadFile($hinh, '../Upload/Category/');
-            if ($hinh_path !== null && $this->modelCategory->addCategory($ten_danh_muc, $hinh_path, $mo_ta, $trang_thai)) {
-                header('Location:./?act=list-category');
+            
+            $img = uploadFile($_FILES['hinh'], '../Upload/Category/');
+            
+            if ($this->modelCategory->addCategory($ten_danh_muc, $img, $mo_ta, $trang_thai)) {
+                $_SESSION['message'] = "Thêm danh mục thành công!";
+                $_SESSION['message_type'] = "success";
+                header('Location: ./?act=list-category');
                 exit();
             } else {
-                echo "Thêm thất bại";
+                $_SESSION['message'] = "Thêm danh mục thất bại!";
+                $_SESSION['message_type'] = "danger"; 
+                header('Location: ./?act=form-add-category');
+                exit();
             }
         }
     }
@@ -56,10 +61,15 @@ class CategoryController
             }
 
             if ($this->modelCategory->updateCategory($danh_muc_id, $ten_danh_muc, $new_img, $mo_ta, $trang_thai)) {
-                header("Location: ./?act=list-category");
+                $_SESSION['message'] = "Cập nhật danh mục thành công!";
+                $_SESSION['message_type'] = "success";
+                header('Location: ./?act=list-category');
                 exit();
             } else {
-                echo "Sửa thất bại!";
+                $_SESSION['message'] = "Cập nhật danh mục thất bại!";
+                $_SESSION['message_type'] = "danger";
+                header('Location: ./?act=form-edit-category&danh_muc_id=' . $danh_muc_id);
+                exit();
             }
         } else {
             echo "Không có dữ liệu gửi đi!";
@@ -76,11 +86,33 @@ class CategoryController
     public function postDeleteCategory()
     {
         $danh_muc_id = $_GET['danh_muc_id'];
-        if ($this->modelCategory->deleteCategory($danh_muc_id)) {
+        
+        // Kiểm tra ràng buộc trước khi xóa
+        $constraints = $this->modelCategory->checkCategoryConstraints($danh_muc_id);
+        
+        if ($constraints['has_products']) {
+            $_SESSION['message'] = "Không thể xóa vì danh mục này đang có sản phẩm!";
+            $_SESSION['message_type'] = "danger";
             header('Location: ?act=list-category');
             exit();
-        } else {
-            echo "Xóa thất bại!";
         }
+        
+        if ($constraints['has_orders']) {
+            $_SESSION['message'] = "Không thể xóa vì danh mục này có đơn hàng!";
+            $_SESSION['message_type'] = "danger";
+            header('Location: ?act=list-category');
+            exit();
+        }
+
+        if ($this->modelCategory->deleteCategory($danh_muc_id)) {
+            $_SESSION['message'] = "Xóa danh mục thành công!";
+            $_SESSION['message_type'] = "success";
+            header('Location: ?act=list-category');
+        } else {
+            $_SESSION['message'] = "Xóa danh mục thất bại!";
+            $_SESSION['message_type'] = "danger";
+            header('Location: ?act=list-category');
+        }
+        exit();
     }
 }
