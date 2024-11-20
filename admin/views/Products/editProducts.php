@@ -9,7 +9,6 @@
             <div class="card">
                 <div class="card-body">
                     <form action="./?act=updateProduct" method="post" enctype="multipart/form-data">
-
                         <?php if (!isset($product) || !is_array($product)): ?>
                             <div class="alert alert-danger">Không có dữ liệu sản phẩm</div>
                         <?php else: ?>
@@ -58,23 +57,40 @@
                                 <input type="file" name="hinh_sp">
                             </div>
                             <div class="mb-3">
-                                <label for="categoryStatus" class="form-label">Danh Mục</label>
-                                <input type="hidden" name="danh_muc_id" value="<?= $product['danh_muc_id'] ?>">
-                                <?php
-                                // Giả sử $currentCategoryId là ID của danh mục hiện tại của sản phẩm
-                                // kiểm tra xem danh_muc_id hiện tại có tôn tại và khác null k
-                                $currentCategoryId = $product['danh_muc_id'] ?? null; // ID danh mục của sản phẩm hiện tại
-
-                                echo '<select name="danh_muc" class="form-select" aria-label="Default select example">';
-                                foreach ($categories as $item) {
-                                    // Kiểm tra nếu ID của danh mục hiện tại khớp với danh mục sản phẩm
-                                    $selected = ($item['danh_muc_id'] == $currentCategoryId) ? 'selected' : '';
-                                    echo '<option value="' . htmlspecialchars($item['danh_muc_id']) . '" ' . $selected . '>'
-                                        . htmlspecialchars($item['ten_danh_muc']) .
-                                        '</option>';
-                                }
-                                echo '</select>';
-                                ?>
+                                <label for="categorySelect" class="form-label">Danh Mục</label>
+                                <select name="danh_muc_id" id="categorySelect" class="form-select">
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= $category['danh_muc_id'] ?>" 
+                                                <?= ($category['danh_muc_id'] == $product['danh_muc_id']) ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($category['ten_danh_muc']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ram_ids" class="form-label">RAM</label>
+                                <select name="ram_ids[]" id="ram_ids" class="form-control" multiple>
+                                    <?php 
+                                    if ($rams): 
+                                        foreach ($rams as $ram): 
+                                            $selected = '';
+                                            if ($productRams) {
+                                                foreach ($productRams as $productRam) {
+                                                    if ($productRam['ram_id'] == $ram['ram_id']) {
+                                                        $selected = 'selected';
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                    ?>
+                                        <option value="<?php echo $ram['ram_id']; ?>" <?php echo $selected; ?>>
+                                            <?php echo $ram['dung_luong']; ?>
+                                        </option>
+                                    <?php 
+                                        endforeach; 
+                                    endif; 
+                                    ?>
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Cập Nhật</button>
                             <a href="?act=listProducts" class="btn btn-secondary">Quay lại Danh

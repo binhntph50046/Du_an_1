@@ -60,7 +60,7 @@ class OrderModel {
                         LEFT JOIN khuyen_mai km ON spkm.khuyen_mai_id = km.khuyen_mai_id
                         WHERE ctdh.don_hang_id = ?
                         GROUP BY ctdh.chi_tiet_don_hang_id";
-                        
+                    
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([$id]);
                 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
