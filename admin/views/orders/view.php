@@ -5,7 +5,6 @@
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
-    
     <div class="row">
         <div class="col-md-6">
             <div class="card shadow mb-4">
@@ -113,7 +112,7 @@
                                     </td>
                                     <td><?= $item['so_luong'] ?></td>
                                     <td><?= number_format($item['gia']) ?>đ</td>
-                                    <td><?= $item['khuyen_mai'] ?>%</td>
+                                    <td><?= isset($item['khuyen_mai']) ? $item['khuyen_mai'] . '%' : '0%' ?></td>
                                     <td><?= number_format($item['tong_tien'] ?? 0) ?>đ</td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -129,3 +128,28 @@
         </div>
     </div>
 </div>
+
+<style>
+    .discount-tag {
+        color: #ff4646;
+        font-weight: 600;
+    }
+    .promotion-name {
+        color: #666;
+        font-size: 0.85em;
+        font-style: italic;
+    }
+    .original-price {
+        color: #999;
+        text-decoration: line-through;
+        font-size: 0.9em;
+    }
+    .discounted-price {
+        color: #ff4646;
+        font-weight: 600;
+    }
+    .no-discount {
+        color: #666;
+        font-style: italic;
+    }
+</style>

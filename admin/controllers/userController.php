@@ -88,11 +88,16 @@ class UserController {
         }
     }
     public function delete($id) {
-        $success = $this->userModel->delete($id);
-        if ($success) {
-            $_SESSION['success'] = "Xóa tài khoản thành công!";
+        // Check if user has orders first
+        if ($this->userModel->checkUserHasOrders($id)) {
+            $_SESSION['error'] = "Không thể xóa tài khoản này vì người dùng có đơn hàng!";
         } else {
-            $_SESSION['error'] = "Có lỗi xảy ra khi xóa tài khoản!";
+            $success = $this->userModel->delete($id);
+            if ($success) {
+                $_SESSION['success'] = "Xóa tài khoản thành công!";
+            } else {
+                $_SESSION['error'] = "Có lỗi xảy ra khi xóa tài khoản!";
+            }
         }
         header("Location: index.php?act=listUser");
         exit();

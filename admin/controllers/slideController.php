@@ -28,10 +28,15 @@ class SLideController
 
             $hinh_path = uploadFile($img, '../Upload/Slides/');
             if ($hinh_path !== null && $this->modelSlide->addSlide($hinh_path, $trang_thai)) {
+                $_SESSION['message'] = "Thêm slide thành công!";
+                $_SESSION['message_type'] = "success";
                 header('Location:./?act=list-slide');
                 exit();
             } else {
-                echo "Thêm thất bại";
+                $_SESSION['message'] = "Thêm slide thất bại!";
+                $_SESSION['message_type'] = "error";
+                header('Location:./?act=form-add-slide');
+                exit();
             }
         }
     }
@@ -51,14 +56,17 @@ class SLideController
                 $new_img = $_POST['old_img'];
             }
 
-            if ($this->modelSlide->updateSlide($slide_id,  $new_img,  $trang_thai)) {
-                header("Location: ./?act=list-slide");
+            if ($this->modelSlide->updateSlide($slide_id, $new_img, $trang_thai)) {
+                $_SESSION['message'] = "Cập nhật slide thành công!";
+                $_SESSION['message_type'] = "success";
+                header('Location:./?act=list-slide');
                 exit();
             } else {
-                echo "Sửa thất bại!";
+                $_SESSION['message'] = "Cập nhật slide thất bại!";
+                $_SESSION['message_type'] = "error";
+                header('Location:./?act=form-edit-slide&slide_id=' . $slide_id);
+                exit();
             }
-        } else {
-            echo "Không có dữ liệu gửi đi!";
         }
     }
 
@@ -72,10 +80,15 @@ class SLideController
     {
         $slide_id = $_GET['slide_id'];
         if ($this->modelSlide->deleteSlide($slide_id)) {
-            header('Location: ?act=list-slide');
+            $_SESSION['message'] = "Xóa slide thành công!";
+            $_SESSION['message_type'] = "success";
+            header('Location:./?act=list-slide');
             exit();
         } else {
-            echo "Xóa thất bại!";
+            $_SESSION['message'] = "Xóa slide thất bại!";
+            $_SESSION['message_type'] = "error";
+            header('Location:./?act=list-slide');
+            exit();
         }
     }
 }

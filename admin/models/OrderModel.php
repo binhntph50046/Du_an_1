@@ -1,56 +1,32 @@
 <?php
 
 class OrderModel {
-    private $db;
+    private $conn;
 
     public function __construct() {
-        $this->db = new PDO("mysql:host=localhost;dbname=du_an_1", "root", "");
+        $this->conn = connectDB();
     }
-
-    // Lấy danh sách đơn hàng với thông tin khách hàng
     public function getAllOrders() {
-        $sql = "SELECT dh.*, tk.ho_va_ten as ten_khach_hang 
-                FROM don_hang dh 
-                JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id 
+        $sql = "SELECT dh.*, tk.ho_va_ten, tk.email, tk.so_dien_thoai,
+                COUNT(ctdh.chi_tiet_don_hang_id) as so_san_pham
+                FROM don_hang dh
+                LEFT JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
+                LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id
+                GROUP BY dh.don_hang_id
                 ORDER BY dh.ngay_dat DESC";
-        $stmt = $this->db->prepare($sql);
+        
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
-        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($orders as &$order) {
-            // Lấy chi tiết sản phẩm của từng đơn hàng
-            $sql = "SELECT * FROM chi_tiet_don_hang WHERE don_hang_id = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$order['don_hang_id']]);
-            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // Tính lại tổng tiền
-            $tongTien = 0;
-            foreach ($items as $item) {
-                $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
-                $tongTien += $giaSauKM * $item['so_luong'];
-            }
-
-            // Cập nhật lại tổng tiền trong DB
-            $sql = "UPDATE don_hang SET tong_tien = ? WHERE don_hang_id = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$tongTien, $order['don_hang_id']]);
-            $order['tong_tien'] = $tongTien;
-        }
-
-        return $orders;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     // Lấy chi tiết một đơn hàng
     public function getOrderDetail($id) {
-        // Lấy thông tin đơn hàng và join với bảng tai_khoan
         $sql = "SELECT dh.*, tk.ho_va_ten, tk.email, tk.so_dien_thoai, tk.dia_chi 
                 FROM don_hang dh
                 JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
-                WHERE dh.don_hang_id = ?";
-                
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
+                WHERE dh.don_hang_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
         $order = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($order) {
@@ -60,15 +36,18 @@ class OrderModel {
                     LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
                     WHERE ctdh.don_hang_id = ?
                     GROUP BY ctdh.chi_tiet_don_hang_id, ctdh.don_hang_id, ctdh.san_pham_id, 
-                             ctdh.so_luong, ctdh.gia, ctdh.khuyen_mai, sp.ten_san_pham";
+                             ctdh.so_luong, ctdh.gia, sp.ten_san_pham";
                     
-            $stmt = $this->db->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
             $stmt->execute([$id]);
             $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             // Tính tổng tiền cho từng item
             foreach ($items as &$item) {
-                $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
+                $giaSauKM = $item['gia']; // Default to original price if no discount
+                if (isset($item['khuyen_mai'])) {
+                    $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
+                }
                 $item['tong_tien'] = $giaSauKM * $item['so_luong'];
             }
             
@@ -82,85 +61,80 @@ class OrderModel {
 
     // Lấy phương thức thanh toán
     public function getPaymentMethod($orderId) {
-        $sql = "SELECT phuong_thuc_thanh_toan FROM don_hang WHERE don_hang_id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$orderId]);
+        $sql = "SELECT phuong_thuc_thanh_toan FROM don_hang WHERE don_hang_id = $orderId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['phuong_thuc_thanh_toan'];
     }
-
-    // Cập nhật trạng thái đơn hàng
     public function updateOrderStatus($orderId, $status) {
         // Kiểm tra phương thức thanh toán
         $paymentMethod = $this->getPaymentMethod($orderId);
-        
-        // Nếu thanh toán online và status = 2 (đang xử lý), tự động chuyển sang trạng thái 3 (đã hoàn thành)
         if ($paymentMethod == 'online' && $status == 2) {
             $status = 3;
         }
-
         $sql = "UPDATE don_hang 
-                SET trang_thai = ?, ngay_xu_ly = CURRENT_DATE 
-                WHERE don_hang_id = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$status, $orderId]);
+                SET trang_thai = $status, ngay_xu_ly = CURRENT_DATE 
+                WHERE don_hang_id = $orderId";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute();
     }
-
     public function deleteOrder($orderId) {
         // Xóa chi tiết đơn hàng trước
-        $sql1 = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = ?";
-        $stmt1 = $this->db->prepare($sql1);
-        $stmt1->execute([$orderId]);
+        $sql1 = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = $orderId";
+        $stmt1 = $this->conn->prepare($sql1);
+        $stmt1->execute();
         // Sau đó xóa đơn hàng
-        $sql2 = "DELETE FROM don_hang WHERE don_hang_id = ?";
-        $stmt2 = $this->db->prepare($sql2);
-        return $stmt2->execute([$orderId]);
+        $sql2 = "DELETE FROM don_hang WHERE don_hang_id = $orderId";
+        $stmt2 = $this->conn->prepare($sql2);
+        return $stmt2->execute();
     }
-
     public function getOrdersByUserId($userId) {
         $sql = "SELECT dh.*, COUNT(ctdh.don_hang_id) as total_items 
                 FROM don_hang dh 
                 LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id 
-                WHERE dh.tai_khoan_id = ? 
+                WHERE dh.tai_khoan_id = $userId 
                 GROUP BY dh.don_hang_id 
                 ORDER BY dh.ngay_dat DESC";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$userId]);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function searchOrders($keyword) {
-        $sql = "SELECT dh.*, tk.ho_va_ten as ten_khach_hang 
-                FROM don_hang dh 
-                JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id 
+        $sql = "SELECT dh.*, tk.ho_va_ten, tk.email, tk.so_dien_thoai,
+                COUNT(ctdh.chi_tiet_don_hang_id) as so_san_pham
+                FROM don_hang dh
+                LEFT JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
+                LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id
+      
                 WHERE dh.don_hang_id LIKE :keyword 
                 OR tk.ho_va_ten LIKE :keyword 
-                OR tk.email LIKE :keyword 
-                OR tk.so_dien_thoai LIKE :keyword 
+                OR tk.email LIKE :keyword
+                OR tk.so_dien_thoai LIKE :keyword
+                GROUP BY dh.don_hang_id
                 ORDER BY dh.ngay_dat DESC";
+        
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':keyword' => "%$keyword%"]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getOrderDetails($orderId) {
+        $sql = "SELECT ct.*, sp.ten_san_pham, sp.gia, km.phan_tram_giam,
+                CASE 
+                    WHEN km.khuyen_mai_id IS NOT NULL 
+                    AND km.trang_thai = 1 
+                    AND CURRENT_DATE BETWEEN km.ngay_bat_dau AND km.ngay_ket_thuc 
+                    THEN sp.gia * (1 - km.phan_tram_giam/100)
+                    ELSE sp.gia
+                END as gia_sau_khuyen_mai
+                FROM chi_tiet_don_hang ct
+                JOIN san_pham sp ON ct.san_pham_id = sp.san_pham_id
+                LEFT JOIN san_pham_khuyen_mai spkm ON sp.san_pham_id = spkm.san_pham_id
+                LEFT JOIN khuyen_mai km ON spkm.khuyen_mai_id = km.khuyen_mai_id
+                WHERE ct.don_hang_id = :orderId";
                 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(['keyword' => "%$keyword%"]);
-        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($orders as &$order) {
-            // Lấy chi tiết sản phẩm và tính tổng tiền như trong getAllOrders()
-            $sql = "SELECT * FROM chi_tiet_don_hang WHERE don_hang_id = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$order['don_hang_id']]);
-            $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $tongTien = 0;
-            foreach ($items as $item) {
-                $giaSauKM = $item['gia'] * (1 - $item['khuyen_mai'] / 100);
-                $tongTien += $giaSauKM * $item['so_luong'];
-            }
-
-            $sql = "UPDATE don_hang SET tong_tien = ? WHERE don_hang_id = ?";
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([$tongTien, $order['don_hang_id']]);
-            $order['tong_tien'] = $tongTien;
-        }
-
-        return $orders;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':orderId' => $orderId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+

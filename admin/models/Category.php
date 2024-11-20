@@ -105,4 +105,30 @@ class Category
             return [];
         }
     }
+
+    public function checkCategoryConstraints($danh_muc_id) {
+        try {
+            // Kiểm tra xem danh mục có sản phẩm không
+            $sql = "SELECT COUNT(*) as count FROM san_pham WHERE danh_muc_id = :danh_muc_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':danh_muc_id' => $danh_muc_id]);
+            $productCount = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+
+            // Kiểm tra xem có đơn hàng nào chứa sản phẩm của danh mục này không
+            $sql = "SELECT COUNT(*) as count FROM chi_tiet_don_hang ctdh 
+                    JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id 
+                    WHERE sp.danh_muc_id = :danh_muc_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':danh_muc_id' => $danh_muc_id]);
+            $orderCount = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+
+            return [
+                'has_products' => $productCount > 0,
+                'has_orders' => $orderCount > 0
+            ];
+        } catch (PDOException $e) {
+            error_log("Error checking category constraints: " . $e->getMessage());
+            return false;
+        }
+    }
 }

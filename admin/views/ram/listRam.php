@@ -17,7 +17,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php var_dump($rams); ?>
+                               
                                 <?php if (!empty($rams)): ?>
                                     <?php foreach ($rams as $key => $ram): ?>
                                         <tr>

@@ -70,10 +70,38 @@ class User {
             'tai_khoan_id' => $id
         ]);
     }
+    public function checkUserHasOrders($id) {
+        try {
+            $sql = "SELECT COUNT(*) as count FROM don_hang WHERE tai_khoan_id = :tai_khoan_id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['tai_khoan_id' => $id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'] > 0;
+        } catch (PDOException $e) {
+            error_log("Error checking user orders: " . $e->getMessage());
+            return false;
+        }
+    }
     public function delete($id) {
-        $sql = "DELETE FROM tai_khoan WHERE tai_khoan_id = :tai_khoan_id";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(['tai_khoan_id' => $id]);
+        try {
+            if ($this->checkUserHasOrders($id)) {
+                return false;
+            }
+
+            $sql = "DELETE FROM tai_khoan WHERE tai_khoan_id = :tai_khoan_id";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute(['tai_khoan_id' => $id]);
+
+            if (!$result) {
+                error_log("Error deleting user: Execute failed");
+                return false;
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error deleting user: " . $e->getMessage());
+            return false;
+        }
     }
     public function login($email, $mat_khau) {
         try {

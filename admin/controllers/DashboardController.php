@@ -22,7 +22,7 @@ class DashboardController {
 
             $formattedOrders[] = [
                 'id' => $order['don_hang_id'],
-                'customer_name' => $order['ten_khach_hang'],
+                'customer_name' => $order['ho_va_ten'],
                 'product' => $this->getOrderProducts($order['don_hang_id']),
                 'product_image' => $this->getFirstProductImage($order['don_hang_id']),
                 'total_amount' => number_format($order['tong_tien']) . 'đ',

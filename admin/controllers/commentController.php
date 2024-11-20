@@ -17,12 +17,24 @@ class commentController
 
     public function deleteComments()
     {
-        $binh_luan_id = $_GET['binh_luan_id'];
-        if ($this->commentController->deleteComments($binh_luan_id)) {
-            header('Location: ?act=listComments');
-            exit();
-        } else {
-            echo "Xóa thất bại!";
+        try {
+            $binh_luan_id = $_GET['binh_luan_id'];
+            if ($this->commentController->deleteComments($binh_luan_id)) {
+                echo "<script>
+                    alert('Xóa bình luận thành công!');
+                    window.location.href='?act=listComments';
+                </script>";
+            } else {
+                echo "<script>
+                    alert('Xóa bình luận thất bại!');
+                    window.location.href='?act=listComments';
+                </script>";
+            }
+        } catch (Exception $e) {
+            echo "<script>
+                alert('Xóa thất bại: " . $e->getMessage() . "');
+                window.location.href='?act=listComments';
+            </script>";
         }
     }
 }

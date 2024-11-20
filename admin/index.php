@@ -3,21 +3,25 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'static';
 
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
-include '../admin/controllers/categoryController.php';
 include '../admin/models/Category.php';
-include '../admin/controllers/slideController.php';
 include '../admin/models/Slide.php';
 include '../admin/models/products.php';
+include '../admin/models/users.php';
+include '../admin/models/OrderModel.php';
+include '../admin/models/comment.php';
+include '../admin/models/ram.php';
+include '../admin/models/PromotionModel.php';
+
+include '../admin/controllers/categoryController.php';
+include '../admin/controllers/slideController.php';
 include '../admin/controllers/productsController.php';
 include '../admin/controllers/userController.php';
 include '../admin/controllers/OrderController.php';
-include '../admin/models/users.php';
-include '../admin/models/OrderModel.php';
 include '../admin/controllers/commentController.php';
-include '../admin/models/comment.php';
 include '../admin/controllers/DashboardController.php';
 include '../admin/controllers/ramController.php';
-include '../admin/models/ram.php';
+include '../admin/controllers/PromotionController.php';
+
 include './views/layout/header.php';
 
 $userController = new UserController();
@@ -144,6 +148,24 @@ switch ($act) {
         break;
     case 'deleteRam':
         $ramController->deleteRam();
+        break;
+
+    case 'list-promotions':
+        $promotionController->index();
+        break;
+
+    case 'add-promotion':
+        $promotionController->add();
+        break;
+
+    case 'edit-promotion':
+        $id = $_GET['id'] ?? 0;
+        $promotionController->edit($id);
+        break;
+
+    case 'delete-promotion':
+        $id = $_GET['id'] ?? 0;
+        $promotionController->delete($id);
         break;
 
     default:

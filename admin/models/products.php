@@ -114,62 +114,43 @@ class Products
         }
     }
 
-    public function updateProductWithRelations(
-        $san_pham_id,
-        $ten_san_pham,
-        $gia,
-        $hinh_id,
-        $hinh_path,
-        $ngay_nhap,
-        $mo_ta,
-        $trang_thai,
-        $danh_muc_id
-    ) {
+    public function updateProductWithRelations($san_pham_id, $ten_san_pham, $gia, $hinh_id, $hinh_path, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id) {
         try {
-            // Bắt đầu giao dịch để đảm bảo tính toàn vẹn dữ liệu
-            $this->conn->beginTransaction();
-
-            // Cập nhật thông tin sản phẩm bao gồm cả danh mục
-            $sqlProduct = "UPDATE san_pham
-                SET ten_san_pham = :ten_san_pham,
+            $sql = "UPDATE san_pham SET 
+                    ten_san_pham = :ten_san_pham,
                     gia = :gia,
                     ngay_nhap = :ngay_nhap,
                     mo_ta = :mo_ta,
                     trang_thai = :trang_thai,
                     danh_muc_id = :danh_muc_id
-                WHERE san_pham_id = :san_pham_id";
-
-            $stmtProduct = $this->conn->prepare($sqlProduct);
-            $stmtProduct->execute([
+                    WHERE san_pham_id = :san_pham_id";
+                    
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':san_pham_id' => $san_pham_id,
                 ':ten_san_pham' => $ten_san_pham,
                 ':gia' => $gia,
                 ':ngay_nhap' => $ngay_nhap,
                 ':mo_ta' => $mo_ta,
                 ':trang_thai' => $trang_thai,
-                ':danh_muc_id' => $danh_muc_id,
-                ':san_pham_id' => $san_pham_id
+                ':danh_muc_id' => $danh_muc_id
             ]);
 
             // Cập nhật hình ảnh nếu có
-            if ($hinh_path) {
-                $sqlImage = "UPDATE hinh_anh_san_pham
-                    SET hinh_sp = :hinh_sp
-                    WHERE hinh_anh_id = :hinh_anh_id AND san_pham_id = :san_pham_id";
+            if ($hinh_path !== null) {
+                $sqlImage = "UPDATE hinh_anh_san_pham 
+                            SET hinh_sp = :hinh_sp 
+                            WHERE hinh_anh_id = :hinh_id";
                 $stmtImage = $this->conn->prepare($sqlImage);
                 $stmtImage->execute([
                     ':hinh_sp' => $hinh_path,
-                    ':hinh_anh_id' => $hinh_id,
-                    ':san_pham_id' => $san_pham_id,
+                    ':hinh_id' => $hinh_id
                 ]);
             }
 
-            // Hoàn tất giao dịch
-            $this->conn->commit();
             return true;
-        } catch (\PDOException $e) {
-            // Nếu có lỗi, hoàn tác các thay đổi
-            $this->conn->rollBack();
-            error_log("Lỗi trong updateProduct: " . $e->getMessage());
+        } catch(PDOException $e) {
+            error_log("Lỗi cập nhật sản phẩm: " . $e->getMessage());
             return false;
         }
     }

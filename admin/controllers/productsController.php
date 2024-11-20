@@ -19,10 +19,9 @@ class ProductsController
     public function listProducts()
     {
         $listProducts = $this->modelProducts->getAllProducts();
-        
-        // Debug để xem dữ liệu
-        echo "<!-- Debug data: ";
-        var_dump($listProducts);
+        // var_dump($listProducts);
+        echo "<!-- Debug: ";
+        // var_dump($listProducts);
         echo " -->";
         
         require_once './views/Products/listProducts.php';
@@ -38,52 +37,34 @@ class ProductsController
 
     public function postFormAdd()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            try {
-                $result = $this->modelProducts->addProduct(
-                    $_POST['ten_san_pham'],
-                    $_POST['gia'],
-                    $_POST['ngay_nhap'],
-                    $_POST['mo_ta'],
-                    $_POST['trang_thai'],
-                    $_POST['danh_muc']
-                );
-                
-                if ($result) {
-                    $san_pham_id = $result['san_pham_id'];
-                    
-                    // Thêm liên kết RAM
-                    if (isset($_POST['ram_ids']) && is_array($_POST['ram_ids'])) {
-                        foreach ($_POST['ram_ids'] as $ram_id) {
-                            $this->modelProducts->addProductRam($san_pham_id, $ram_id);
-                        }
-                    }
-                    
-                    // Upload và thêm hình ảnh
-                    if (isset($_FILES['hinh_sp'])) {
-                        foreach ($_FILES['hinh_sp']['name'] as $key => $value) {
-                            if ($_FILES['hinh_sp']['error'][$key] === UPLOAD_ERR_OK) {
-                                $file = [
-                                    'name' => $_FILES['hinh_sp']['name'][$key],
-                                    'type' => $_FILES['hinh_sp']['type'][$key],
-                                    'tmp_name' => $_FILES['hinh_sp']['tmp_name'][$key],
-                                    'error' => $_FILES['hinh_sp']['error'][$key],
-                                    'size' => $_FILES['hinh_sp']['size'][$key]
-                                ];
-                                
-                                $url = uploadFile($file, '../Upload/Product/');
-                                if ($url) {
-                                    $this->modelProducts->addProductImage($url, $san_pham_id);
-                                }
-                            }
-                        }
-                    }
-                    
-                    echo "<script>alert('Thêm sản phẩm thành công!'); window.location.href='index.php?act=listProducts';</script>";
-                }
-            } catch (Exception $e) {
-                error_log($e->getMessage());
-                echo "<script>alert('Có lỗi xảy ra!'); window.location.href='index.php?act=formAddProducts';</script>";
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+            $ten_san_pham = $_POST['ten_san_pham'];
+            $gia = $_POST['gia'];
+            $hinh = $_FILES['hinh_sp'];
+            $ngay_nhap = $_POST['ngay_nhap'];
+            $mo_ta = $_POST['mo_ta'];
+            $trang_thai = $_POST['trang_thai'];
+            $danh_muc_id = isset($_POST['danh_muc']) ? $_POST['danh_muc'] : NULL;
+            // var_dump("hinh", $hinh);
+
+            // $hinhPath = uploadFile($hinh,'../Upload/Product/');
+
+            $result = $this->modelProducts->addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id);
+            // var_dump($result['san_pham_id']);
+
+            foreach ($hinh['name'] as $key => $value) {
+                $file = [
+                    'name' => $hinh['name'][$key],
+                    'type' => $hinh['type'][$key],
+                    'tmp_name' => $hinh['tmp_name'][$key],
+                    'error' => $hinh['error'][$key],
+                    'size' => $hinh['size'][$key]
+                ];
+
+                $url = uploadFile($file, '../Upload/Product/');
+                // var_dump($url);
+                $san_pham_id = $result['san_pham_id'];
+                $this->modelProducts->addProductImage($url, $san_pham_id);
             }
         }
     }
@@ -125,60 +106,59 @@ class ProductsController
 
     
     public function updateProduct() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                $san_pham_id = (int)$_POST['san_pham_id'];
-                $ten_san_pham = $_POST['ten_san_pham'];
-                $gia = (int)$_POST['gia'];
-                $ngay_nhap = $_POST['ngay_nhap'];
-                $mo_ta = $_POST['mo_ta'];
-                $old_img = $_POST['old_img'];
-                $trang_thai = (int)$_POST['trang_thai'];
-                $danh_muc_id = (int)$_POST['danh_muc'];
-                $hinh_id = $_POST['hinh_anh_id'];
+        try {
+            $san_pham_id = (int)$_POST['san_pham_id'];
+            $ten_san_pham = $_POST['ten_san_pham'];
+            $gia = (int)$_POST['gia'];
+            $ngay_nhap = $_POST['ngay_nhap'];
+            $mo_ta = $_POST['mo_ta'];
+            $old_img = $_POST['old_img'];
+            $trang_thai = (int)$_POST['trang_thai'];
+            $danh_muc_id = (int)$_POST['danh_muc_id'];
+            $hinh_id = $_POST['hinh_anh_id'];
 
-                // Xử lý hình ảnh
-                if(isset($_FILES['hinh_sp']) && $_FILES['hinh_sp']['error'] === UPLOAD_ERR_OK) {
-                    $hinh_path = uploadFile($_FILES['hinh_sp'], '../Upload/Product/');
-                } else {
-                    $hinh_path = $old_img;
-                }
-
-                // Bắt đầu transaction
-                $this->conn->beginTransaction();
-
-                // Cập nhật thông tin cơ bản của sản phẩm
-                $result = $this->modelProducts->updateProductWithRelations(
-                    $san_pham_id,
-                    $ten_san_pham,
-                    $gia,
-                    $hinh_id,
-                    $hinh_path,
-                    $ngay_nhap,
-                    $mo_ta,
-                    $trang_thai,
-                    $danh_muc_id
-                );
-
-                // Cập nhật RAM của sản phẩm
-                if (isset($_POST['ram_ids']) && is_array($_POST['ram_ids'])) {
-                    $this->modelProducts->updateProductRams($san_pham_id, $_POST['ram_ids']);
-                }
-
-                $this->conn->commit();
-
-                if ($result) {
-                    echo "<script>alert('Cập nhật thành công'); window.location.href='index.php?act=listProducts';</script>";
-                } else {
-                    echo "<script>alert('Cập nhật thất bại'); window.location.href='index.php?act=listProducts';</script>";
-                }
-            } catch (Exception $e) {
-                $this->conn->rollBack();
-                error_log($e->getMessage());
-                echo "<script>alert('Có lỗi xảy ra!'); window.location.href='index.php?act=formEditProducts&id=".$san_pham_id."';</script>";
+            // Xử lý hình ảnh
+            if(isset($_FILES['hinh_sp']) && $_FILES['hinh_sp']['error'] === UPLOAD_ERR_OK) {
+                $hinh_path = uploadFile($_FILES['hinh_sp'], '../Upload/Product/');
+            } else {
+                $hinh_path = $old_img;
             }
+
+            // Bắt đầu transaction
+            $this->conn->beginTransaction();
+
+            // Cập nhật thông tin cơ bản của sản phẩm
+            $result = $this->modelProducts->updateProductWithRelations(
+                $san_pham_id,
+                $ten_san_pham,
+                $gia,
+                $hinh_id,
+                $hinh_path,
+                $ngay_nhap,
+                $mo_ta,
+                $trang_thai,
+                $danh_muc_id
+            );
+
+            // Cập nhật RAM của sản phẩm
+            if (isset($_POST['ram_ids']) && is_array($_POST['ram_ids'])) {
+                $this->modelProducts->updateProductRams($san_pham_id, $_POST['ram_ids']);
+            }
+
+            $this->conn->commit();
+
+            if ($result) {
+                echo "<script>alert('Cập nhật thành công'); window.location.href='index.php?act=listProducts';</script>";
+            } else {
+                echo "<script>alert('Cập nhật thất bại'); window.location.href='index.php?act=listProducts';</script>";
+            }
+        } catch (Exception $e) {
+            $this->conn->rollBack();
+            error_log($e->getMessage());
+            echo "<script>alert('Có lỗi xảy ra!'); window.location.href='index.php?act=formEditProducts&id=".$san_pham_id."';</script>";
         }
     }
+
     public function deleteProduct($id)
     {
         if (empty($id) || !is_numeric($id)) {

@@ -1,4 +1,5 @@
 
+
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -19,8 +20,8 @@
                             <?php
                             echo '<select name="danh_muc"  class="form-select" aria-label="Default select example">';
                             foreach ($categories as $item) {
-                                echo '<option value="' . htmlspecialchars($item['danh_muc_id']) . '">'
-                                    . htmlspecialchars($item['ten_danh_muc']) .
+                                echo '<option value="' . ($item['danh_muc_id']) . '">'
+                                    . ($item['ten_danh_muc']) .
                                     '</option>';
                             }
                             echo '</select>';
@@ -40,15 +41,14 @@
 
                         <div class="mb-3">
                             <label for="productName" class="form-label">Ngày Nhập</label>
-                            <input type="date" class="form-control" id="productName"
-                                name="ngay_nhap" required>
+                            <input type="date" class="form-control" id="productName" style="width: 150px;" name="ngay_nhap" style="width: 150px;" required>
                         </div>
                         <div class="mb-3">
                             <label for="categoryDescription" class="form-label">Mô Tả</label>
                             <textarea class="form-control" id="categoryDescription" name="mo_ta"
                                 rows="3" required></textarea>
                         </div>
-                       
+
                         <div class="mb-3">
                             <label for="productName" class="form-label">Hình Ảnh</label>
                             <input type="file" class="form-control" id="productName"
@@ -60,7 +60,7 @@
                                 required>
                                 <option value="2">Trạng thái</option>
                                 <option value="1">Còn</option>
-                                
+
                                 <option value="0">Hết</option>
                             </select>
                         </div>
@@ -84,5 +84,10 @@
             </div>
         </div>
     </div>
+
+</div>
+
+
+
 </div>
 

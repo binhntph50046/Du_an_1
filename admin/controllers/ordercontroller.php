@@ -5,27 +5,21 @@ class OrderController {
     public function __construct() {
         $this->orderModel = new OrderModel();
     }
-
     // Hiển thị danh sách đơn hàng
     public function index() {
         $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-        
         if (!empty($keyword)) {
             $orders = $this->orderModel->searchOrders($keyword);
         } else {
             $orders = $this->orderModel->getAllOrders();
         }
-        
         include 'views/orders/list.php';
     }
-
     // Xem chi tiết đơn hàng
     public function view($id) {
         $orderData = $this->orderModel->getOrderDetail($id);
         include 'views/orders/view.php';
     }
-
-    // Cập nhật trạng thái đơn hàng
     public function updateStatus() {
         if(isset($_POST['order_id']) && isset($_POST['status'])) {
             $orderId = $_POST['order_id'];
@@ -36,7 +30,6 @@ class OrderController {
         header("Location: index.php?act=list-orders");
         exit();
     }
-
     // Xóa đơn hàng
     public function deleteOrder() {
         if(isset($_POST['order_id'])) {

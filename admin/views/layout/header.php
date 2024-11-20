@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/libs/jsvectormap/css/jsvectormap.min.css" />
     <link rel="stylesheet" href="assets/css/icons.min.css" />
     <link rel="stylesheet" href="assets/css/app.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
     <style>
         .table {
             width: 100%;
@@ -42,7 +43,6 @@
             color: #333;
             font-weight: bold;
         }
-
         .table tr {
             transition: background-color 0.3s ease;
             /* Hiệu ứng chuyển màu mượt */
@@ -71,6 +71,25 @@
 
         .dropdown:hover .dropdown-menu {
             display: block;
+        }
+
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
         }
     </style>
 </head>
@@ -133,3 +152,4 @@
         <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid"></div>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>

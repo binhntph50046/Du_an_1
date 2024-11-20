@@ -183,7 +183,7 @@ h2 {
   font-weight: bold;
   color: #222;
   font-family: Poppins;
-  font-size: 36px; }
+  font-size: 34px; }
 
 .main {
   background: #f8f8f8;
@@ -590,3 +590,20 @@ label.valid {
     margin-bottom: 10px; } }
 
 /*# sourceMappingURL=style.css.map */
+
+.form-remember {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-password-link {
+  font-size: 13px;
+  color: #3498db;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
