@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 <div class="row">
     <div class="col">
         <div class="h-100">
@@ -66,6 +65,17 @@
                             </select>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="ram_ids" class="form-label">RAM</label>
+                            <select name="ram_ids[]" id="ram_ids" class="form-control" multiple>
+                                <?php foreach ($rams as $ram): ?>
+                                    <option value="<?php echo $ram['ram_id']; ?>">
+                                        <?php echo $ram['dung_luong']; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
                         <a href="?act=listProducts" class="btn btn-secondary">Quay lại Danh
                             Sách</a>
@@ -75,4 +85,4 @@
         </div>
     </div>
 </div>
->>>>>>> 528858ebcb0bb7afa66e3ce5901356629062a1bd
+

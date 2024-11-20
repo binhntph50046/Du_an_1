@@ -16,6 +16,8 @@ include '../admin/models/OrderModel.php';
 include '../admin/controllers/commentController.php';
 include '../admin/models/comment.php';
 include '../admin/controllers/DashboardController.php';
+include '../admin/controllers/ramController.php';
+include '../admin/models/ram.php';
 include './views/layout/header.php';
 
 $userController = new UserController();
@@ -25,6 +27,7 @@ $categoryController = new CategoryController();
 $slideController = new SlideController();
 $commentController = new commentController();
 $dashboardController = new DashboardController();
+$ramController = new RamController();
 
 switch ($act) {
     case 'static':
@@ -123,6 +126,24 @@ switch ($act) {
         if (isset($_GET['id'])) {
             $userController->viewDetail($_GET['id']);
         }
+        break;
+    case 'listRams':
+        $ramController->listRam();
+        break;
+    case 'formAddRam':
+        $ramController->formAddRam();
+        break;
+    case 'addRam':
+        $ramController->addRam();
+        break;
+    case 'formEditRam':
+        $ramController->formEditRam();
+        break;
+    case 'editRam':
+        $ramController->editRam();
+        break;
+    case 'deleteRam':
+        $ramController->deleteRam();
         break;
 
     default:

@@ -12,42 +12,40 @@ class Products
     public function getAllProducts()
     {
         try {
-            $sql = "SELECT
-            san_pham.*,
-            danh_muc.ten_danh_muc,
-            -- hàm COALESCE thay thế 1 giá trị NULL bảng giá trị khác (trường hợp này k chọn nó sẽ trả về a2.jpg)
-            COALESCE(
-                (SELECT hinh_sp FROM hinh_anh_san_pham WHERE san_pham.san_pham_id = hinh_anh_san_pham.san_pham_id LIMIT 1),
-                'a2.jpg'
-            ) AS hinh_sp
-        FROM
-            san_pham
-        LEFT JOIN danh_muc ON san_pham.danh_muc_id = danh_muc.danh_muc_id
-        ORDER BY san_pham.san_pham_id";
-
-
+            $sql = "SELECT 
+                        sp.*,
+                        dm.ten_danh_muc,
+                        GROUP_CONCAT(r.dung_luong SEPARATOR ', ') as ram_info,
+                        COALESCE(
+                            (SELECT hinh_sp 
+                             FROM hinh_anh_san_pham 
+                             WHERE san_pham_id = sp.san_pham_id 
+                             LIMIT 1),
+                            'default.jpg'
+                        ) as hinh_sp
+                    FROM san_pham sp
+                    LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
+                    LEFT JOIN san_pham_ram spr ON sp.san_pham_id = spr.san_pham_id
+                    LEFT JOIN ram r ON spr.ram_id = r.ram_id
+                    GROUP BY sp.san_pham_id";
+            
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
-
-            // Debug
-            error_log("SQL Query: " . $sql);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            error_log("Query Result: " . print_r($result, true));
-
-            return $result ?? [];
-        } catch (Exception $e) {
-            error_log("Error in getAllProducts: " . $e->getMessage());
-            echo "<!-- Error: " . $e->getMessage() . " -->";
-            return [];
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Lỗi lấy danh sách sản phẩm: " . $e->getMessage());
+            return false;
         }
     }
 
-    public function addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id = NULL)
+    public function addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id)
     {
         try {
-            $sql = 'INSERT INTO san_pham (ten_san_pham, gia, ngay_nhap, mo_ta, trang_thai, danh_muc_id)
-                    VALUES (:ten_san_pham, :gia, :ngay_nhap, :mo_ta, :trang_thai, :danh_muc_id)';
-
+            $this->conn->beginTransaction();
+            
+            $sql = "INSERT INTO san_pham (ten_san_pham, gia, ngay_nhap, mo_ta, trang_thai, danh_muc_id) 
+                    VALUES (:ten_san_pham, :gia, :ngay_nhap, :mo_ta, :trang_thai, :danh_muc_id)";
+            
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
                 ':ten_san_pham' => $ten_san_pham,
@@ -55,14 +53,16 @@ class Products
                 ':ngay_nhap' => $ngay_nhap,
                 ':mo_ta' => $mo_ta,
                 ':trang_thai' => $trang_thai,
-                ':danh_muc_id' => $danh_muc_id, // Nếu không có giá trị, sẽ là NULL
+                ':danh_muc_id' => $danh_muc_id
             ]);
-
-            $stmt = $this->conn->query("SELECT * FROM san_pham WHERE san_pham_id = " . $this->conn->lastInsertId());
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            error_log("Error in addProduct: " . $e->getMessage());
-            echo "Error adding product: " . $e->getMessage();
+            
+            $san_pham_id = $this->conn->lastInsertId();
+            $this->conn->commit();
+            
+            return ['san_pham_id' => $san_pham_id];
+        } catch(PDOException $e) {
+            $this->conn->rollBack();
+            error_log("Lỗi thêm sản phẩm: " . $e->getMessage());
             return false;
         }
     }
@@ -126,9 +126,10 @@ class Products
         $danh_muc_id
     ) {
         try {
-            
+            // Bắt đầu giao dịch để đảm bảo tính toàn vẹn dữ liệu
             $this->conn->beginTransaction();
-    
+
+            // Cập nhật thông tin sản phẩm bao gồm cả danh mục
             $sqlProduct = "UPDATE san_pham
                 SET ten_san_pham = :ten_san_pham,
                     gia = :gia,
@@ -137,7 +138,7 @@ class Products
                     trang_thai = :trang_thai,
                     danh_muc_id = :danh_muc_id
                 WHERE san_pham_id = :san_pham_id";
-    
+
             $stmtProduct = $this->conn->prepare($sqlProduct);
             $stmtProduct->execute([
                 ':ten_san_pham' => $ten_san_pham,
@@ -148,22 +149,27 @@ class Products
                 ':danh_muc_id' => $danh_muc_id,
                 ':san_pham_id' => $san_pham_id
             ]);
-    
-            $sqlImage = "UPDATE hinh_anh_san_pham
-                SET hinh_sp = :hinh_sp
-                WHERE hinh_anh_id = :hinh_anh_id AND san_pham_id = :san_pham_id";
-            $stmtImage = $this->conn->prepare($sqlImage);
-            $stmtImage->execute([
-                ':hinh_sp' => $hinh_path,
-                ':hinh_anh_id' => $hinh_id,
-                ':san_pham_id' => $san_pham_id,
-            ]);
-    
+
+            // Cập nhật hình ảnh nếu có
+            if ($hinh_path) {
+                $sqlImage = "UPDATE hinh_anh_san_pham
+                    SET hinh_sp = :hinh_sp
+                    WHERE hinh_anh_id = :hinh_anh_id AND san_pham_id = :san_pham_id";
+                $stmtImage = $this->conn->prepare($sqlImage);
+                $stmtImage->execute([
+                    ':hinh_sp' => $hinh_path,
+                    ':hinh_anh_id' => $hinh_id,
+                    ':san_pham_id' => $san_pham_id,
+                ]);
+            }
+
+            // Hoàn tất giao dịch
             $this->conn->commit();
             return true;
         } catch (\PDOException $e) {
+            // Nếu có lỗi, hoàn tác các thay đổi
             $this->conn->rollBack();
-            error_log("Error in updateProduct: " . $e->getMessage());
+            error_log("Lỗi trong updateProduct: " . $e->getMessage());
             return false;
         }
     }
@@ -208,6 +214,82 @@ class Products
         $stmt->execute(['productId' => $productId]);
         $result = $stmt->fetch();
         return $result['count'] > 0;
+    }
+
+    public function addProductRam($san_pham_id, $ram_id) {
+        try {
+            $sql = "INSERT INTO san_pham_ram (san_pham_id, ram_id) 
+                    VALUES (:san_pham_id, :ram_id)";
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute([
+                ':san_pham_id' => $san_pham_id,
+                ':ram_id' => $ram_id
+            ]);
+        } catch(PDOException $e) {
+            error_log("Lỗi thêm RAM cho sản phẩm: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getAllRam()
+    {
+        try {
+            $sql = "SELECT * FROM ram WHERE trang_thai = 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Lỗi lấy danh sách RAM: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getProductRams($san_pham_id) 
+    {
+        try {
+            $sql = "SELECT r.* 
+                    FROM ram r
+                    INNER JOIN san_pham_ram spr ON r.ram_id = spr.ram_id
+                    WHERE spr.san_pham_id = :san_pham_id";
+                    
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':san_pham_id', $san_pham_id, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log("Lỗi lấy RAM của sản phẩm: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Thêm phương thức để cập nhật RAM của sản phẩm
+    public function updateProductRams($san_pham_id, $ram_ids) 
+    {
+        try {
+            $this->conn->beginTransaction();
+            
+            // Xóa tất cả RAM cũ của sản phẩm
+            $sqlDelete = "DELETE FROM san_pham_ram WHERE san_pham_id = :san_pham_id";
+            $stmtDelete = $this->conn->prepare($sqlDelete);
+            $stmtDelete->execute([':san_pham_id' => $san_pham_id]);
+            
+            // Thêm RAM mới
+            if (!empty($ram_ids)) {
+                $sqlInsert = "INSERT INTO san_pham_ram (san_pham_id, ram_id) VALUES (:san_pham_id, :ram_id)";
+                $stmtInsert = $this->conn->prepare($sqlInsert);
+                foreach ($ram_ids as $ram_id) {
+                    $stmtInsert->execute([':san_pham_id' => $san_pham_id, ':ram_id' => $ram_id]);
+                }
+            }
+            
+            $this->conn->commit();
+            return true;
+        } catch(PDOException $e) {
+            $this->conn->rollBack();
+            error_log("Lỗi trong updateProductRams: " . $e->getMessage());
+            return false;
+        }
     }
 }
 

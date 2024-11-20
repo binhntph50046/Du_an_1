@@ -13,6 +13,7 @@
                                     <th>ID</th>
                                     <th>Tên Sản Phẩm</th>
                                     <th>Giá Sản Phẩm</th>
+                                    <th>RAM</th>
                                     <th>Ngày Nhập</th>
                                     <th>Mô tả</th>
                                     <th>Trạng thái</th>
@@ -23,14 +24,24 @@
                             </thead>
                             <tbody>
 
-                                <?php foreach ($listProducts as $key => $product): ?> 
+                                <?php foreach ($listProducts as $product): ?> 
+                                    
                                     <tr>
-                                        <td><?= $key + 1 ?></td>
+                                        <td><?= $product['san_pham_id'] ?></td>
                                         <td><?= $product['ten_san_pham'] ?></td>
-                                        <td><?= $product['gia'] ?></td>
+                                        <td><?= number_format($product['gia'], 0, ',', '.') ?>đ</td>
+                                        <td>
+                                            <?php 
+                                            if (!empty($product['ram_info'])) {
+                                                echo htmlspecialchars($product['ram_info']);
+                                            } else {
+                                                echo "Chưa có RAM";
+                                            }
+                                            ?>
+                                        </td>
                                         <td><?= $product['ngay_nhap'] ?></td>
                                         <td><?= $product['mo_ta'] ?></td>
-                                        <td><?= $product['trang_thai'] == 1 ? 'Còn' : 'Hết' ?></td>
+                                        <td><?= $product['trang_thai'] == 1 ? 'Còn hàng' : 'Hết hàng' ?></td>
                                         <td>
                                            <img src="<?= $product['hinh_sp'] ?>" width="100px" alt="">
                                         </td>

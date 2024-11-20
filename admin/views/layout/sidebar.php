@@ -44,6 +44,11 @@
                         <i class="ri-chat-3-line"></i> <span>Comments</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="?act=listRams">
+                        <i class="ri-chat-3-line"></i> <span>Ram</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
