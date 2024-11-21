@@ -19,7 +19,7 @@ class OrderModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Lấy chi tiết một đơn hàng
+    
     public function getOrderDetail($id) {
         try {
             // Lấy thông tin đơn hàng và khách hàng
@@ -145,8 +145,7 @@ class OrderModel {
                 OR tk.email LIKE :keyword
                 OR tk.so_dien_thoai LIKE :keyword
                 GROUP BY dh.don_hang_id
-                ORDER BY dh.ngay_dat DESC";
-        
+                ORDER BY dh.ngay_dat DESC";    
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':keyword' => "%$keyword%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

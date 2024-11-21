@@ -47,7 +47,7 @@ if (!class_exists('PromotionController')) {
             $allProducts = $this->productModel->getAllProducts();
             include 'views/promotions/add.php';
         }
-
+        
         public function edit($id) {
             $promotion = $this->promotionModel->getPromotionById($id);
             $allProducts = $this->productModel->getAllProducts();
@@ -99,3 +99,5 @@ if (!class_exists('PromotionController')) {
         }
     }
 } 
+
+
