@@ -20,157 +20,33 @@
             <div class="category-item">
                 <h3>SẢN PHẨM MỚI</h3>
                 <div class="product-list">
-                    <a href="#" class="product-box">
-                        <img src="../Upload/Product/a1.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 16 Pro Max</div>
-                            <div class="product-price">39.990.000<span>₫</span></div>
-                        </div>
-                    </a>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a2.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 16</div>
-                            <div class="product-price">32.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a3.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 15 Pro Max</div>
-                            <div class="product-price">30.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a3.png" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 16</div>
-                            <div class="product-price">29.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a5.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 15 Pro Max</div>
-                            <div class="product-price">30.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-list">
-                    <div class="product-box">
-                        <img src="../Upload/Product/a6.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 15 Plus</div>
-                            <div class="product-price">26.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a7.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 15 Plus</div>
-                            <div class="product-price">26.690.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a8.jpeg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 15 Plus</div>
-                            <div class="product-price">26.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a9.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 12</div>
-                            <div class="product-price">18.990.000<span>₫</span></div>
-                        </div>
-                    </div>
-                    <div class="product-box">
-                        <img src="../Upload/Product/a10.jpg" alt="">
-                        <div class="product-infor">
-                            <div class="product-name">Iphone 11</div>
-                            <div class="product-price">9.990.000<span>₫</span></div>
-                        </div>
-                    </div>
+                    <?php foreach ($products as $product): ?>
+                        <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
+                            <img src="<?= $product['hinh_sp'] ?>" alt="kh có ảnh">
+                            <div class="product-infor">
+                                <div class="product-name"><?= $product['ten_san_pham'] ?></div>
+                                <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
-
         <div class="category-item">
-            <h4>TOP 10 SẢN PHẨM</h4>
+            <h4>TOP 10 SẢN PHẨM YÊU THÍCH</h4>
             <div class="product-list">
-                <a href="#" class="product-box">
-                    <img src="../Upload/Product/a11.jpg" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 11</div>
-                        <div class="product-price">8.990.000<span>₫</span></div>
-                    </div>
-                </a>
-                <div class="product-box">
-                    <img src="../Upload/Product/a12.jpg" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 11</div>
-                        <div class="product-price">15.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a13.jpg" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 13</div>
-                        <div class="product-price">12.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a14.jpg" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 13</div>
-                        <div class="product-price">12.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a15.webp" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 15 Pro Max</div>
-                        <div class="product-price">15.990.000<span>₫</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="product-list">
-                <div class="product-box">
-                    <img src="../Upload/Product/a28.png" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 13 Pro Max</div>
-                        <div class="product-price">6.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a17.webp" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 13 Pro Max</div>
-                        <div class="product-price">15.690.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a15.webp" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 13 Pro Max</div>
-                        <div class="product-price">15.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a11.jpg" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 11</div>
-                        <div class="product-price">7.990.000<span>₫</span></div>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img src="../Upload/Product/a20.webp" alt="">
-                    <div class="product-infor">
-                        <div class="product-name">Iphone 11 Pro Max</div>
-                        <div class="product-price">9.990.000<span>₫</span></div>
-                    </div>
-                </div>
+                <?php foreach ($dstop10 as $product): ?>
+                    <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
+                        <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
+                        <div class="product-infor">
+                            <div class="product-name"><?= $product['ten_san_pham'] ?></div>
+                            <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
+                            <div class="product-view">
+                                <i class="fas fa-eye"></i> <?= number_format($product['so_luot_xem']) ?> lượt xem
+                            </div>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

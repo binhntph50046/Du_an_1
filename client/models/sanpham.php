@@ -1,36 +1,35 @@
 <?php
 function loadall_sanpham_home()
 {
-    $sql = "SELECT DISTINCT  san_pham.san_pham_id, san_pham.ten_san_pham, san_pham.gia, hinh_anh_san_pham.hinh_sp
-            FROM san_pham
-            INNER JOIN hinh_anh_san_pham
-            ON san_pham.san_pham_id = hinh_anh_san_pham.san_pham_id
-            ORDER BY san_pham.san_pham_id DESC
-            LIMIT 0, 9";
+    $sql = "SELECT  sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.ngay_nhap, sp.mo_ta, sp.trang_thai, 
+            dm.ten_danh_muc, dm.danh_muc_id,
+            MIN(hasp.hinh_sp) as hinh_sp
+            FROM san_pham sp
+            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id 
+            LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
+            GROUP BY sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.ngay_nhap, sp.mo_ta, 
+                     sp.trang_thai, dm.ten_danh_muc, dm.danh_muc_id
+            ORDER BY sp.ngay_nhap DESC";
+            
     $listsanpham = pdo_query($sql);
     return $listsanpham;
 }
-// function loadall_sanpham($kyw = "", $iddm = 0)
-// {
-//     $sql = "SELECT * FROM san_pham WHERE 1";
-//     if ($kyw != '') {
-//         $sql .= " and name like '%" . $kyw . "%'"; // tim sp cung ten
-//     }
-//     if ($iddm > 0) {
-//         $sql .= " and iddm ='" . $iddm . "'"; // tim sp cung ten
-//     }
-//     $sql .= " order by id desc";
-//     $listsanpham = pdo_query($sql);
-//     return $listsanpham;
-// }
-// function load_ten_dm($iddm)
-// {
-//     if ($iddm > 0) {
-//         $sql = 'SELECT * FROM danh_muc WHERE danu_muc_id=' . $iddm;
-//         $dm = pdo_query_one($sql);
-//         extract($dm);
-//         return $name;
-//     } else {
-//         return "";
-//     }
-// }
+function loadall_sanpham_top10()
+{
+    $sql = "SELECT sp.*, hasp.hinh_sp 
+            FROM san_pham sp
+            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+            WHERE sp.trang_thai = 1
+            ORDER BY sp.so_luot_xem DESC 
+            LIMIT 10";
+    return pdo_query($sql);
+}
+function getProductById($id) {
+    $sql = "SELECT sp.*, hasp.hinh_sp, dm.ten_danh_muc
+            FROM san_pham sp
+            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+            LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
+            WHERE sp.san_pham_id = ?
+            GROUP BY sp.san_pham_id";
+    return pdo_query_one($sql, $id);
+}

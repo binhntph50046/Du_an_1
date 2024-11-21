@@ -35,10 +35,9 @@ class DashboardController {
         $recentOrders = $formattedOrders;
         include 'views/layout/static.php';
     }
-
     private function getOrderProducts($orderId) {
         $orderData = $this->orderModel->getOrderDetail($orderId);
-        $products = [];
+        $products=[];
         foreach ($orderData['items'] as $item) {
             $products[] = $item['ten_san_pham'];
         }
