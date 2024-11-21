@@ -18,6 +18,7 @@
                                     <th>Mô tả</th>
                                     <th>Trạng thái</th>
                                     <th>Hình Ảnh</th>
+                                    <th>Lượt Xem</th>
                                     <th>Danh Mục</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -45,6 +46,7 @@
                                         <td>
                                            <img src="<?= $product['hinh_sp'] ?>" width="100px" alt="">
                                         </td>
+                                        <td><?= $product['so_luot_xem'] ?></td>
                                         <td><?= $product['ten_danh_muc'] ?></td>
                                         <td>
                                             <a href="./?act=formEditProducts&id=<?= $product['san_pham_id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
