@@ -8,8 +8,9 @@ require_once "./models/sanpham.php";
 require_once "./models/slide.php";
 require_once "./controllers/authController.php";
 require_once "./models/binhluan.php";
+require_once "./controllers/OrderController.php";
+require_once "./models/OrderModel.php";
 require_once "./controllers/CartController.php";
-
 
 $authController = new AuthController();
 $products = loadAll_sanpham_home();
@@ -53,32 +54,19 @@ if (isset($_GET['act'])) {
             }
             break;
 
-        case 'search':
-            if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-                $keyword = $_GET['keyword'];
-                $products = search_products($keyword);
-                $searchTitle = "Kết quả tìm kiếm cho: \"" . htmlspecialchars($keyword) . "\"";
-                include "./views/home.php";
-            } else {
-                $products = loadall_sanpham_home();
-                include "./views/home.php";
-            }
-        case 'cart':
-            $cartController = new CartController();
-            $cartController->showCart();
+        case 'checkout':
+            $orderController = new OrderController();
+            $orderController->checkout();
+            break;  
+
+        case 'place-order':
+            $orderController = new OrderController();
+            $orderController->placeOrder();
             break;
 
-        case 'add-to-cart':
-            $cartController = new CartController();
-            $cartController->addToCart();
-            break;
-
-        case 'update-cart':
-            $cartController->updateCart();
-            break;
-
-        case 'remove-cart-item':
-            $cartController->removeCartItem();
+        case 'my-orders':
+            $orderController = new OrderController();
+            $orderController->getMyOrders();
             break;
 
         default:

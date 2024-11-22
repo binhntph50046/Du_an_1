@@ -12,6 +12,13 @@
 </head>
 <body>
     <?php include "views/header.php"; ?>
+    <?php if(isset($_SESSION['success_message'])): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $_SESSION['success_message'] ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
     <div class="category-list">
         <div class="banner">
             <?php include "views/slideShow.php"; ?>
@@ -73,5 +80,20 @@
         <?php endif; ?>
     </div>
     <?php include "views/footer.php"; ?>
+<<<<<<< HEAD
+    <script src="assets/js/slideShow.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tự động ẩn alert sau 3 giây
+        setTimeout(function() {
+            var alert = document.querySelector('.alert');
+            if(alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }
+        }, 3000);
+    </script>
+=======
+>>>>>>> a1bcd3fe28ebe0c6f0af96a94e9ac46c3db4eecc
 </body>
 </html>

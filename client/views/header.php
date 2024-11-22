@@ -92,6 +92,10 @@
                                                     Quản trị
                                                 </a>
                                             <?php endif; ?>
+                                            <a href="?act=my-orders">
+                                                <i class="fas fa-shopping-bag"></i>
+                                                Đơn hàng của tôi
+                                            </a>
                                             <a href="?act=logout">
                                                 <i class="fas fa-sign-out-alt"></i>
                                                 Đăng xuất

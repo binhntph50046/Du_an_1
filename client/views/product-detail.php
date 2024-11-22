@@ -69,48 +69,49 @@
                 <span class="current-price"><?= number_format($product['gia'], 0, ',', '.') ?>₫</span>
             </div>
 
-            <div class="product-actions">
-                <form action="?act=add-to-cart" method="POST" class="add-to-cart-form">
-                    <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
-                    
-                    <!-- Chọn RAM -->
-                    <div class="ram-selector">
-                        <label>Chọn dung lượng RAM:</label>
-                        <div class="ram-options">
-                            <?php if (!empty($product['rams'])): ?>
-                                <?php foreach ($product['rams'] as $ram): ?>
-                                    <label class="ram-option">
-                                        <input type="radio" name="ram_id" value="<?= $ram['ram_id'] ?>" required>
-                                        <span class="ram-label"><?= $ram['dung_luong'] ?></span>
-                                    </label>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </div>
+            <form action="?act=checkout" method="POST" class="product-actions">
+                <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
+                <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
+                <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
+                <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
+                
+                <!-- Chọn RAM -->
+                <div class="ram-selector">
+                    <label>Chọn dung lượng RAM:</label>
+                    <div class="ram-options">
+                        <?php if (!empty($product['rams'])): ?>
+                            <?php foreach ($product['rams'] as $ram): ?>
+                                <label class="ram-option">
+                                    <input type="radio" name="ram_id" value="<?= $ram['ram_id'] ?>" required>
+                                    <span class="ram-label"><?= $ram['dung_luong'] ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
+                </div>
 
-                    <div class="quantity-selector">
-                        <label>Số lượng:</label>
-                        <div class="quantity-controls">
-                            <button type="button" onclick="decreaseQuantity()" class="quantity-btn minus">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <input type="number" name="so_luong" value="1" min="1" max="10" readonly>
-                            <button type="button" onclick="increaseQuantity()" class="quantity-btn plus">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button type="submit" name="add-to-cart" class="btn-add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                <div class="quantity-selector">
+                    <label>Số lượng:</label>
+                    <div class="quantity-controls">
+                        <button type="button" onclick="decreaseQuantity()" class="quantity-btn minus">
+                            <i class="fas fa-minus"></i>
                         </button>
-                        <button type="submit" name="buy-now" class="btn-buy-now">
-                            <i class="fas fa-bolt"></i> Mua ngay
+                        <input type="number" name="so_luong" value="1" min="1" max="10" readonly>
+                        <button type="button" onclick="increaseQuantity()" class="quantity-btn plus">
+                            <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" name="add-to-cart" class="btn-add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                    </button>
+                    <button type="submit" name="buy-now" class="btn-buy-now">
+                        <i class="fas fa-bolt"></i> Mua ngay
+                    </button>
+                </div>
+            </form>
 
             <div class="product-description">
                 <h3>Mô tả sản phẩm</h3>

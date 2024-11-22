@@ -47,7 +47,7 @@ if (!class_exists('PromotionController')) {
             $allProducts = $this->productModel->getAllProducts();
             include 'views/promotions/add.php';
         }
-
+        
         public function edit($id) {
             $promotion = $this->promotionModel->getPromotionById($id);
             $allProducts = $this->productModel->getAllProducts();
@@ -70,9 +70,14 @@ if (!class_exists('PromotionController')) {
 
                 try {
                     if ($this->promotionModel->updatePromotion($id, $data)) {
-                        if (isset($_POST['products'])) {
-                            $this->promotionModel->addPromotionProducts($id, $_POST['products']);
+                        // Nếu không có products được gửi lên, sử dụng danh sách sản phẩm cũ
+                        $newProducts = isset($_POST['products']) ? $_POST['products'] : $promotionProducts;
+                        
+                        // Chỉ cập nhật nếu danh sách sản phẩm thay đổi
+                        if ($newProducts != $promotionProducts) {
+                            $this->promotionModel->addPromotionProducts($id, $newProducts);
                         }
+                        
                         $_SESSION['success_message'] = "Cập nhật khuyến mãi thành công!";
                         header('Location: index.php?act=list-promotions');
                         exit();
@@ -97,5 +102,16 @@ if (!class_exists('PromotionController')) {
                 </script>";
             }
         }
+        public function deleteExpired() {
+            if ($this->promotionModel->deleteExpiredPromotions()) {
+                $_SESSION['success_message'] = "Đã xóa tất cả khuyến mãi hết hạn!";
+            } else {
+                $_SESSION['error_message'] = "Có lỗi xảy ra khi xóa khuyến mãi hết hạn!";
+            }
+            header('Location: index.php?act=list-promotions');
+            exit();
+        }
     }
 } 
+
+
