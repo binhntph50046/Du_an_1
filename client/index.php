@@ -8,6 +8,7 @@ require_once "./models/sanpham.php";
 require_once "./models/slide.php";
 require_once "./controllers/authController.php";
 require_once "./models/binhluan.php";
+require_once "./controllers/CartController.php";
 
 
 $authController = new AuthController();
@@ -50,6 +51,24 @@ if (isset($_GET['act'])) {
                 themBinhLuan($san_pham_id, $tai_khoan_id, $noi_dung);
                 header("Location: ?act=product-detail&id=" . $san_pham_id);
             }
+            break;
+
+        case 'cart':
+            $cartController = new CartController();
+            $cartController->showCart();
+            break;
+
+        case 'add-to-cart':
+            $cartController = new CartController();
+            $cartController->addToCart();
+            break;
+
+        case 'update-cart':
+            $cartController->updateCart();
+            break;
+
+        case 'remove-cart-item':
+            $cartController->removeCartItem();
             break;
 
         default:

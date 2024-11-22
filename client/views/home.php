@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="category-item">
-            <h4>TOP 10 SẢN PHẨM YÊU THÍCH</h4>
+            <h4>TOP 10 SẢN PHẨM XEM NHIỀU NHẤT</h4>
             <div class="product-list">
                 <?php foreach ($dstop10 as $product): ?>
                     <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
@@ -41,9 +41,6 @@
                         <div class="product-infor">
                             <div class="product-name"><?= $product['ten_san_pham'] ?></div>
                             <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
-                            <div class="product-view">
-                                <i class="fas fa-eye"></i> <?= number_format($product['so_luot_xem']) ?> lượt xem
-                            </div>
                         </div>
                     </a>
                 <?php endforeach; ?>
@@ -51,6 +48,5 @@
         </div>
     </div>
     <?php include "views/footer.php"; ?>
-    <script src="assets/js/slideShow.js"></script>
 </body>
 </html>
