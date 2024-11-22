@@ -233,20 +233,20 @@ class PromotionModel
         }
     }
 
-    public function updateOrderDetailsPrice()
-    {
-        try {
-            $sql = "UPDATE chi_tiet_don_hang ctdh
-                    JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
-                    SET ctdh.gia = COALESCE(sp.gia_khuyen_mai, sp.gia)
-                    WHERE ctdh.trang_thai = 1";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-        } catch (\PDOException $e) {
-            error_log("Error updating order details price: " . $e->getMessage());
-            throw $e;
-        }
-    }
+    // public function updateOrderDetailsPrice()
+    // {
+    //     try {
+    //         $sql = "UPDATE chi_tiet_don_hang ctdh
+    //                 JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
+    //                 SET ctdh.gia = COALESCE(sp.gia_khuyen_mai, sp.gia)
+    //                 WHERE ctdh.trang_thai = 1";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->execute();
+    //     } catch (\PDOException $e) {
+    //         error_log("Error updating order details price: " . $e->getMessage());
+    //         throw $e;
+    //     }
+    // }
 
     public function checkExpiredPromotions()
     {
@@ -308,5 +308,43 @@ class PromotionModel
             return max(0, $originalPrice - $promotion['giam_gia']);
         }
         return $originalPrice;
+    }
+
+    public function deleteExpiredPromotions() {
+        try {
+            // Lấy danh sách khuyến mãi đã hết hạn trước khi bắt đầu transaction
+            $sql = "SELECT khuyen_mai_id FROM khuyen_mai 
+                    WHERE ngay_ket_thuc < CURRENT_DATE";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $expiredPromotions = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (empty($expiredPromotions)) {
+                // Không có khuyến mãi hết hạn để xóa
+                return true;
+            }
+
+            // Bắt đầu transaction chỉ khi có khuyến mãi cần xóa
+            $this->conn->beginTransaction();
+
+            foreach ($expiredPromotions as $promotionId) {
+                if (!$this->deletePromotion($promotionId)) {
+                    // Nếu có lỗi khi xóa, rollback và return false
+                    $this->conn->rollBack();
+                    error_log("Failed to delete promotion ID: " . $promotionId);
+                    return false;
+                }
+            }
+
+            $this->conn->commit();
+            return true;
+        } catch (\PDOException $e) {
+            // Chỉ rollback nếu transaction đang active
+            if ($this->conn->inTransaction()) {
+                $this->conn->rollBack();
+            }
+            error_log("Error deleting expired promotions: " . $e->getMessage());
+            return false;
+        }
     }
 }

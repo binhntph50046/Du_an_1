@@ -73,5 +73,16 @@ class User {
             return false;
         }
     }
+
+    public function getUserById($id) {
+        $sql = "SELECT * FROM tai_khoan WHERE tai_khoan_id = ?";
+        try {
+            $user = pdo_query_one($sql, $id);
+            return $user;
+        } catch(PDOException $e) {
+            echo "Lỗi truy vấn: " . $e->getMessage();
+            return null;
+        }
+    }
 }
 ?>
