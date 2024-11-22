@@ -56,11 +56,15 @@
                     <!-- Search Bar -->
                     <div class="col-md-6">
                         <div class="search-wrapper">
-                            <input type="text" class="form-control search-input" 
-                                   placeholder="Bạn cần tìm gì hôm nay?">
-                            <button class="btn btn-search">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                            <form action="index.php" method="GET" class="search-form">
+                                <input type="text" name="keyword" class="form-control search-input" 
+                                       placeholder="Bạn cần tìm gì hôm nay?" required
+                                       value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
+                                <input type="hidden" name="act" value="search">
+                                <button type="submit" class="btn btn-search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
 

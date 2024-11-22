@@ -8,9 +8,9 @@ require_once "./models/sanpham.php";
 require_once "./models/slide.php";
 require_once "./controllers/authController.php";
 require_once "./models/binhluan.php";
-require_once "./controllers/CheckoutController.php";
 require_once "./controllers/OrderController.php";
-
+require_once "./models/OrderModel.php";
+require_once "./controllers/CartController.php";
 
 $authController = new AuthController();
 $products = loadAll_sanpham_home();
@@ -55,15 +55,13 @@ if (isset($_GET['act'])) {
             break;
 
         case 'checkout':
-            require_once 'controllers/CheckoutController.php';
-            $controller = new CheckoutController();
-            $controller->checkout();
-            break;
+            $orderController = new OrderController();
+            $orderController->checkout();
+            break;  
 
         case 'place-order':
-            require_once 'controllers/CheckoutController.php'; 
-            $controller = new CheckoutController();
-            $controller->placeOrder();
+            $orderController = new OrderController();
+            $orderController->placeOrder();
             break;
 
         case 'my-orders':

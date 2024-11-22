@@ -56,10 +56,10 @@
                             <?php foreach ($order['products'] as $product): ?>
                                 <div class="product-item d-flex align-items-center mb-3 pb-3 border-bottom">
                                     <div class="product-image">
-                                        <img src="<?php echo $product['hinh']; ?>" alt="<?php echo $product['ten_sp']; ?>" class="rounded">
+                                        <img src="<?php echo $product['hinh_sp']; ?>" alt="<?php echo $product['ten_sp']; ?>" class="rounded">
                                     </div>
                                     <div class="product-details ms-3 flex-grow-1">
-                                        <h6 class="product-name mb-1"><?php echo $product['ten_sp']; ?></h6>
+                                        <h6 class="product-name mb-1"><?php echo $product['ten_san_pham']; ?></h6>
                                         <p class="product-quantity mb-1 text-muted">Số lượng: <?php echo $product['so_luong']; ?></p>
                                         <p class="product-price mb-0 text-danger fw-bold"><?php echo number_format($product['gia'], 0, ',', '.'); ?>đ</p>
                                     </div>

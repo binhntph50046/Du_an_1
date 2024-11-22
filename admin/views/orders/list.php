@@ -43,56 +43,28 @@
                         <?php foreach ($orders as $order): ?>
                           
                             
-                            <tr class="<?= ($order['yeu_cau_huy'] == 1) ? 'table-warning' : '' ?>">
+                            <tr>
                                 <td>#<?= $order['don_hang_id'] ?></td>
                                 <td><?= $order['ho_va_ten'] ?></td>
                                 <td><?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></td>
                                 <td><?= number_format($order['tong_tien'], 0, ',', '.') ?>đ</td>
                                 <td>
-                                    <?php if ($order['yeu_cau_huy'] == 1): ?>
-                                        <span class="badge bg-warning">Yêu cầu hủy</span>
-                                    <?php else: ?>
-                                        <?php
-                                        switch ($order['trang_thai']) {
-                                            case 0:
-                                                echo '<span class="badge bg-secondary">Đã hủy</span>';
-                                                break;
-                                            case 1:
-                                                echo '<span class="badge bg-warning">Chờ xác nhận</span>';
-                                                break;
-                                            case 2:
-                                                echo '<span class="badge bg-primary">Đã xác nhận</span>';
-                                                break;
-                                            case 3:
-                                                echo '<span class="badge bg-info">Đang giao</span>';
-                                                break;
-                                            case 4:
-                                                echo '<span class="badge bg-success">Đã giao</span>';
-                                                break;
-                                        }
-                                        ?>
-                                    <?php endif; ?>
+                                    <?php
+                                    $trang_thai = [
+                                        0 => '<span class="badge bg-warning">Chờ xác nhận</span>',
+                                        1 => '<span class="badge bg-info">Đã xác nhận</span>',
+                                        2 => '<span class="badge bg-primary">Đang giao hàng</span>',
+                                        3 => '<span class="badge bg-success">Đã hoàn thành</span>',
+                                        4 => '<span class="badge bg-danger">Đã hủy</span>'
+                                    ];
+                                    echo $trang_thai[$order['trang_thai']] ?? '<span class="badge bg-secondary">Không xác định</span>';
+                                    ?>
                                 </td>
                                 <td>
                                     <a href="index.php?act=view-order&id=<?= $order['don_hang_id'] ?>" 
                                        class="btn btn-sm btn-info">
                                         <i class="fas fa-eye"></i> Xem
                                     </a>
-
-                                    <?php if ($order['yeu_cau_huy'] == 1): ?>
-                                        <form action="index.php" method="POST" class="d-inline">
-                                            <input type="hidden" name="act" value="handle-cancel-request">
-                                            <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
-                                            <button type="submit" name="action" value="approve" 
-                                                    class="btn btn-sm btn-success">
-                                                <i class="fas fa-check"></i> Duyệt hủy
-                                            </button>
-                                            <button type="submit" name="action" value="reject" 
-                                                    class="btn btn-sm btn-danger">
-                                                <i class="fas fa-times"></i> Từ chối
-                                            </button>
-                                        </form>
-                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
