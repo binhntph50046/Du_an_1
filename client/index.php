@@ -68,6 +68,8 @@ if (isset($_GET['act'])) {
             $orderController = new OrderController();
             $orderController->getMyOrders();
             break;
+        
+        
 
         default:
             include "./views/home.php";
