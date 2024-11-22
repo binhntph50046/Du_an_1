@@ -68,6 +68,8 @@ if (isset($_GET['act'])) {
             $orderController = new OrderController();
             $orderController->getMyOrders();
             break;
+        
+        
 
         case 'search':
             if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {

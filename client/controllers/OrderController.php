@@ -9,13 +9,21 @@ class OrderController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy-now'])) {
             $san_pham_id = $_POST['san_pham_id'];
-            $so_luong = $_POST['so_luong'];
+            $so_luong = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
+            $ram_id = isset($_POST['ram_id']) ? $_POST['ram_id'] : null;
             
             // Lấy thông tin sản phẩm
             $product = getProductById($san_pham_id);
             if (!$product) {
                 $_SESSION['error'] = "Không tìm thấy sản phẩm";
                 header('Location: index.php');
+                exit;   
+            }
+
+            // Kiểm tra số lượng
+            if ($so_luong < 1) {
+                $_SESSION['error'] = "Số lượng không hợp lệ";
+                header('Location: ?act=product-detail&id=' . $san_pham_id);
                 exit;
             }
 
@@ -25,35 +33,54 @@ class OrderController {
 
     public function placeOrder() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $order_data = [
-                'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
-                'ho_va_ten' => $_POST['ho_va_ten'],
-                'email' => $_POST['email'],
-                'so_dien_thoai' => $_POST['so_dien_thoai'],
-                'dia_chi' => $_POST['dia_chi'],
-                'phuong_thuc_thanh_toan' => $_POST['phuong_thuc_thanh_toan'],
-                'tong_tien' => ($_POST['gia'] * $_POST['so_luong']) + 30000 // Cộng thêm phí ship
-            ];
-
-            $order_id = createOrder($order_data);
-
-            if ($order_id) {
-                $order_detail = [
-                    'don_hang_id' => $order_id,
-                    'san_pham_id' => $_POST['san_pham_id'],
-                    'so_luong' => $_POST['so_luong'],
-                    'gia' => $_POST['gia']
+            try {
+                // Chuyển đổi sang kiểu số trước khi tính toán
+                $product_price = (float)$_POST['gia'];
+                $quantity = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
+                $ram_id = isset($_POST['ram_id']) ? $_POST['ram_id'] : null;
+                
+                // Tính tổng tiền
+                $total = ($product_price * $quantity) + 30000; // Cộng thêm phí ship 30,000
+                
+                // Tạo đơn hàng mới
+                $order_data = [
+                    'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
+                    'ho_va_ten' => $_POST['ho_va_ten'],
+                    'email' => $_POST['email'],
+                    'so_dien_thoai' => $_POST['so_dien_thoai'],
+                    'dia_chi' => $_POST['dia_chi'],
+                    'tong_tien' => $total,
+                    'phuong_thuc_thanh_toan' => $_POST['phuong_thuc_thanh_toan'],
+                    'ram_id' => $ram_id
                 ];
 
-                if (createOrderDetail($order_detail)) {
-                    $_SESSION['success'] = "Đặt hàng thành công!";
-                    header('Location: ?act=my-orders');
-                    exit;
-                }
-            }
+                $order_id = createOrder($order_data);
 
-            $_SESSION['error'] = "Có lỗi xảy ra, vui lòng thử lại!";
-            header('Location: ?act=checkout');
+                if ($order_id) {
+                    $order_detail = [
+                        'don_hang_id' => $order_id,
+                        'san_pham_id' => (int)$_POST['san_pham_id'],
+                        'so_luong' => $quantity,
+                        'gia' => $product_price,
+                        'ram_id' => $ram_id
+                    ];
+
+                    if (createOrderDetail($order_detail)) {
+                        $_SESSION['success'] = "Đặt hàng thành công!";
+                        header('Location: ?act=my-orders');
+                        exit;
+                    }
+                }
+
+                $_SESSION['error'] = "Có lỗi xảy ra khi đặt hàng!";
+                header('Location: ?act=checkout');
+                exit;
+
+            } catch (Exception $e) {
+                $_SESSION['error'] = "Có lỗi xảy ra: " . $e->getMessage();
+                header('Location: ?act=checkout');
+                exit;
+            }
         }
     }
 
