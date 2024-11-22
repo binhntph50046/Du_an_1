@@ -51,7 +51,6 @@ if (isset($_GET['act'])) {
                 header("Location: ?act=product-detail&id=" . $san_pham_id);
             }
             break;
-
         default:
             include "./views/home.php";
             break;
