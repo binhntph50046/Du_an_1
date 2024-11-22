@@ -64,7 +64,7 @@ class CartController {
         }
         
         $cartItems = $this->cartModel->getCartItems($_SESSION['email']['tai_khoan_id']);
-        include 'views/cart.php';
+        include 'views/cart/cart.php';
     }
 
     public function updateCart() {
