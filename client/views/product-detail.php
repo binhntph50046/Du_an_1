@@ -10,10 +10,46 @@
     <link rel="stylesheet" href="./assets/css/client/Header.css">
     <link rel="stylesheet" href="./assets/css/client/Footer.css">
     <link rel="stylesheet" href="./assets/css/client/ProductDetail.css">
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
 </head>
 
 <body>
     <?php include "views/header.php"; ?>
+
+    <div class="messages">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                <?= $_SESSION['success'] ?>
+                <?php unset($_SESSION['success']) ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger">
+                <?= $_SESSION['error'] ?>
+                <?php unset($_SESSION['error']) ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <div class="product-detail-container">
         <div class="product-images">
@@ -31,48 +67,49 @@
 
             <div class="product-price">
                 <span class="current-price"><?= number_format($product['gia'], 0, ',', '.') ?>₫</span>
-                <!-- <?php if (isset($product['gia_goc']) && $product['gia_goc'] > $product['gia']): ?>
-                    <span class="original-price"><?= number_format($product['gia_goc'], 0, ',', '.') ?>₫</span>
-                    <span class="discount-percent">-<?= ceil((($product['gia_goc'] - $product['gia']) / $product['gia_goc']) * 100) ?>%</span>
-                <?php endif; ?> -->
-            </div>
-
-            <div class="product-variants">
-                <div class="variant-group">
-                    <h3>Dung lượng</h3>
-                    <div class="variant-options">
-                        <?php if (!empty($product['rams'])): ?>
-                            <?php foreach ($product['rams'] as $ram): ?>
-                                <button class="variant-btn"><?= $ram['dung_luong'] ?></button>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p>Chưa có thông tin RAM</p>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- <div class="variant-group">
-                    <h3>Màu sắc</h3>
-                    <div class="variant-options">
-                        <button class="color-btn" data-color="Hồng">
-                            <span class="color-circle" style="background-color: #FFB6C1;"></span>
-                            <span class="color-name">Hồng</span>
-                        </button>
-                        <button class="color-btn" data-color="Đen">
-                            <span class="color-circle" style="background-color: #000000;"></span>
-                            <span class="color-name">Đen</span>
-                        </button>
-                        <button class="color-btn" data-color="Xanh">
-                            <span class="color-circle" style="background-color: #87CEEB;"></span>
-                            <span class="color-name">Xanh dương</span>
-                        </button>
-                    </div>
-                </div> -->
             </div>
 
             <div class="product-actions">
-                <button class="buy-now-btn">Mua ngay</button>
-                <button class="add-to-cart-btn">Thêm vào giỏ hàng</button>
+                <form action="?act=add-to-cart" method="POST" class="add-to-cart-form">
+                    <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
+                    
+                    <!-- Chọn RAM -->
+                    <div class="ram-selector">
+                        <label>Chọn dung lượng RAM:</label>
+                        <div class="ram-options">
+                            <?php if (!empty($product['rams'])): ?>
+                                <?php foreach ($product['rams'] as $ram): ?>
+                                    <label class="ram-option">
+                                        <input type="radio" name="ram_id" value="<?= $ram['ram_id'] ?>" required>
+                                        <span class="ram-label"><?= $ram['dung_luong'] ?></span>
+                                    </label>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label>Số lượng:</label>
+                        <div class="quantity-controls">
+                            <button type="button" onclick="decreaseQuantity()" class="quantity-btn minus">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" name="so_luong" value="1" min="1" max="10" readonly>
+                            <button type="button" onclick="increaseQuantity()" class="quantity-btn plus">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" name="add-to-cart" class="btn-add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                        </button>
+                        <button type="submit" name="buy-now" class="btn-buy-now">
+                            <i class="fas fa-bolt"></i> Mua ngay
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <div class="product-description">
@@ -130,6 +167,24 @@
 
 
     <?php include "views/footer.php"; ?>
+
+    <script>
+    function decreaseQuantity() {
+        var input = document.querySelector('input[name="so_luong"]');
+        var value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    }
+
+    function increaseQuantity() {
+        var input = document.querySelector('input[name="so_luong"]');
+        var value = parseInt(input.value);
+        if (value < 10) {
+            input.value = value + 1;
+        }
+    }
+    </script>
 </body>
 
 </html>

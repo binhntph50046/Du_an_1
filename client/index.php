@@ -8,6 +8,7 @@ require_once "./models/sanpham.php";
 require_once "./models/slide.php";
 require_once "./controllers/authController.php";
 require_once "./models/binhluan.php";
+require_once "./controllers/CartController.php";
 
 
 $authController = new AuthController();
@@ -62,6 +63,22 @@ if (isset($_GET['act'])) {
                 $products = loadall_sanpham_home();
                 include "./views/home.php";
             }
+        case 'cart':
+            $cartController = new CartController();
+            $cartController->showCart();
+            break;
+
+        case 'add-to-cart':
+            $cartController = new CartController();
+            $cartController->addToCart();
+            break;
+
+        case 'update-cart':
+            $cartController->updateCart();
+            break;
+
+        case 'remove-cart-item':
+            $cartController->removeCartItem();
             break;
 
         default:
