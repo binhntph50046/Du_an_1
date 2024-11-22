@@ -11,7 +11,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form action="./?act=postFormAdd" method="post" enctype="multipart/form-data">
+                    <form action="./?act=postFormAdd" method="post" enctype="multipart/form-data" onsubmit="console.log('Form submitted')">
 
 
                         <div class="mb-3">
@@ -67,13 +67,14 @@
 
                         <div class="mb-3">
                             <label for="ram_ids" class="form-label">RAM</label>
-                            <select name="ram_ids[]" id="ram_ids" class="form-control" multiple>
+                            <select name="ram_ids[]" id="ram_ids" class="form-select" multiple required>
                                 <?php foreach ($rams as $ram): ?>
                                     <option value="<?php echo $ram['ram_id']; ?>">
-                                        <?php echo $ram['dung_luong']; ?>
+                                        <?php echo $ram['dung_luong']; ?> GB
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <small class="form-text text-muted">Giữ Ctrl để chọn nhiều RAM</small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
