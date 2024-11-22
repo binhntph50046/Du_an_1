@@ -27,7 +27,8 @@ class Products
                     LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
                     LEFT JOIN san_pham_ram spr ON sp.san_pham_id = spr.san_pham_id
                     LEFT JOIN ram r ON spr.ram_id = r.ram_id
-                    GROUP BY sp.san_pham_id";
+                    GROUP BY sp.san_pham_id
+                    ORDER BY sp.san_pham_id DESC";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();

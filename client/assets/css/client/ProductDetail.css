@@ -29,23 +29,6 @@
     /* padding: 20px; */
 }
 
-.thumbnail-images {
-    display: flex;
-    gap: 10px;
-}
-
-.thumbnail-images img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.thumbnail-images img:hover {
-    transform: translateY(-3px);
-}
 
 .product-info {
     padding: 20px;

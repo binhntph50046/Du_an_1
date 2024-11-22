@@ -18,10 +18,7 @@
     <div class="product-detail-container">
         <div class="product-images">
             <div class="main-image">
-                <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
-            </div>
-            <div class="thumbnail-images">
-                <!-- Thêm ảnh thumbnail nếu có -->
+                <img id="mainImage" src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
             </div>
         </div>
 
@@ -34,23 +31,27 @@
 
             <div class="product-price">
                 <span class="current-price"><?= number_format($product['gia'], 0, ',', '.') ?>₫</span>
-                <?php if (isset($product['gia_goc']) && $product['gia_goc'] > $product['gia']): ?>
+                <!-- <?php if (isset($product['gia_goc']) && $product['gia_goc'] > $product['gia']): ?>
                     <span class="original-price"><?= number_format($product['gia_goc'], 0, ',', '.') ?>₫</span>
                     <span class="discount-percent">-<?= ceil((($product['gia_goc'] - $product['gia']) / $product['gia_goc']) * 100) ?>%</span>
-                <?php endif; ?>
+                <?php endif; ?> -->
             </div>
 
             <div class="product-variants">
                 <div class="variant-group">
                     <h3>Dung lượng</h3>
                     <div class="variant-options">
-                        <button class="variant-btn active">128GB</button>
-                        <button class="variant-btn">256GB</button>
-                        <button class="variant-btn">512GB</button>
+                        <?php if (!empty($product['rams'])): ?>
+                            <?php foreach ($product['rams'] as $ram): ?>
+                                <button class="variant-btn"><?= $ram['dung_luong'] ?></button>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>Chưa có thông tin RAM</p>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div class="variant-group">
+                <!-- <div class="variant-group">
                     <h3>Màu sắc</h3>
                     <div class="variant-options">
                         <button class="color-btn" data-color="Hồng">
@@ -66,7 +67,7 @@
                             <span class="color-name">Xanh dương</span>
                         </button>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="product-actions">
@@ -81,10 +82,10 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="product-comments">
             <h3>Bình luận</h3>
-    
+
             <?php if (isset($_SESSION['email'])): ?>
                 <div class="comment-form">
                     <form action="?act=comment" method="POST">
@@ -98,7 +99,7 @@
             <?php else: ?>
                 <p class="login-to-comment">Vui lòng <a href="?act=login">đăng nhập</a> để bình luận</p>
             <?php endif; ?>
-    
+
             <div class="comment-list">
                 <?php
                 $comments = getBinhLuanBySanPhamId($product['san_pham_id']);
@@ -127,9 +128,8 @@
         </div>
     </div>
 
-    
+
     <?php include "views/footer.php"; ?>
-    <script src="assets/js/productDetail.js"></script>
 </body>
 
 </html>
