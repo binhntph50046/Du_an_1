@@ -51,6 +51,19 @@ if (isset($_GET['act'])) {
                 header("Location: ?act=product-detail&id=" . $san_pham_id);
             }
             break;
+
+        case 'search':
+            if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                $keyword = $_GET['keyword'];
+                $products = search_products($keyword);
+                $searchTitle = "Kết quả tìm kiếm cho: \"" . htmlspecialchars($keyword) . "\"";
+                include "./views/home.php";
+            } else {
+                $products = loadall_sanpham_home();
+                include "./views/home.php";
+            }
+            break;
+
         default:
             include "./views/home.php";
             break;

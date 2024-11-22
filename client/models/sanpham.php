@@ -47,3 +47,16 @@ function increaseProductView($id)
     $sql = "UPDATE san_pham SET so_luot_xem = so_luot_xem + 1 WHERE san_pham_id = ?";
     return pdo_execute($sql, $id);
 }
+function search_products($keyword) {
+    $sql = "SELECT sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.mo_ta, sp.trang_thai,
+            MIN(hasp.hinh_sp) as hinh_sp
+            FROM san_pham sp
+            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+            WHERE sp.trang_thai = 1 
+            AND LOWER(sp.ten_san_pham) LIKE LOWER(?)
+            GROUP BY sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.mo_ta, sp.trang_thai
+            ORDER BY sp.ten_san_pham ASC";
+            
+    $keyword = "%{$keyword}%";
+    return pdo_query($sql, $keyword);
+}

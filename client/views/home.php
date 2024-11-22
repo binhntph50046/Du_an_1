@@ -14,15 +14,39 @@
     <?php include "views/header.php"; ?>
     <div class="category-list">
         <div class="banner">
-            <?php 
-            include "views/slideShow.php"; 
-            ?>
+            <?php include "views/slideShow.php"; ?>
+        </div>
+        
+        <?php if (isset($searchTitle)): ?>
+            <!-- Hiển thị kết quả tìm kiếm -->
+            <div class="category-item">
+                <h3><?= $searchTitle ?></h3>
+                <?php if (empty($products)): ?>
+                    <div class="alert alert-info">
+                        Không tìm thấy sản phẩm nào phù hợp với từ khóa tìm kiếm.
+                    </div>
+                <?php else: ?>
+                    <div class="product-list">
+                        <?php foreach ($products as $product): ?>
+                            <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
+                                <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
+                                <div class="product-infor">
+                                    <div class="product-name"><?= $product['ten_san_pham'] ?></div>
+                                    <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php else: ?>
+            <!-- Hiển thị trang chủ bình thường -->
             <div class="category-item">
                 <h3>SẢN PHẨM MỚI</h3>
                 <div class="product-list">
                     <?php foreach ($products as $product): ?>
                         <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
-                            <img src="<?= $product['hinh_sp'] ?>" alt="kh có ảnh">
+                            <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
                             <div class="product-infor">
                                 <div class="product-name"><?= $product['ten_san_pham'] ?></div>
                                 <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
@@ -31,21 +55,22 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-        </div>
-        <div class="category-item">
-            <h4>TOP 10 SẢN PHẨM XEM NHIỀU NHẤT</h4>
-            <div class="product-list">
-                <?php foreach ($dstop10 as $product): ?>
-                    <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
-                        <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
-                        <div class="product-infor">
-                            <div class="product-name"><?= $product['ten_san_pham'] ?></div>
-                            <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
+
+            <div class="category-item">
+                <h4>TOP 10 SẢN PHẨM XEM NHIỀU NHẤT</h4>
+                <div class="product-list">
+                    <?php foreach ($dstop10 as $product): ?>
+                        <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
+                            <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
+                            <div class="product-infor">
+                                <div class="product-name"><?= $product['ten_san_pham'] ?></div>
+                                <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
     <?php include "views/footer.php"; ?>
 </body>
