@@ -32,9 +32,18 @@
                                 <input type="date" class="form-control" id="categoryName" name="ngay_nhap" style="width: 150px;" required value="<?= $product['ngay_nhap'] ?>">
                             </div>
 
+                            
+                            
                             <div class="mb-3">
                                 <label for="categoryDescription" class="form-label">Mô Tả</label>
-                                <textarea class="form-control" id="categoryDescription" name="mo_ta" rows="3"><?= htmlspecialchars($product['mo_ta']) ?></textarea>
+                                <textarea 
+                                    class="form-control" 
+                                    id="categoryDescription" 
+                                    name="mo_ta" 
+                                    rows="3" 
+                                    required
+                                    spellcheck="false"
+                                ><?= isset($product['mo_ta']) ? htmlspecialchars($product['mo_ta']) : '' ?></textarea>
                             </div>
 
                             <div class="mb-3">
