@@ -8,8 +8,9 @@ require_once "./models/sanpham.php";
 require_once "./models/slide.php";
 require_once "./controllers/authController.php";
 require_once "./models/binhluan.php";
+require_once "./controllers/OrderController.php";
+require_once "./models/OrderModel.php";
 require_once "./controllers/CartController.php";
-
 
 $authController = new AuthController();
 $products = loadAll_sanpham_home();
@@ -51,6 +52,21 @@ if (isset($_GET['act'])) {
                 themBinhLuan($san_pham_id, $tai_khoan_id, $noi_dung);
                 header("Location: ?act=product-detail&id=" . $san_pham_id);
             }
+            break;
+
+        case 'checkout':
+            $orderController = new OrderController();
+            $orderController->checkout();
+            break;
+
+        case 'place-order':
+            $orderController = new OrderController();
+            $orderController->placeOrder();
+            break;
+
+        case 'my-orders':
+            $orderController = new OrderController();
+            $orderController->getMyOrders();
             break;
 
         case 'search':

@@ -6,6 +6,10 @@
             <a href="index.php?act=add-promotion" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Thêm khuyến mãi mới
             </a>
+            <a href="index.php?act=delete-expired-promotions" class="btn btn-danger" 
+               onclick="return confirm('Bạn có chắc muốn xóa tất cả khuyến mãi đã hết hạn?');">
+                Xóa khuyến mãi hết hạn
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -66,11 +70,7 @@
                                        class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="index.php?act=delete-promotion&id=<?= $promotion['khuyen_mai_id'] ?>" 
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Bạn có chắc muốn xóa khuyến mãi này?')">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    
                                 </td>
                             </tr>
                         <?php endforeach; ?>

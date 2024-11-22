@@ -28,53 +28,45 @@
             <?php endif; ?>
             
             <div class="table-responsive">
-                <table class="table table-bordered" id="orderTable" width="100%" cellspacing="0">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Mã đơn hàng</th>
+                            <th>Mã đơn</th>
                             <th>Khách hàng</th>
                             <th>Ngày đặt</th>
                             <th>Tổng tiền</th>
-                            <th>Thanh toán</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($orders as $order): ?>
-                        <tr>
-                            <td>#<?= $order['don_hang_id'] ?></td>
-                            <td><?= $order['ho_va_ten'] ?></td>
-                            <td><?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></td>
-                            <td><?= number_format($order['tong_tien']) ?>đ</td>
-                            <td>
-                                <?php if($order['trang_thai'] != 4): ?>
-                                    <?= $order['phuong_thuc_thanh_toan'] == 'online' ? 
-                                        '<span class="btn btn-success">Online</span>' : 
-                                        '<span class="btn btn-info">COD</span>' ?> 
-                                <?php else: ?>
-                                    <span class="btn btn-secondary">Đã hủy</span> 
-                                <?php endif; ?> 
-                            </td> 
-                            <td> 
-                                <?php 
-                                $status = ''; 
-                                switch($order['trang_thai']) { 
-                                    case 1: $status = '<span class="btn btn-warning">Chờ xử lý</span>'; break; 
-                                    case 2: $status = '<span class="btn btn-info">Đang xử lý</span>'; break;
-                                    case 3: $status = '<span class="btn btn-success">Đã hoàn thành</span>'; break;
-                                    case 4: $status = '<span class="btn btn-danger">Đã hủy</span>'; break;
-                                }
-                                echo $status;
-                                ?>
-                            </td>
-                            <td>
-                                <a href="index.php?act=view-order&id=<?= $order['don_hang_id'] ?>" 
-                                   class="btn btn-info btn-sm">
-                                    Xem chi tiết 
-                                </a>
-                            </td>
-                        </tr>
+                          
+                            
+                            <tr>
+                                <td>#<?= $order['don_hang_id'] ?></td>
+                                <td><?= $order['ho_va_ten'] ?></td>
+                                <td><?= date('d/m/Y', strtotime($order['ngay_dat'])) ?></td>
+                                <td><?= number_format($order['tong_tien'], 0, ',', '.') ?>đ</td>
+                                <td>
+                                    <?php
+                                    $trang_thai = [
+                                        0 => '<span class="badge bg-warning">Chờ xác nhận</span>',
+                                        1 => '<span class="badge bg-info">Đã xác nhận</span>',
+                                        2 => '<span class="badge bg-primary">Đang giao hàng</span>',
+                                        3 => '<span class="badge bg-success">Đã hoàn thành</span>',
+                                        4 => '<span class="badge bg-danger">Đã hủy</span>'
+                                    ];
+                                    echo $trang_thai[$order['trang_thai']] ?? '<span class="badge bg-secondary">Không xác định</span>';
+                                    ?>
+                                </td>
+                                <td>
+                                    <a href="index.php?act=view-order&id=<?= $order['don_hang_id'] ?>" 
+                                       class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </a>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

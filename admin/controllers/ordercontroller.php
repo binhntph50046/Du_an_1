@@ -1,7 +1,6 @@
 <?php
 class OrderController {
     private $orderModel;
-
     public function __construct() {
         $this->orderModel = new OrderModel();
     }
@@ -19,7 +18,6 @@ class OrderController {
     public function view($id) {
         $orderModel = new OrderModel();
         $orderData = $orderModel->getOrderDetail($id);
-        
         if ($orderData) {
             // Truyền dữ liệu sang view
             $data = [
@@ -28,7 +26,6 @@ class OrderController {
             ];
             include_once 'views/orders/view.php';
         } else {
-            // Xử lý khi không tìm thấy đơn hàng
             echo "Không tìm thấy đơn hàng";
         }
     }
@@ -46,9 +43,20 @@ class OrderController {
     public function deleteOrder() {
         if(isset($_POST['order_id'])) {
             $orderId = $_POST['order_id'];
-            $this->orderModel->deleteOrder($orderId);
+            $orderStatus = $this->orderModel->getOrderStatus($orderId);
+            if($orderStatus == 4) { 
+                $result = $this->orderModel->deleteOrder($orderId);
+                if($result) {
+                    $_SESSION['success'] = "Xóa đơn hàng thành công!";
+                } else {
+                    $_SESSION['error'] = "Có lỗi xảy ra khi xóa đơn hàng!";
+                }
+            } else {
+                $_SESSION['error'] = "Chỉ có thể xóa đơn hàng đã hủy!";
+            }
             header("Location: index.php?act=list-orders");
             exit();
         }
     }
 }
+  

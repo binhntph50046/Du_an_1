@@ -19,7 +19,6 @@ class OrderModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Lấy chi tiết một đơn hàng
     public function getOrderDetail($id) {
         try {
             // Lấy thông tin đơn hàng và khách hàng
@@ -113,14 +112,36 @@ class OrderModel {
         return $stmt->execute();
     }
     public function deleteOrder($orderId) {
-        // Xóa chi tiết đơn hàng trước
-        $sql1 = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = $orderId";
-        $stmt1 = $this->conn->prepare($sql1);
-        $stmt1->execute();
-        // Sau đó xóa đơn hàng
-        $sql2 = "DELETE FROM don_hang WHERE don_hang_id = $orderId";
-        $stmt2 = $this->conn->prepare($sql2);
-        return $stmt2->execute();
+        try {
+            $checkStatus = "SELECT trang_thai FROM don_hang WHERE don_hang_id = $orderId";
+            $stmtCheck = $this->conn->prepare($checkStatus);
+            $stmtCheck->execute();
+            $status = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+            if ($status && $status['trang_thai'] == 4) {
+                $this->conn->beginTransaction();
+                // Xóa chi tiết đơn hàng trước
+                $sql1 = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = $orderId";
+                $stmt1 = $this->conn->prepare($sql1);
+                $result1 = $stmt1->execute();
+                // Sau đó xóa đơn hàng
+                $sql2 = "DELETE FROM don_hang WHERE don_hang_id = $orderId";
+                $stmt2 = $this->conn->prepare($sql2);
+                $result2 = $stmt2->execute();
+                if ($result1 && $result2) {
+                    $this->conn->commit();
+                    return true;
+                }
+                $this->conn->rollBack();
+                return false;
+            }
+            return false; 
+        } catch (PDOException $e) {
+            if ($this->conn->inTransaction()) {
+                $this->conn->rollBack();
+            }
+            error_log($e->getMessage());
+            return false;
+        }
     }
     public function getOrdersByUserId($userId) {
         $sql = "SELECT dh.*, COUNT(ctdh.don_hang_id) as total_items 
@@ -145,8 +166,7 @@ class OrderModel {
                 OR tk.email LIKE :keyword
                 OR tk.so_dien_thoai LIKE :keyword
                 GROUP BY dh.don_hang_id
-                ORDER BY dh.ngay_dat DESC";
-        
+                ORDER BY dh.ngay_dat DESC";    
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':keyword' => "%$keyword%"]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -169,5 +189,12 @@ class OrderModel {
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':orderId' => $orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getOrderStatus($orderId) {
+        $sql = "SELECT trang_thai FROM don_hang WHERE don_hang_id = $orderId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$orderId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['trang_thai'] : null;
     }
 }

@@ -168,6 +168,9 @@ switch ($act) {
         $promotionController->delete($id);
         break;
 
+    case 'delete-expired-promotions':
+        $promotionController->deleteExpired();
+        break;
     default:
         break;
 }
