@@ -66,6 +66,7 @@ class ProductsController
                 $san_pham_id = $result['san_pham_id'];
                 $this->modelProducts->addProductImage($url, $san_pham_id);
             }
+            header("location: ?act=listProducts");
         }
     }
 

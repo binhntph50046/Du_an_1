@@ -23,6 +23,6 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a href="index.php?act=listRams" class="btn btn-secondary">Quay lại</a>
+        <a href="?act=listRams" class="btn btn-secondary">Quay lại</a>
     </form>
 </div> 

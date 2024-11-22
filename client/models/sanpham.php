@@ -9,8 +9,8 @@ function loadall_sanpham_home()
             LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
             GROUP BY sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.ngay_nhap, sp.mo_ta, 
                      sp.trang_thai, dm.ten_danh_muc, dm.danh_muc_id
-            ORDER BY sp.ngay_nhap DESC";
-            
+            ORDER BY sp.ten_san_pham DESC";
+
     $listsanpham = pdo_query($sql);
     return $listsanpham;
 }
@@ -24,12 +24,26 @@ function loadall_sanpham_top10()
             LIMIT 10";
     return pdo_query($sql);
 }
-function getProductById($id) {
-    $sql = "SELECT sp.*, hasp.hinh_sp, dm.ten_danh_muc
+function getProductById($id)
+{
+    increaseProductView($id);
+    
+    $sql = "SELECT sp.*, dm.ten_danh_muc,
+            (SELECT hinh_sp FROM hinh_anh_san_pham WHERE san_pham_id = sp.san_pham_id LIMIT 1) as hinh_sp
             FROM san_pham sp
-            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
             LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
-            WHERE sp.san_pham_id = ?
-            GROUP BY sp.san_pham_id";
-    return pdo_query_one($sql, $id);
+            WHERE sp.san_pham_id = ?";
+    $product = pdo_query_one($sql, $id);
+    
+    if ($product) {
+        $sql_ram = "SELECT * FROM ram WHERE trang_thai = 1";
+        $product['rams'] = pdo_query($sql_ram);
+    }
+    
+    return $product;
+}
+function increaseProductView($id)
+{
+    $sql = "UPDATE san_pham SET so_luot_xem = so_luot_xem + 1 WHERE san_pham_id = ?";
+    return pdo_execute($sql, $id);
 }
