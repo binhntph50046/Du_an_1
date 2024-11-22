@@ -3,6 +3,22 @@
     <div class="col">
         <div class="h-100">
             <div class="container" style="max-width:100%">
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background-color: #f8d7da; color: #721c24; border: none; border-radius: 3px;">
+                        <?= $_SESSION['error'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= $_SESSION['success'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                <?php endif; ?>
+
                 <h1>Danh Sách Sản Phẩm</h1>
                 <a href="./?act=formAddProducts" class="btn btn-primary" style="width: 170px;margin: 10px 0px;" >Thêm Sản Phẩm </a>
                 <div class="card">
