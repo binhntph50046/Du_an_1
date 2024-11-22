@@ -80,7 +80,6 @@
         <?php endif; ?>
     </div>
     <?php include "views/footer.php"; ?>
-<<<<<<< HEAD
     <script src="assets/js/slideShow.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -93,7 +92,5 @@
             }
         }, 3000);
     </script>
-=======
->>>>>>> a1bcd3fe28ebe0c6f0af96a94e9ac46c3db4eecc
 </body>
 </html>

@@ -68,12 +68,6 @@
             <div class="product-price">
                 <span class="current-price"><?= number_format($product['gia'], 0, ',', '.') ?>₫</span>
             </div>
-
-            <form action="?act=checkout" method="POST" class="product-actions">
-                <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
-                <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
-                <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
-                <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
                 
                 <!-- Chọn RAM -->
                 <div class="ram-selector">
@@ -104,14 +98,30 @@
                 </div>
 
                 <div class="button-group">
-                    <button type="submit" name="add-to-cart" class="btn-add-to-cart">
-                        <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-                    </button>
-                    <button type="submit" name="buy-now" class="btn-buy-now">
-                        <i class="fas fa-bolt"></i> Mua ngay
-                    </button>
+                    <form action="?act=add-to-cart" method="POST" class="d-inline">
+                        <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
+                        <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
+                        <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
+                        <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
+                        <input type="hidden" name="so_luong" id="cart_quantity" value="1">
+                        <input type="hidden" name="ram_id" id="cart_ram_id">
+                        <button type="submit" name="add-to-cart" class="btn-add-to-cart" onclick="return validateForm()">
+                            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                        </button>
+                    </form>
+                    
+                    <form action="?act=checkout" method="POST" class="d-inline">
+                        <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
+                        <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
+                        <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
+                        <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
+                        <input type="hidden" name="so_luong" id="buy_quantity">
+                        <input type="hidden" name="ram_id" id="selected_ram">
+                        <button type="submit" name="buy-now" class="btn-buy-now">
+                            <i class="fas fa-bolt"></i> Mua ngay
+                        </button>
+                    </form>
                 </div>
-            </form>
 
             <div class="product-description">
                 <h3>Mô tả sản phẩm</h3>
@@ -172,17 +182,55 @@
     <script>
     function decreaseQuantity() {
         var input = document.querySelector('input[name="so_luong"]');
+        var cartQuantityInput = document.getElementById('cart_quantity');
+        var buyQuantityInput = document.getElementById('buy_quantity');
         var value = parseInt(input.value);
         if (value > 1) {
-            input.value = value - 1;
+            value = value - 1;
+            input.value = value;
+            cartQuantityInput.value = value;
+            buyQuantityInput.value = value;
         }
     }
 
     function increaseQuantity() {
         var input = document.querySelector('input[name="so_luong"]');
+        var cartQuantityInput = document.getElementById('cart_quantity');
+        var buyQuantityInput = document.getElementById('buy_quantity');
         var value = parseInt(input.value);
         if (value < 10) {
-            input.value = value + 1;
+            value = value + 1;
+            input.value = value;
+            cartQuantityInput.value = value;
+            buyQuantityInput.value = value;
+        }
+    }
+
+    document.querySelectorAll('input[name="ram_id"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            document.getElementById('cart_ram_id').value = this.value;
+            document.getElementById('selected_ram').value = this.value;
+        });
+    });
+
+    function validateForm() {
+        var ramId = document.getElementById('cart_ram_id').value;
+        if (!ramId) {
+            alert('Vui lòng chọn dung lượng RAM');
+            return false;
+        }
+        return true;
+    }
+
+    window.onload = function() {
+        document.getElementById('cart_quantity').value = 1;
+        document.getElementById('buy_quantity').value = 1;
+        
+        var firstRam = document.querySelector('input[name="ram_id"]');
+        if (firstRam) {
+            firstRam.checked = true;
+            document.getElementById('cart_ram_id').value = firstRam.value;
+            document.getElementById('selected_ram').value = firstRam.value;
         }
     }
     </script>
