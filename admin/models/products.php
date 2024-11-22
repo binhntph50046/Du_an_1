@@ -42,13 +42,23 @@ class Products
     public function addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id)
     {
         try {
-            $this->conn->beginTransaction();
-            
+            // Debug SQL và parameters
             $sql = "INSERT INTO san_pham (ten_san_pham, gia, ngay_nhap, mo_ta, trang_thai, danh_muc_id) 
                     VALUES (:ten_san_pham, :gia, :ngay_nhap, :mo_ta, :trang_thai, :danh_muc_id)";
             
+            error_log("SQL Query: " . $sql);
+            error_log("Parameters: " . print_r([
+                ':ten_san_pham' => $ten_san_pham,
+                ':gia' => $gia,
+                ':ngay_nhap' => $ngay_nhap,
+                ':mo_ta' => $mo_ta,
+                ':trang_thai' => $trang_thai,
+                ':danh_muc_id' => $danh_muc_id
+            ], true));
+            
+            $this->conn->beginTransaction();
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
+            $result = $stmt->execute([
                 ':ten_san_pham' => $ten_san_pham,
                 ':gia' => $gia,
                 ':ngay_nhap' => $ngay_nhap,
@@ -57,10 +67,17 @@ class Products
                 ':danh_muc_id' => $danh_muc_id
             ]);
             
-            $san_pham_id = $this->conn->lastInsertId();
-            $this->conn->commit();
+            error_log("Execute result: " . ($result ? "Success" : "Failed"));
             
-            return ['san_pham_id' => $san_pham_id];
+            if ($result) {
+                $san_pham_id = $this->conn->lastInsertId();
+                error_log("New product ID: " . $san_pham_id);
+                $this->conn->commit();
+                return ['san_pham_id' => $san_pham_id];
+            }
+            
+            $this->conn->rollBack();
+            return false;
         } catch(PDOException $e) {
             $this->conn->rollBack();
             error_log("Lỗi thêm sản phẩm: " . $e->getMessage());
@@ -71,15 +88,15 @@ class Products
     public function addProductImage($url, $san_pham_id)
     {
         try {
-            $sql = 'INSERT INTO hinh_anh_san_pham (hinh_sp,san_pham_id) VALUES (:hinh_sp,:san_pham_id)';
+            $sql = 'INSERT INTO hinh_anh_san_pham (hinh_sp, san_pham_id) VALUES (:hinh_sp, :san_pham_id)';
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
+            return $stmt->execute([
                 ':hinh_sp' => $url,
                 ':san_pham_id' => $san_pham_id,
             ]);
-            return true;
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch(PDOException $e) {
+            error_log("Lỗi thêm hình ảnh sản phẩm: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -92,13 +109,17 @@ class Products
                 return false;
             }
 
-            $sql = 'SELECT * FROM san_pham 
-                    JOIN danh_muc ON san_pham.danh_muc_id = danh_muc.danh_muc_id
-                    JOIN hinh_anh_san_pham ON hinh_anh_san_pham.san_pham_id = san_pham.san_pham_id
-                    WHERE san_pham.san_pham_id = :idProduct';
+            // Sửa câu SQL để lấy đầy đủ thông tin sản phẩm
+            $sql = "SELECT sp.*, dm.ten_danh_muc, hasp.hinh_anh_id, hasp.hinh_sp 
+                    FROM san_pham sp
+                    LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
+                    LEFT JOIN hinh_anh_san_pham hasp ON hasp.san_pham_id = sp.san_pham_id
+                    WHERE sp.san_pham_id = :idProduct
+                    LIMIT 1";
 
             // Debug
-            error_log("Executing query for ID: " . $idProduct);
+            error_log("SQL Query: " . $sql);
+            error_log("Product ID: " . $idProduct);
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':idProduct' => $idProduct]);
@@ -106,11 +127,11 @@ class Products
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Debug kết quả
-            error_log("Query result: " . ($result ? "Found" : "Not found"));
+            error_log("Product data: " . print_r($result, true));
 
             return $result;
         } catch (\PDOException $e) {
-            error_log("Database error: " . $e->getMessage());
+            error_log("Database error in thongTinProduct: " . $e->getMessage());
             return false;
         }
     }
