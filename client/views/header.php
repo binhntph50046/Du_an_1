@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPT Shop - Điện thoại, Laptop, Phụ kiện chính hãng</title>
+    <title>IPHONE XỊN</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/client/Header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -21,7 +21,7 @@
                     <!-- Logo và Danh mục -->
                     <div class="col-md-3 d-flex align-items-center">
                         <a href="index.php" class="logo me-3">
-                            <img src="../Upload/Img/iphoneapple.jpg" alt="Logo">
+                            <img src="../Upload/Img/iphoneapple-removebg.png" alt="Logo">
                         </a>
                         <div class="category-dropdown">
                             <button class="category-btn" onclick="toggleCategoryMenu(event)">

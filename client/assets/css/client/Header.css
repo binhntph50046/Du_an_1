@@ -279,7 +279,7 @@ background: #cd1818;
     border-radius: 30px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    /* gap: 8px; */
     white-space: nowrap;
     color: white !important;
     position: relative;

@@ -14,11 +14,11 @@
 }
 .category-item h3, 
 .category-item h4 {
-    color: #003366;
+    color: #333;
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #003366;
+    border-bottom: 2px solid #333;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -249,11 +249,3 @@
     text-align: center;
     color: #666;
 }
-
-.category-item h3 {
-    margin: 20px 0;
-    padding-bottom: 10px;
-    /* border-bottom: 2px solid #cd1818; */
-    color: #333;
-    font-size: 24px;
-} 

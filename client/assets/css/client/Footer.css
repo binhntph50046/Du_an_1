@@ -1,5 +1,5 @@
 footer {
-    background: #090d14;
+    background: #111827;
     color: #fff;
     padding: 60px 0 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,7 +34,7 @@ footer {
     bottom: 0;
     width: 50px;
     height: 2px;
-    background: #7dd3fc;
+    background: #ffffff;
 }
 
 .contact-info .contact-item {
@@ -57,7 +57,7 @@ footer {
     align-items: center;
     justify-content: center;
     margin-right: 15px;
-    color: #7dd3fc;
+    color: #ffffff;
 }
 
 .footer-links {
@@ -117,7 +117,7 @@ footer {
     padding: 12px 25px;
     border: none;
     border-radius: 25px;
-    background: #7dd3fc;
+    background: #ffffff;
     color: #0c4a6e;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -211,7 +211,7 @@ footer {
 
 .payment-item i {
     font-size: 24px;
-    color: #7dd3fc;
+    color: #ffffff;
 }
 
 .payment-item:hover i {
