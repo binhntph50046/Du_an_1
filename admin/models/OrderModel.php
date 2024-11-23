@@ -100,48 +100,11 @@ class OrderModel {
         return $stmt->fetch(PDO::FETCH_ASSOC)['phuong_thuc_thanh_toan'];
     }
     public function updateOrderStatus($orderId, $status) {
-        // Kiểm tra phương thức thanh toán
-        $paymentMethod = $this->getPaymentMethod($orderId);
-        if ($paymentMethod == 'online' && $status == 2) {
-            $status = 3;
-        }
         $sql = "UPDATE don_hang 
                 SET trang_thai = $status, ngay_xu_ly = CURRENT_DATE 
                 WHERE don_hang_id = $orderId";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute();
-    }
-    public function deleteOrder($orderId) {
-        try {
-            $checkStatus = "SELECT trang_thai FROM don_hang WHERE don_hang_id = $orderId";
-            $stmtCheck = $this->conn->prepare($checkStatus);
-            $stmtCheck->execute();
-            $status = $stmtCheck->fetch(PDO::FETCH_ASSOC);
-            if ($status && $status['trang_thai'] == 4) {
-                $this->conn->beginTransaction();
-                // Xóa chi tiết đơn hàng trước
-                $sql1 = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = $orderId";
-                $stmt1 = $this->conn->prepare($sql1);
-                $result1 = $stmt1->execute();
-                // Sau đó xóa đơn hàng
-                $sql2 = "DELETE FROM don_hang WHERE don_hang_id = $orderId";
-                $stmt2 = $this->conn->prepare($sql2);
-                $result2 = $stmt2->execute();
-                if ($result1 && $result2) {
-                    $this->conn->commit();
-                    return true;
-                }
-                $this->conn->rollBack();
-                return false;
-            }
-            return false; 
-        } catch (PDOException $e) {
-            if ($this->conn->inTransaction()) {
-                $this->conn->rollBack();
-            }
-            error_log($e->getMessage());
-            return false;
-        }
     }
     public function getOrdersByUserId($userId) {
         $sql = "SELECT dh.*, COUNT(ctdh.don_hang_id) as total_items 
