@@ -11,7 +11,7 @@ class CartController {
 
     public function addToCart() {
         if(!isset($_SESSION['email'])) {
-            $_SESSION['error'] = 'Vui lòng đăng nhập để thêm vào giỏ hàng';
+            $_SESSION['error'] = '<i class="fas fa-exclamation-circle"></i> Vui lòng đăng nhập để thêm vào giỏ hàng';
             header('Location: ?act=login');
             exit;
         }
@@ -41,12 +41,12 @@ class CartController {
                     pdo_execute($insert_sql, $tai_khoan_id, $san_pham_id, $ram_id, $so_luong);
                 }
 
-                $_SESSION['success'] = 'Đã thêm sản phẩm vào giỏ hàng';
+                $_SESSION['success'] = '<i class="fas fa-check-circle"></i> Đã thêm sản phẩm vào giỏ hàng';
                 header('Location: ?act=cart');
                 exit;
 
             } catch(PDOException $e) {
-                $_SESSION['error'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+                $_SESSION['error'] = '<i class="fas fa-exclamation-circle"></i> Có lỗi xảy ra: ' . $e->getMessage();
                 header('Location: ?act=cart');
                 exit;
             }
