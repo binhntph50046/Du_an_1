@@ -76,8 +76,4 @@ class CartController {
         header('Location: ?act=cart');
         exit;
     }
-
-    public function updateCart() {
-        // Thêm phương thức cập nhật số lượng nếu cần
-    }
 } 

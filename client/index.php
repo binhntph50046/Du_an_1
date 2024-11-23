@@ -94,10 +94,6 @@ if (isset($_GET['act'])) {
             $cartController->addToCart();
             break;
 
-        case 'update-cart':
-            $cartController->updateCart();
-            break;
-
         case 'remove-cart-item':
             $cartController->removeCartItem();
             break;
