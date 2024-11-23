@@ -109,10 +109,13 @@ body {
     text-decoration: none;
 }
 
+
 .deal-bar {
-    background-color: #f2f2f2;
-    color: black;
-    padding: 10px;
+    background: #374151;
+    color: white;
+    padding: 8px 0;
+    text-align: center;
+    margin-top: 123px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,6 +124,7 @@ body {
 
 .deal-bar span {
     margin: 0 10px;
+    padding: 5px 0;
 }
 
 .deal-icon {
@@ -314,14 +318,6 @@ background: #cd1818;
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.deal-bar {
-    background: #374151;
-    color: white;
-    padding: 8px 0;
-    text-align: center;
-    margin-top: 123px;
 }
 
 @media (max-width: 992px) {

@@ -75,4 +75,50 @@ class AuthController {
             include "./views/forgot-password.php";
         }
     }
+
+    public function updateProfile() {
+        if (!isset($_SESSION['email'])) {
+            header('Location: ?act=login');
+            exit;
+        }
+
+        if (isset($_POST['update'])) {
+            $data = [
+                'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
+                'ho_va_ten' => $_POST['ho_va_ten'],
+                'so_dien_thoai' => $_POST['so_dien_thoai'],
+                'dia_chi' => $_POST['dia_chi']
+            ];
+
+            // Giữ lại ảnh cũ nếu không upload ảnh mới
+            if (!empty($_FILES['hinh']['name'])) {
+                $hinh = uploadFile($_FILES['hinh'], '../Upload/User/');
+                if ($hinh) {
+                    $data['hinh'] = $hinh;
+                    // Xóa ảnh cũ nếu không phải ảnh mặc định
+                    if ($_POST['hinh_cu'] != '../Upload/User/nam.jpg') {
+                        deleteFile($_POST['hinh_cu']);
+                    }
+                }
+            } else {
+                $data['hinh'] = $_POST['hinh_cu'];
+            }
+
+            // Xử lý mật khẩu nếu có thay đổi
+            if (!empty($_POST['mat_khau'])) {
+                $data['mat_khau'] = $_POST['mat_khau'];
+            }
+
+            if ($this->userModel->update($data)) {
+                // Cập nhật lại session
+                $_SESSION['email'] = $this->userModel->getUserById($data['tai_khoan_id']);
+                $_SESSION['success'] = "Cập nhật thông tin thành công!";
+            } else {
+                $_SESSION['error'] = "Có lỗi xảy ra khi cập nhật thông tin!";
+            }
+        }
+        
+        header('Location: ?act=profile');
+        exit;
+    }
 } 

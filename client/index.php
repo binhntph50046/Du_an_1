@@ -29,6 +29,14 @@ if (isset($_GET['act'])) {
             $authController->login();
             break;
 
+        case 'profile':
+            include "./views/profile.php";
+            break;
+
+        case 'update-profile':
+            $authController->updateProfile();
+            break;
+
         case 'logout':
             $authController->logout();
             break;
