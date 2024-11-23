@@ -81,6 +81,8 @@ if (isset($_GET['act'])) {
                 $products = loadall_sanpham_home();
                 include "./views/home.php";
             }
+            break;
+
         case 'cart':
             $cartController = new CartController();
             $cartController->showCart();
