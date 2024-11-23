@@ -98,6 +98,9 @@
                     <h5><?= $product['ten_san_pham'] ?></h5>
                     <p>Số lượng: <?= $so_luong ?></p>
                     <p>Giá: <?= number_format($product['gia'], 0, ',', '.') ?>₫</p>
+                    <?php if (isset($ram_info)): ?>
+                        <p>RAM: <?= $ram_info['dung_luong'] ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
 

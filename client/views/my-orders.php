@@ -19,37 +19,41 @@
                             <div>
                                 <span class="fw-bold">Mã đơn hàng: #<?php echo $order['ma_don_hang']; ?></span>
                             </div>
-                            <div class="order-status">
-                                <?php
-                                $statusClass = '';
-                                $statusText = '';
-                                switch ($order['trang_thai']) {
-                                    case 0:
-                                        $statusClass = 'text-secondary';
-                                        $statusText = 'Đã hủy';
-                                        break;
-                                    case 1:
-                                        $statusClass = 'text-warning';
-                                        $statusText = 'Chờ xác nhận';
-                                        break;
-                                    case 2:
-                                        $statusClass = 'text-primary';
-                                        $statusText = 'Đã xác nhận';
-                                        break;
-                                    case 3:
-                                        $statusClass = 'text-info';
-                                        $statusText = 'Đang giao hàng';
-                                        break;
-                                    case 4:
-                                        $statusClass = 'text-success';
-                                        $statusText = 'Đã giao hàng';
-                                        break;
-                                    default:
-                                        $statusClass = 'text-secondary';
-                                        $statusText = 'Không xác định';
-                                }
-                                ?>
-                                <span class="badge rounded-pill <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
+                            <div class="d-flex align-items-center">
+                                <div class="order-status me-3">
+                                    <?php
+                                    $statusClass = '';
+                                    $statusText = '';
+                                    $trang_thai = (int)$order['trang_thai'];
+                                    switch ($trang_thai) {
+                                        case 1:
+                                            $statusClass = 'bg-warning';
+                                            $statusText = 'Chờ xử lý';
+                                            break;
+                                        case 2:
+                                            $statusClass = 'bg-info';
+                                            $statusText = 'Đang xử lý';
+                                            break;
+                                        case 3:
+                                            $statusClass = 'bg-success';
+                                            $statusText = 'Đã hoàn thành';
+                                            break;
+                                        case 4:
+                                            $statusClass = 'bg-danger';
+                                            $statusText = 'Đã hủy';
+                                            break;
+                                        default:
+                                            $statusClass = 'bg-secondary';
+                                            $statusText = 'Không xác định';
+                                    }
+                                    ?>
+                                    <span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
+                                </div>
+                                <?php if ($order['trang_thai'] == 1): // Chỉ cho phép xóa đơn hàng ở trạng thái "Chờ xác nhận" ?>
+                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $order['ma_don_hang']; ?>)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="card-body">
@@ -171,4 +175,12 @@
     }
 }
 </style> 
+
+<script>
+function confirmDelete(orderId) {
+    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?')) {
+        window.location.href = `?act=delete-order&id=${orderId}`;
+    }
+}
+</script>
 <?php include 'footer.php'; ?>

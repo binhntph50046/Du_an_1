@@ -45,3 +45,95 @@ function createOrderDetail($data) {
         return false;
     }
 }
+
+function getRamById($ram_id) {
+    try {
+        $pdo = pdo_get_connection();
+        $sql = "SELECT * FROM ram WHERE ram_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$ram_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        return false;
+    }
+}
+
+function getOrderById($order_id) {
+    try {
+        $pdo = pdo_get_connection();
+        $sql = "SELECT * FROM don_hang WHERE don_hang_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        return false;
+    }
+}
+
+function deleteOrder($order_id) {
+    try {
+        $pdo = pdo_get_connection();
+        
+        // Bắt đầu transaction
+        $pdo->beginTransaction();
+        
+        // Xóa chi tiết đơn hàng trước
+        $sql = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+        
+        // Sau đó xóa đơn hàng
+        $sql = "DELETE FROM don_hang WHERE don_hang_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+        
+        // Commit transaction
+        $pdo->commit();
+        return true;
+    } catch(PDOException $e) {
+        // Rollback nếu có lỗi
+        $pdo->rollBack();
+        return false;
+    }
+}
+
+function getMyOrders($tai_khoan_id) {
+    try {
+        $sql = "SELECT dh.*, ctdh.*, sp.ten_san_pham, sp.hinh_sp, sp.gia 
+                FROM don_hang dh 
+                LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id 
+                LEFT JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id 
+                WHERE dh.tai_khoan_id = ? 
+                ORDER BY dh.ngay_dat DESC, dh.don_hang_id DESC";
+                
+        $orders = [];
+        $result = pdo_query($sql, $tai_khoan_id);
+        
+        foreach ($result as $row) {
+            if (!isset($orders[$row['don_hang_id']])) {
+                $orders[$row['don_hang_id']] = [
+                    'ma_don_hang' => $row['don_hang_id'],
+                    'ngay_dat' => $row['ngay_dat'],
+                    'trang_thai' => (int)$row['trang_thai'],
+                    'tong_tien' => $row['tong_tien'],
+                    'dia_chi' => $row['dia_chi'],
+                    'so_dien_thoai' => $row['so_dien_thoai'],
+                    'products' => []
+                ];
+            }
+            
+            if ($row['san_pham_id']) {
+                $orders[$row['don_hang_id']]['products'][] = [
+                    'ten_san_pham' => $row['ten_san_pham'],
+                    'hinh_sp' => $row['hinh_sp'],
+                    'so_luong' => $row['so_luong'],
+                    'gia' => $row['gia']
+                ];
+            }
+        }
+        
+        return array_values($orders);
+    } catch(PDOException $e) {
+        return [];
+    }
+}

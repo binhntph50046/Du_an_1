@@ -61,7 +61,7 @@ if (!$order || empty($items)) {
                                 <form action="index.php?act=update-order-status" method="POST" class="d-inline">
                                     <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
                                     <select name="status" class="form-control" onchange="this.form.submit()">
-                                        <option value="1" <?= $order['trang_thai'] == 1 ? 'selected' : '' ?>>Chờ xử lý</option>
+                                        <option value="1" <?= (!$order['trang_thai'] || $order['trang_thai'] == 1) ? 'selected' : '' ?>>Chờ xử lý</option>
                                         <option value="2" <?= $order['trang_thai'] == 2 ? 'selected' : '' ?>>Đang xử lý</option>
                                         <option value="3" <?= $order['trang_thai'] == 3 ? 'selected' : '' ?>>Đã hoàn thành</option>
                                         <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hủy</option>
@@ -134,17 +134,7 @@ if (!$order || empty($items)) {
                     </div>
                 </div>
             </div>
-            <?php if($order['trang_thai'] == 4): ?>
-            <div class="text-right">
-                <form action="index.php?act=delete-order" method="POST" class="d-inline" 
-                      onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn hàng này?');">
-                    <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fas fa-trash"></i> Xóa đơn hàng
-                    </button>
-                </form>
-            </div>
-            <?php endif; ?>
+           
         </div>
     </div>
 </div>

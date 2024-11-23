@@ -16,6 +16,7 @@ $authController = new AuthController();
 $products = loadAll_sanpham_home();
 $dstop10 = loadAll_sanpham_top10();
 $listSlides = getSlides();
+$cartController = new CartController();
 
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -68,8 +69,10 @@ if (isset($_GET['act'])) {
             $orderController = new OrderController();
             $orderController->getMyOrders();
             break;
-        
-        
+        case 'delete-order':
+            $orderController = new OrderController();
+            $orderController->deleteOrder();
+            break;
 
         case 'search':
             if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
@@ -84,12 +87,10 @@ if (isset($_GET['act'])) {
             break;
 
         case 'cart':
-            $cartController = new CartController();
             $cartController->showCart();
             break;
 
         case 'add-to-cart':
-            $cartController = new CartController();
             $cartController->addToCart();
             break;
 
@@ -99,6 +100,11 @@ if (isset($_GET['act'])) {
 
         case 'remove-cart-item':
             $cartController->removeCartItem();
+            break;
+
+        case 'process-cart-order':
+            $orderController = new OrderController();
+            $orderController->processCartOrder();
             break;
 
         default:
