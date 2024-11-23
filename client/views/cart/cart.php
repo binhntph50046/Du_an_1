@@ -59,6 +59,24 @@
 <body>
     <?php include "views/header.php"; ?>
     
+    <div class="messages position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1000;">
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <?= $_SESSION['success'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?php unset($_SESSION['success']) ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <?= $_SESSION['error'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <?php unset($_SESSION['error']) ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    
     <div class="container py-5">
         <div class="row">
             <div class="col-12">
@@ -187,5 +205,18 @@
     </div>
 
     <?php include "views/footer.php"; ?>
+
+    <script>
+        // Tự động ẩn alert sau 3 giây
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 3000);
+        });
+    </script>
 </body>
 </html> 

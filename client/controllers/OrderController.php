@@ -114,7 +114,7 @@ class OrderController {
                     ];
 
                     if (createOrderDetail($order_detail)) {
-                        $_SESSION['success'] = "Đặt hàng thành công!";
+                        $_SESSION['success'] = '<i class="fas fa-check-circle"></i> Đặt hàng thành công!';
                         header('Location: ?act=my-orders');
                         exit;
                     }
