@@ -10,7 +10,7 @@ body {
 }
 
 .top-bar {
-    background-color: #66CDAA;
+    /* background-color: #66CDAA; */
     height: 80px;
     display: flex;
     align-items: center;
@@ -209,7 +209,7 @@ body {
 }
 
 .header-top {
-    background: linear-gradient(135deg, #0ea5e9, #0369a1, #0c4a6e);
+    background: #111827;
     padding: 12px 0;
     position: fixed;
     top: 0;
@@ -222,7 +222,7 @@ body {
 }
 
 .logo img {
-    width: 100px;
+    width: 80px;
     height: auto;
 }
 
@@ -233,11 +233,15 @@ body {
 }
 
 .search-input {
+    background-color: #374151;
     width: 100%;
-    padding: 12px 45px 12px 20px;
+    padding: 12px;
     border-radius: 25px;
-    border: 2px solid #e0e0e0;
+    border: none;
     font-size: 15px;
+}
+.custom-input1::placeholder {
+    color: #c3c6ca; 
 }
 
 .btn-search {
@@ -253,10 +257,10 @@ body {
     justify-content: center;
     border: none;
 }
-.btn-search:hover{
+/* .btn-search:hover{
 background: #cd1818;
     color: white;
-}
+} */
 .user-actions {
     display: flex;
     justify-content: flex-end;
@@ -270,6 +274,9 @@ background: #cd1818;
 }
 
 .action-link {
+    background-color: #374151;
+    padding: 12px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -285,10 +292,10 @@ background: #cd1818;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.action-link:hover i,
+/* .action-link:hover i,
 .action-link:hover span {
     color: #ffeb3b;
-}
+} */
 
 .action-link i,
 .action-link span {
@@ -310,11 +317,11 @@ background: #cd1818;
 }
 
 .deal-bar {
-    background: #cd1818;
+    background: #374151;
     color: white;
     padding: 8px 0;
     text-align: center;
-    margin-top: 122px;
+    margin-top: 123px;
 }
 
 @media (max-width: 992px) {
@@ -334,8 +341,8 @@ background: #cd1818;
 
 .category-btn {
     width: auto;
-    padding: 8px 15px;
-    background: #cd1818;
+    padding: 12px;
+    background: #374151;
     border: none;
     border-radius: 25px;
     color: white;
@@ -347,7 +354,6 @@ background: #cd1818;
 }
 
 .category-btn:hover {
-    background: #b31515;
     transform: translateY(-2px);
 }
 
@@ -505,7 +511,7 @@ background: #cd1818;
     width: 100%;
 }
 
-.search-input {
+/* .search-input {
     width: 100%;
     padding: 12px 20px;
     border: 2px solid #e0e0e0;
@@ -513,24 +519,24 @@ background: #cd1818;
     font-size: 15px;
     outline: none;
     transition: all 0.3s ease;
-}
+} */
 
-.search-input:focus {
+/* .search-input:focus {
     border-color: #cd1818;
-}
+} */
 
 .btn-search {
-    padding: 12px 25px;
-    background: #cd1818;
-    color: white;
+    /* padding: 12px 20px; */
+    background: #ffffff;
+    color: #6b7280;
     border: none;
-    border-radius: 0 25px 25px 0;
+    border-radius: 29px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .btn-search:hover {
-    background: #b31515;
+    background: #ffffff;
 }
 
 .btn-search i {
@@ -678,7 +684,7 @@ background: #cd1818;
 .account-trigger:hover i,
 .account-trigger:hover span,
 .account-trigger:hover .avatar-small {
-    color: #ffeb3b;
+    /* color: #ffeb3b; */
     filter: brightness(1.1);
 }
 
@@ -689,8 +695,8 @@ background: #cd1818;
 }
 
 .avatar-small {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -742,13 +748,6 @@ background: #cd1818;
     white-space: nowrap;
 }
 
-.avatar-small {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
 .account-dropdown {
     min-width: 200px;
     padding: 8px 0;
@@ -781,13 +780,6 @@ background: #cd1818;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-.avatar-small {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .account-trigger {
@@ -838,7 +830,7 @@ background: #cd1818;
 }
 
 .cart-link:hover {
-    color: #ffeb3b;
+    /* color: #ffeb3b; */
     transform: translateY(-2px);
 }
 
@@ -846,7 +838,7 @@ background: #cd1818;
     position: absolute;
     top: -8px;
     right: -8px;
-    background: #ff4444;
+    /* background: #ff4444; */
     color: white;
     border-radius: 50%;
     width: 20px;

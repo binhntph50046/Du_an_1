@@ -21,7 +21,7 @@
                     <!-- Logo và Danh mục -->
                     <div class="col-md-3 d-flex align-items-center">
                         <a href="index.php" class="logo me-3">
-                            <img src="../Upload/Img/logoip.png" alt="Logo">
+                            <img src="../Upload/Img/iphoneapple.jpg" alt="Logo">
                         </a>
                         <div class="category-dropdown">
                             <button class="category-btn" onclick="toggleCategoryMenu(event)">
@@ -57,7 +57,7 @@
                     <div class="col-md-6">
                         <div class="search-wrapper">
                             <form action="index.php" method="GET" class="search-form">
-                                <input type="text" name="keyword" class="form-control search-input" 
+                                <input type="text" name="keyword" class="form-control search-input custom-input1" 
                                        placeholder="Bạn cần tìm gì hôm nay?" required
                                        value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>">
                                 <input type="hidden" name="act" value="search">
