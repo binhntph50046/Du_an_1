@@ -81,11 +81,11 @@ class OrderController {
             // Tạo đơn hàng mới
             $order_data = [
                 'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
-                'ho_va_ten' => $_SESSION['email']['ho_va_ten'],
+                'ho_va_ten' => $_SESSION['email']['ho_va_ten'], 
                 'email' => $_SESSION['email']['email'],
                 'so_dien_thoai' => $checkout_data['so_dien_thoai'],
                 'dia_chi' => $checkout_data['dia_chi'],
-                'tong_tien' => $checkout_data['total'] + 30000, // Cộng thêm phí vận chuyển
+                'tong_tien' => $checkout_data['total'] + 30000,
                 'phuong_thuc_thanh_toan' => 1,
                 'trang_thai' => 1
             ];
@@ -93,6 +93,9 @@ class OrderController {
             $order_id = createOrder($order_data);
 
             if ($order_id) {
+                // Tạo mảng chứa các ID sản phẩm đã chọn
+                $selected_items = [];
+                
                 foreach ($checkout_data['cart_items'] as $item) {
                     $order_detail = [
                         'don_hang_id' => $order_id,
@@ -102,22 +105,26 @@ class OrderController {
                         'ram_id' => $item['ram_id']
                     ];
                     createOrderDetail($order_detail);
+                    
+                    // Thêm vào mảng sản phẩm đã chọn
+                    $selected_items[] = "tai_khoan_id = {$_SESSION['email']['tai_khoan_id']} AND san_pham_id = {$item['san_pham_id']} AND ram_id = {$item['ram_id']}";
                 }
 
-                // Xóa giỏ hàng
-                $sql = "DELETE FROM gio_hang WHERE tai_khoan_id = ?";
-                pdo_execute($sql, $_SESSION['email']['tai_khoan_id']);
+                // Xóa chỉ những sản phẩm đã chọn khỏi giỏ hàng
+                if (!empty($selected_items)) {
+                    $conditions = implode(' OR ', $selected_items);
+                    $sql = "DELETE FROM gio_hang WHERE " . $conditions;
+                    pdo_execute($sql);
+                }
 
-                // Xóa dữ liệu checkout khỏi session
                 unset($_SESSION['checkout_data']);
-
                 $_SESSION['success'] = "Đặt hàng thành công!";
                 header('Location: ?act=my-orders');
                 exit;
             }
         } catch (Exception $e) {
             $_SESSION['error'] = "Có lỗi xảy ra: " . $e->getMessage();
-            header('Location: ?act=checkout');
+            header('Location: ?act=cart');
             exit;
         }
     }
