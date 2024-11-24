@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,55 +11,56 @@
 </head>
 <style>
     .cart-item {
-    transition: all 0.3s ease;
-}
+        transition: all 0.3s ease;
+    }
 
-.cart-item:hover {
-    background-color: #f8f9fa;
-}
+    .cart-item:hover {
+        background-color: #f8f9fa;
+    }
 
-.cart-item img {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-}
+    .cart-item img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 
-.btn-outline-danger {
-    transition: all 0.2s ease;
-}
+    .btn-outline-danger {
+        transition: all 0.2s ease;
+    }
 
-.btn-outline-danger:hover {
-    transform: scale(1.05);
-}
+    .btn-outline-danger:hover {
+        transform: scale(1.05);
+    }
 
-.card {
-    border: none;
-    border-radius: 10px;
-}
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
 
-.card-body {
-    padding: 1.5rem;
-}
+    .card-body {
+        padding: 1.5rem;
+    }
 
-.form-control {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-}
+    .form-control {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+    }
 
-.form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
-}
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+    }
 
-.btn-primary {
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+    .btn-primary {
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
 </style>
+
 <body>
     <?php include "views/header.php"; ?>
-    
+
     <div class="messages position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1000;">
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success alert-dismissible fade show">
@@ -76,22 +78,22 @@
             </div>
         <?php endif; ?>
     </div>
-    
+
     <div class="container py-5">
         <div class="row">
             <div class="col-12">
                 <h2 class="mb-4 fw-bold">Giỏ hàng của bạn</h2>
-                
+
                 <?php
                 // Kiểm tra đăng nhập
-                if(!isset($_SESSION['email'])) {
+                if (!isset($_SESSION['email'])) {
                     echo '<div class="alert alert-warning">Vui lòng đăng nhập để xem giỏ hàng</div>';
                     exit;
                 }
 
                 try {
                     $tai_khoan_id = $_SESSION['email']['tai_khoan_id'];
-                    
+
                     // Truy vấn lấy thông tin giỏ hàng
                     $sql = "SELECT g.*, sp.ten_san_pham, sp.gia, hasp.hinh_sp as hinh_sp, r.dung_luong 
                            FROM gio_hang g
@@ -100,15 +102,15 @@
                            JOIN ram r ON g.ram_id = r.ram_id
                            WHERE g.tai_khoan_id = ?
                            GROUP BY g.gio_hang_id";
-                    
+
                     $cartItems = pdo_query($sql, $tai_khoan_id);
-                    
+
                     // Tính tổng tiền
                     $totalAmount = 0;
-                    foreach($cartItems as $item) {
+                    foreach ($cartItems as $item) {
                         $totalAmount += $item['gia'] * $item['so_luong'];
                     }
-                } catch(PDOException $e) {
+                } catch (PDOException $e) {
                     echo '<div class="alert alert-danger">Có lỗi xảy ra: ' . $e->getMessage() . '</div>';
                     exit;
                 }
@@ -121,6 +123,9 @@
                                 <div class="card-body">
                                     <?php foreach ($cartItems as $key => $item): ?>
                                         <div class="row align-items-center mb-4 cart-item">
+                                            <div class="col-md-1">
+                                                <input type="checkbox" class="cart-checkbox" data-id="<?= $item['gio_hang_id'] ?>" data-price="<?= $item['gia'] * $item['so_luong'] ?>">
+                                            </div>
                                             <div class="col-md-2">
                                                 <img src="<?= $item['hinh_sp'] ?>" class="img-fluid rounded" alt="<?= $item['ten_san_pham'] ?>">
                                             </div>
@@ -147,14 +152,14 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-4">
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h4 class="card-title mb-4">Tổng đơn hàng</h4>
                                     <div class="d-flex justify-content-between mb-3">
                                         <span>Tạm tính:</span>
-                                        <span class="fw-bold"><?= number_format($totalAmount, 0, ',', '.') ?>₫</span>
+                                        <span class="fw-bold subtotal-amount">0₫</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-3">
                                         <span>Phí vận chuyển:</span>
@@ -163,29 +168,29 @@
                                     <hr>
                                     <div class="d-flex justify-content-between mb-4">
                                         <span class="fw-bold">Tổng cộng:</span>
-                                        <span class="text-primary fw-bold fs-5"><?= number_format($totalAmount + 30000, 0, ',', '.') ?>₫</span>
+                                        <span class="text-primary fw-bold fs-5 total-amount">30.000₫</span>
                                     </div>
-                                    
+
                                     <form action="?act=process-cart-order" method="POST">
                                         <input type="hidden" name="tong_tien" value="<?= $totalAmount + 30000 ?>">
                                         <?php foreach ($cartItems as $item): ?>
                                             <input type="hidden" name="cart_items[]" value="<?= htmlspecialchars(json_encode([
-                                                'san_pham_id' => $item['san_pham_id'],
-                                                'ram_id' => $item['ram_id'],
-                                                'so_luong' => $item['so_luong'],
-                                                'gia' => $item['gia']
-                                            ])) ?>">
+                                                                                                'san_pham_id' => $item['san_pham_id'],
+                                                                                                'ram_id' => $item['ram_id'],
+                                                                                                'so_luong' => $item['so_luong'],
+                                                                                                'gia' => $item['gia']
+                                                                                            ])) ?>">
                                         <?php endforeach; ?>
                                         <div class="mb-3">
                                             <input type="text" name="dia_chi" class="form-control" placeholder="Địa chỉ giao hàng" required
-                                                   value="<?= isset($_SESSION['email']['dia_chi']) ? $_SESSION['email']['dia_chi'] : '' ?>">
+                                                value="<?= isset($_SESSION['email']['dia_chi']) ? $_SESSION['email']['dia_chi'] : '' ?>">
                                         </div>
                                         <div class="mb-4">
                                             <input type="tel" name="so_dien_thoai" class="form-control" placeholder="Số điện thoại" required
-                                                   value="<?= isset($_SESSION['email']['so_dien_thoai']) ? $_SESSION['email']['so_dien_thoai'] : '' ?>">
+                                                value="<?= isset($_SESSION['email']['so_dien_thoai']) ? $_SESSION['email']['so_dien_thoai'] : '' ?>">
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100 py-2">
-                                            Đặt hàng ngay
+                                        <button type="submit" class="btn btn-primary w-100 py-2" id="confirmOrderBtn" disabled>
+                                            Xác nhận đơn hàng
                                         </button>
                                     </form>
                                 </div>
@@ -217,6 +222,66 @@
                 });
             }, 3000);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.cart-checkbox');
+            const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+            let selectedTotal = 0;
+            let selectedItems = [];
+
+            // Cập nhật form khi checkbox thay đổi
+            function updateForm() {
+                const form = document.querySelector('form[action="?act=process-cart-order"]');
+                const cartItemsInputs = form.querySelectorAll('input[name="cart_items[]"]');
+
+                // Ẩn tất cả cart items inputs
+                cartItemsInputs.forEach(input => {
+                    input.disabled = true;
+                });
+
+                // Chỉ enable những input của sản phẩm được chọn
+                selectedItems.forEach(cartId => {
+                    const itemIndex = Array.from(checkboxes).findIndex(cb => cb.dataset.id === cartId);
+                    if (itemIndex !== -1) {
+                        cartItemsInputs[itemIndex].disabled = false;
+                    }
+                });
+            }
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const price = parseFloat(this.dataset.price);
+                    const cartId = this.dataset.id;
+
+                    if (this.checked) {
+                        selectedTotal += price;
+                        selectedItems.push(cartId);
+                    } else {
+                        selectedTotal -= price;
+                        selectedItems = selectedItems.filter(id => id !== cartId);
+                    }
+
+                    // Cập nhật trạng thái nút và tổng tiền
+                    confirmOrderBtn.disabled = selectedItems.length === 0;
+
+                    // Cập nhật hiển thị tổng tiền
+                    const shippingFee = 30000;
+                    const finalTotal = selectedTotal + (selectedItems.length > 0 ? shippingFee : 0);
+
+                    document.querySelector('.subtotal-amount').textContent =
+                        new Intl.NumberFormat('vi-VN').format(selectedTotal) + '₫';
+                    document.querySelector('.total-amount').textContent =
+                        new Intl.NumberFormat('vi-VN').format(finalTotal) + '₫';
+
+                    // Cập nhật input hidden tổng tiền
+                    document.querySelector('input[name="tong_tien"]').value = finalTotal;
+
+                    // Cập nhật form
+                    updateForm();
+                });
+            });
+        });
     </script>
 </body>
-</html> 
+
+</html>
