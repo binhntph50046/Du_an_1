@@ -16,6 +16,7 @@ $authController = new AuthController();
 $products = loadAll_sanpham_home();
 $dstop10 = loadAll_sanpham_top10();
 $listSlides = getSlides();
+$cartController = new CartController();
 
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -26,6 +27,14 @@ if (isset($_GET['act'])) {
 
         case 'login':
             $authController->login();
+            break;
+
+        case 'profile':
+            include "./views/profile.php";
+            break;
+
+        case 'update-profile':
+            $authController->updateProfile();
             break;
 
         case 'logout':
@@ -68,8 +77,10 @@ if (isset($_GET['act'])) {
             $orderController = new OrderController();
             $orderController->getMyOrders();
             break;
-        
-        
+        case 'delete-order':
+            $orderController = new OrderController();
+            $orderController->deleteOrder();
+            break;
 
         case 'search':
             if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
@@ -96,21 +107,25 @@ if (isset($_GET['act'])) {
             
             break;
         case 'cart':
-            $cartController = new CartController();
             $cartController->showCart();
             break;
 
         case 'add-to-cart':
-            $cartController = new CartController();
             $cartController->addToCart();
-            break;
-
-        case 'update-cart':
-            $cartController->updateCart();
             break;
 
         case 'remove-cart-item':
             $cartController->removeCartItem();
+            break;
+
+        case 'checkout':
+            $orderController = new OrderController();
+            $orderController->checkout();
+            break;
+
+        case 'place-order':
+            $orderController = new OrderController();
+            $orderController->placeOrder();
             break;
 
         default:

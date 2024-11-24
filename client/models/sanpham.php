@@ -9,7 +9,7 @@ function loadall_sanpham_home()
             LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
             GROUP BY sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.ngay_nhap, sp.mo_ta, 
                      sp.trang_thai, dm.ten_danh_muc, dm.danh_muc_id
-            ORDER BY sp.ten_san_pham DESC";
+            ORDER BY sp.ten_san_pham DESC LIMIT 10";
 
     $listsanpham = pdo_query($sql);
     return $listsanpham;

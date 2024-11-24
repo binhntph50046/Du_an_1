@@ -84,5 +84,40 @@ class User {
             return null;
         }
     }
+
+    public function update($data) {
+        try {
+            $fields = [];
+            $values = [];
+            
+            foreach ($data as $key => $value) {
+                if ($key !== 'tai_khoan_id') {
+                    $fields[] = "$key = :$key";
+                    $values[$key] = $value;
+                }
+            }
+            
+            $values['tai_khoan_id'] = $data['tai_khoan_id'];
+            
+            $sql = "UPDATE tai_khoan SET " . implode(', ', $fields) . 
+                   " WHERE tai_khoan_id = :tai_khoan_id";
+                   
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute($values);
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getById($id) {
+        try {
+            $sql = "SELECT * FROM tai_khoan WHERE tai_khoan_id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch();
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
 }
 ?>

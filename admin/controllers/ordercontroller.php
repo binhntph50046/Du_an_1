@@ -39,24 +39,5 @@ class OrderController {
         header("Location: index.php?act=list-orders");
         exit();
     }
-    // Xóa đơn hàng
-    public function deleteOrder() {
-        if(isset($_POST['order_id'])) {
-            $orderId = $_POST['order_id'];
-            $orderStatus = $this->orderModel->getOrderStatus($orderId);
-            if($orderStatus == 4) { 
-                $result = $this->orderModel->deleteOrder($orderId);
-                if($result) {
-                    $_SESSION['success'] = "Xóa đơn hàng thành công!";
-                } else {
-                    $_SESSION['error'] = "Có lỗi xảy ra khi xóa đơn hàng!";
-                }
-            } else {
-                $_SESSION['error'] = "Chỉ có thể xóa đơn hàng đã hủy!";
-            }
-            header("Location: index.php?act=list-orders");
-            exit();
-        }
-    }
 }
   

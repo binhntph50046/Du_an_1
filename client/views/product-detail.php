@@ -98,26 +98,22 @@
                 </div>
 
                 <div class="button-group">
-                    <form action="?act=add-to-cart" method="POST" class="d-inline">
+                    <form action="?act=add-to-cart" method="POST" class="d-inline" onsubmit="return validateForm()">
                         <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
-                        <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
-                        <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
-                        <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
                         <input type="hidden" name="so_luong" id="cart_quantity" value="1">
                         <input type="hidden" name="ram_id" id="cart_ram_id">
-                        <button type="submit" name="add-to-cart" class="btn-add-to-cart" onclick="return validateForm()">
+                        <button type="submit" class="btn-add-to-cart">
                             <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
                         </button>
                     </form>
                     
-                    <form action="?act=checkout" method="POST" class="d-inline">
+                    <form action="?act=checkout" method="POST" class="d-inline" onsubmit="return validateForm()">
                         <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
-                        <input type="hidden" name="ten_san_pham" value="<?= $product['ten_san_pham'] ?>">
                         <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
-                        <input type="hidden" name="hinh_sp" value="<?= $product['hinh_sp'] ?>">
-                        <input type="hidden" name="so_luong" id="buy_quantity">
+                        <input type="hidden" name="so_luong" id="buy_quantity" value="1">
                         <input type="hidden" name="ram_id" id="selected_ram">
-                        <button type="submit" name="buy-now" class="btn-buy-now">
+                        <input type="hidden" name="buy-now" value="1">
+                        <button type="submit" class="btn-buy-now">
                             <i class="fas fa-bolt"></i> Mua ngay
                         </button>
                     </form>

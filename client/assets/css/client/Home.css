@@ -14,11 +14,11 @@
 }
 .category-item h3, 
 .category-item h4 {
-    color: #003366;
+    color: #333;
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #003366;
+    border-bottom: 2px solid #333;
     text-transform: uppercase;
     font-weight: bold;
 }
@@ -39,6 +39,7 @@
     text-decoration: none;
     color: inherit;
     display: block;
+    position: relative;
 }
 
 .product-box:hover {
@@ -66,10 +67,45 @@
     color: #ff4444;
     font-size: 18px;
     font-weight: bold;
+    position: relative;
 }
 
 .product-price span {
     font-size: 14px;
+}
+
+.price-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+}
+
+.discounted-price {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.current-price {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.discount-badge {
+    position: absolute;
+    top: -25px;
+    right: 0;
+    background-color: #ff0000;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
@@ -180,12 +216,12 @@
     width: 100%;
 }
 
-.search-form .search-input {
+/* .search-form .search-input {
     border-radius: 25px 0 0 25px;
     border-right: none;
-}
+} */
 
-.search-form .btn-search {
+/* .search-form .btn-search {
     border-radius: 0 25px 25px 0;
     background: #cd1818;
     color: white;
@@ -195,7 +231,7 @@
 
 .search-form .btn-search:hover {
     background: #b31515;
-}
+} */
 
 .alert {
     padding: 15px;
@@ -213,11 +249,3 @@
     text-align: center;
     color: #666;
 }
-
-.category-item h3 {
-    margin: 20px 0;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #cd1818;
-    color: #333;
-    font-size: 24px;
-} 
