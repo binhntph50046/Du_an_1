@@ -60,3 +60,26 @@ function search_products($keyword) {
     $keyword = "%{$keyword}%";
     return pdo_query($sql, $keyword);
 }
+function search_products_by_category($category) {
+    $sql = "SELECT sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.mo_ta, sp.trang_thai,
+            MIN(hasp.hinh_sp) as hinh_sp,
+            dm.ten_danh_muc
+            FROM san_pham sp
+            LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+            LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
+            WHERE sp.trang_thai = 1 
+            AND LOWER(dm.ten_danh_muc) LIKE LOWER(?)
+            GROUP BY sp.san_pham_id, sp.ten_san_pham, sp.gia, sp.mo_ta, sp.trang_thai, dm.ten_danh_muc
+            ORDER BY sp.ten_san_pham ASC";
+            
+    $category = "%{$category}%";
+    $products = pdo_query($sql, $category);
+    
+    // Debug
+    if (empty($products)) {
+        error_log("Không tìm thấy sản phẩm cho danh mục: " . $category);
+        error_log("SQL Query: " . $sql);
+    }
+    
+    return $products;
+}

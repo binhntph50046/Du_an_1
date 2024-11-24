@@ -29,23 +29,23 @@
                                 <span>Danh mục</span>
                             </button>
                             <div class="category-menu" id="categoryDropdown">
-                                <a class="dropdown-item" href="?model=iphone15">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 15">
                                     <i class="fab fa-apple"></i>
                                     iPhone 15 Series
                                 </a>
-                                <a class="dropdown-item" href="?model=iphone14">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 14">
                                     <i class="fab fa-apple"></i>
                                     iPhone 14 Series
                                 </a>
-                                <a class="dropdown-item" href="?model=iphone13">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 13">
                                     <i class="fab fa-apple"></i>
                                     iPhone 13 Series
                                 </a>
-                                <a class="dropdown-item" href="?model=iphone12">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 12">
                                     <i class="fab fa-apple"></i>
                                     iPhone 12 Series
                                 </a>
-                                <a class="dropdown-item" href="?model=iphone11">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 11">
                                     <i class="fab fa-apple"></i>
                                     iPhone 11 Series
                                 </a>

@@ -77,10 +77,24 @@ if (isset($_GET['act'])) {
                 $products = search_products($keyword);
                 $searchTitle = "Kết quả tìm kiếm cho: \"" . htmlspecialchars($keyword) . "\"";
                 include "./views/home.php";
-            } else {
+            } 
+            else if (isset($_GET['category'])) {
+                $category = $_GET['category'];
+                error_log("Đang tìm kiếm danh mục: " . $category);
+                
+                $products = search_products_by_category($category);
+                $searchTitle = htmlspecialchars($category) . " Series";
+                
+                error_log("Số sản phẩm tìm thấy: " . count($products));
+                
+                include "./views/home.php";
+            }
+            else {
                 $products = loadall_sanpham_home();
                 include "./views/home.php";
             }
+            
+            break;
         case 'cart':
             $cartController = new CartController();
             $cartController->showCart();
