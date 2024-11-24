@@ -101,20 +101,12 @@ if (!$order || empty($items)) {
                                             <?php endif; ?>
                                             <div>
                                                 <div class="font-weight-bold"><?= $item['ten_san_pham'] ?></div>
-                                                <?php if (!empty($item['phan_tram_giam'])): ?>
-                                                    <small class="text-danger">Giảm <?= $item['phan_tram_giam'] ?>%</small>
-                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-center"><?= $item['so_luong'] ?></td>
                                     <td class="text-right">
-                                        <?php if (!empty($item['gia_sau_khuyen_mai']) && $item['gia_sau_khuyen_mai'] != $item['gia_goc']): ?>
-                                            <del class="text-muted small"><?= number_format($item['gia_goc'], 0, ',', '.') ?>đ</del><br>
-                                            <?= number_format($item['gia_sau_khuyen_mai'], 0, ',', '.') ?>đ
-                                        <?php else: ?>
-                                            <?= number_format($item['gia_goc'], 0, ',', '.') ?>đ
-                                        <?php endif; ?>
+                                        <?= number_format($item['gia_goc'], 0, ',', '.') ?>đ
                                     </td>
                                     <td class="text-right font-weight-bold">
                                         <?= number_format($item['thanh_tien'], 0, ',', '.') ?>đ

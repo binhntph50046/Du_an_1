@@ -10,7 +10,7 @@ include '../admin/models/users.php';
 include '../admin/models/OrderModel.php';
 include '../admin/models/comment.php';
 include '../admin/models/ram.php';
-include '../admin/models/PromotionModel.php';
+
 
 include '../admin/controllers/categoryController.php';
 include '../admin/controllers/slideController.php';
@@ -20,7 +20,7 @@ include '../admin/controllers/OrderController.php';
 include '../admin/controllers/commentController.php';
 include '../admin/controllers/DashboardController.php';
 include '../admin/controllers/ramController.php';
-include '../admin/controllers/PromotionController.php';
+
 
 include './views/layout/header.php';
 
@@ -32,7 +32,7 @@ $slideController = new SlideController();
 $commentController = new commentController();
 $dashboardController = new DashboardController();
 $ramController = new RamController();
-$promotionController = new PromotionController();
+
 switch ($act) {
     case 'static':
         $dashboardController->index();
@@ -148,28 +148,6 @@ switch ($act) {
         break;
     case 'deleteRam':
         $ramController->deleteRam();
-        break;
-
-    case 'list-promotions':
-        $promotionController->index();
-        break;
-
-    case 'add-promotion':
-        $promotionController->add();
-        break;
-
-    case 'edit-promotion':
-        $id = $_GET['id'] ?? 0;
-        $promotionController->edit($id);
-        break;
-
-    case 'delete-promotion':
-        $id = $_GET['id'] ?? 0;
-        $promotionController->delete($id);
-        break;
-
-    case 'delete-expired-promotions':
-        $promotionController->deleteExpired();
         break;
     default:
         break;
