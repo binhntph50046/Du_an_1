@@ -30,7 +30,7 @@
                                     <th>Tên Sản Phẩm</th>
                                     <th>Giá Sản Phẩm</th>
                                     <th>RAM</th>
-                                    <th>Ngày Nhập</th>
+                                    <th style="width: 120px;">Ngày Nhập</th>
                                     <th>Mô tả</th>
                                     <th>Trạng thái</th>
                                     <th>Hình Ảnh</th>

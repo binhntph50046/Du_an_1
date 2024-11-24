@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-locked {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
 <div class="row">
     <div class="col">
         <?php if (isset($_SESSION['message'])): ?>
@@ -39,7 +65,11 @@
                                     <td><?= $Category['ten_danh_muc'] ?></td>
                                     <td><img src="<?= $Category['hinh'] ?>" style="width: 100px;"></td>
                                     <td><?= $Category['mo_ta'] ?></td>
-                                    <td><?= $Category['trang_thai'] == 1 ? 'Hoạt động' : 'Ngừng hoạt động' ?></td>
+                                    <td>
+                                        <span class="status-badge <?= $Category['trang_thai'] == 1 ? 'status-active' : 'status-locked' ?>">
+                                            <?= $Category['trang_thai'] == 1 ? 'Hoạt động' : 'Ngừng hoạt động' ?>
+                                        </span>
+                                    </td>
                                     <td>
                                         <a href="?act=form-edit-category&danh_muc_id=<?= $Category['danh_muc_id'] ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                         <a href="?act=delete-category&danh_muc_id=<?= $Category['danh_muc_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?')"><i class="fas fa-trash"></i></a>
@@ -53,3 +83,5 @@
         </div>
     </div>
 </div>
+</body>
+</html>
