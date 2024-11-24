@@ -29,6 +29,10 @@
                                 <span>Danh mục</span>
                             </button>
                             <div class="category-menu" id="categoryDropdown">
+                                <a class="dropdown-item" href="?act=search&category=iPhone 16">
+                                    <i class="fab fa-apple"></i>
+                                    iPhone 16 Series
+                                </a>
                                 <a class="dropdown-item" href="?act=search&category=iPhone 15">
                                     <i class="fab fa-apple"></i>
                                     iPhone 15 Series
