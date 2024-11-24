@@ -106,9 +106,14 @@ if (isset($_GET['act'])) {
             $cartController->removeCartItem();
             break;
 
-        case 'process-cart-order':
+        case 'checkout':
             $orderController = new OrderController();
-            $orderController->processCartOrder();
+            $orderController->checkout();
+            break;
+
+        case 'place-order':
+            $orderController = new OrderController();
+            $orderController->placeOrder();
             break;
 
         default:

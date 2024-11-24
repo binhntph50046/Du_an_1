@@ -8,127 +8,117 @@ class OrderController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Xử lý mua ngay từ trang chi tiết sản phẩm
+            // Xử lý mua ngay
             if (isset($_POST['buy-now'])) {
                 $san_pham_id = $_POST['san_pham_id'];
                 $so_luong = $_POST['so_luong'];
+                $gia = $_POST['gia'];
                 $ram_id = $_POST['ram_id'];
-                
+
                 // Lấy thông tin sản phẩm
-                $product = getProductById($san_pham_id);
-                if (!$product) {
-                    $_SESSION['error'] = "Không tìm thấy sản phẩm";
-                    header('Location: index.php');
-                    exit;
-                }
+                $sql = "SELECT sp.*, hasp.hinh_sp, r.dung_luong 
+                       FROM san_pham sp
+                       JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+                       LEFT JOIN ram r ON r.ram_id = ?
+                       WHERE sp.san_pham_id = ?
+                       LIMIT 1";
+                $product = pdo_query_one($sql, $ram_id, $san_pham_id);
 
-                // Lấy thông tin RAM nếu có
-                $ram_info = null;
-                if ($ram_id) {
-                    $ram_info = getRamById($ram_id);
+                if ($product) {
+                    $_SESSION['checkout_data'] = [
+                        'cart_items' => [[
+                            'san_pham_id' => $san_pham_id,
+                            'so_luong' => $so_luong,
+                            'gia' => $gia,
+                            'ram_id' => $ram_id,
+                            'ten_san_pham' => $product['ten_san_pham'],
+                            'hinh_sp' => $product['hinh_sp'],
+                            'dung_luong' => $product['dung_luong']
+                        ]],
+                        'total' => $gia * $so_luong,
+                        'dia_chi' => $_SESSION['email']['dia_chi'],
+                        'so_dien_thoai' => $_SESSION['email']['so_dien_thoai']
+                    ];
                 }
-
-                include "./views/checkout.php";
-                return;
             }
-            
-            // Xử lý đặt hàng từ giỏ hàng
-            if (isset($_POST['from_cart'])) {
-                // Xử lý đặt hàng từ giỏ hàng
+            // Xử lý mua từ giỏ hàng 
+            else if (isset($_POST['cart_items'])) {
                 $cart_items = array_map(function($item) {
                     return json_decode(htmlspecialchars_decode($item), true);
                 }, $_POST['cart_items']);
 
-                $total = $_POST['tong_tien'];
-                
-                // Tạo đơn hàng mới
-                $order_data = [
-                    'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
-                    'ho_va_ten' => $_SESSION['email']['ho_va_ten'],
-                    'email' => $_SESSION['email']['email'],
-                    'so_dien_thoai' => $_POST['so_dien_thoai'],
-                    'dia_chi' => $_POST['dia_chi'],
-                    'tong_tien' => $total,
-                    'phuong_thuc_thanh_toan' => 1, // COD mặc định
-                    'trang_thai' => 1 // Trạng thái chờ xử lý
-                ];
-
-                $order_id = createOrder($order_data);
-
-                if ($order_id) {
-                    foreach ($cart_items as $item) {
-                        $order_detail = [
-                            'don_hang_id' => $order_id,
-                            'san_pham_id' => $item['san_pham_id'],
-                            'so_luong' => $item['so_luong'],
-                            'gia' => $item['gia'],
-                            'ram_id' => $item['ram_id']
-                        ];
-                        createOrderDetail($order_detail);
-                    }
-
-                    // Xóa giỏ hàng sau khi đặt hàng thành công
-                    $sql = "DELETE FROM gio_hang WHERE tai_khoan_id = ?";
-                    pdo_execute($sql, $_SESSION['email']['tai_khoan_id']);
-
-                    $_SESSION['success'] = "Đặt hàng thành công!";
-                    header('Location: ?act=my-orders');
-                    exit;
+                $total = 0;
+                foreach ($cart_items as $item) {
+                    $total += $item['gia'] * $item['so_luong'];
                 }
+
+                $_SESSION['checkout_data'] = [
+                    'cart_items' => $cart_items,
+                    'total' => $total,
+                    'dia_chi' => $_POST['dia_chi'],
+                    'so_dien_thoai' => $_POST['so_dien_thoai']
+                ];
             }
+
+            include "./views/checkout.php";
+            return;
         }
+        
+        header('Location: ?act=cart');
+        exit;
     }
 
     public function placeOrder() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            try {
-                // Chuyển đổi sang kiểu số trước khi tính toán
-                $product_price = (float)$_POST['gia'];
-                $quantity = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
-                $ram_id = isset($_POST['ram_id']) ? $_POST['ram_id'] : null;
-                
-                // Tính tổng tiền
-                $total = ($product_price * $quantity) + 30000; // Cộng thêm phí ship 30,000
-                
-                // Tạo đơn hàng mới
-                $order_data = [
-                    'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
-                    'ho_va_ten' => $_POST['ho_va_ten'],
-                    'email' => $_POST['email'],
-                    'so_dien_thoai' => $_POST['so_dien_thoai'],
-                    'dia_chi' => $_POST['dia_chi'],
-                    'tong_tien' => $total,
-                    'phuong_thuc_thanh_toan' => $_POST['phuong_thuc_thanh_toan'],
-                    'ram_id' => $ram_id
-                ];
+        if (!isset($_SESSION['email']) || !isset($_SESSION['checkout_data'])) {
+            $_SESSION['error'] = "Có lỗi xảy ra, vui lòng thử lại";
+            header('Location: ?act=cart');
+            exit;
+        }
 
-                $order_id = createOrder($order_data);
+        try {
+            $checkout_data = $_SESSION['checkout_data'];
+            
+            // Tạo đơn hàng mới
+            $order_data = [
+                'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
+                'ho_va_ten' => $_SESSION['email']['ho_va_ten'],
+                'email' => $_SESSION['email']['email'],
+                'so_dien_thoai' => $checkout_data['so_dien_thoai'],
+                'dia_chi' => $checkout_data['dia_chi'],
+                'tong_tien' => $checkout_data['total'] + 30000, // Cộng thêm phí vận chuyển
+                'phuong_thuc_thanh_toan' => 1,
+                'trang_thai' => 1
+            ];
 
-                if ($order_id) {
+            $order_id = createOrder($order_data);
+
+            if ($order_id) {
+                foreach ($checkout_data['cart_items'] as $item) {
                     $order_detail = [
                         'don_hang_id' => $order_id,
-                        'san_pham_id' => (int)$_POST['san_pham_id'],
-                        'so_luong' => $quantity,
-                        'gia' => $product_price,
-                        'ram_id' => $ram_id
+                        'san_pham_id' => $item['san_pham_id'],
+                        'so_luong' => $item['so_luong'],
+                        'gia' => $item['gia'],
+                        'ram_id' => $item['ram_id']
                     ];
-
-                    if (createOrderDetail($order_detail)) {
-                        $_SESSION['success'] = '<i class="fas fa-check-circle"></i> Đặt hàng thành công!';
-                        header('Location: ?act=my-orders');
-                        exit;
-                    }
+                    createOrderDetail($order_detail);
                 }
 
-                $_SESSION['error'] = "Có lỗi xảy ra khi đặt hàng!";
-                header('Location: ?act=checkout');
-                exit;
+                // Xóa giỏ hàng
+                $sql = "DELETE FROM gio_hang WHERE tai_khoan_id = ?";
+                pdo_execute($sql, $_SESSION['email']['tai_khoan_id']);
 
-            } catch (Exception $e) {
-                $_SESSION['error'] = "Có lỗi xảy ra: " . $e->getMessage();
-                header('Location: ?act=checkout');
+                // Xóa dữ liệu checkout khỏi session
+                unset($_SESSION['checkout_data']);
+
+                $_SESSION['success'] = "Đặt hàng thành công!";
+                header('Location: ?act=my-orders');
                 exit;
             }
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Có lỗi xảy ra: " . $e->getMessage();
+            header('Location: ?act=checkout');
+            exit;
         }
     }
 

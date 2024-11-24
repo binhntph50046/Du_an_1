@@ -176,15 +176,10 @@
                                         <span class="text-primary fw-bold fs-5 total-amount">30.000₫</span>
                                     </div>
 
-                                    <form action="?act=process-cart-order" method="POST">
+                                    <form action="?act=checkout" method="POST">
                                         <input type="hidden" name="tong_tien" value="<?= $totalAmount + 30000 ?>">
                                         <?php foreach ($cartItems as $item): ?>
-                                            <input type="hidden" name="cart_items[]" value="<?= htmlspecialchars(json_encode([
-                                                                                                'san_pham_id' => $item['san_pham_id'],
-                                                                                                'ram_id' => $item['ram_id'],
-                                                                                                'so_luong' => $item['so_luong'],
-                                                                                                'gia' => $item['gia']
-                                                                                            ])) ?>">
+                                            <input type="hidden" name="cart_items[]" value="<?= htmlspecialchars(json_encode($item)) ?>">
                                         <?php endforeach; ?>
                                         <div class="mb-3">
                                             <input type="text" name="dia_chi" class="form-control" placeholder="Địa chỉ giao hàng" required
@@ -195,7 +190,7 @@
                                                 value="<?= isset($_SESSION['email']['so_dien_thoai']) ? $_SESSION['email']['so_dien_thoai'] : '' ?>">
                                         </div>
                                         <button type="submit" class="btn btn-primary w-100 py-2" id="confirmOrderBtn" disabled>
-                                            Xác nhận đơn hàng
+                                            Tiến hành thanh toán
                                         </button>
                                     </form>
                                 </div>
@@ -236,15 +231,13 @@
 
             // Cập nhật form khi checkbox thay đổi
             function updateForm() {
-                const form = document.querySelector('form[action="?act=process-cart-order"]');
+                const form = document.querySelector('form[action="?act=checkout"]');
                 const cartItemsInputs = form.querySelectorAll('input[name="cart_items[]"]');
 
-                // Ẩn tất cả cart items inputs
                 cartItemsInputs.forEach(input => {
                     input.disabled = true;
                 });
 
-                // Chỉ enable những input của sản phẩm được chọn
                 selectedItems.forEach(cartId => {
                     const itemIndex = Array.from(checkboxes).findIndex(cb => cb.dataset.id === cartId);
                     if (itemIndex !== -1) {
