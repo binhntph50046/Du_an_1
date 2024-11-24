@@ -82,7 +82,12 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-4 fw-bold">Giỏ hàng của bạn</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">Giỏ hàng của bạn</h2>
+                    <a href="index.php" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Tiếp tục mua sắm
+                    </a>
+                </div>
 
                 <?php
                 // Kiểm tra đăng nhập
