@@ -31,32 +31,15 @@ class OrderModel {
             $order = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($order) {
-                // Lấy chi tiết đơn hàng với thông tin khuyến mãi
+                // Lấy chi tiết đơn hàng 
                 $sql = "SELECT 
                         ctdh.*,
                         sp.ten_san_pham,
                         sp.gia as gia_goc,
-                        MIN(hasp.hinh_sp) as hinh,
-                        km.phan_tram_giam,
-                        km.giam_gia,
-                        CASE 
-                            WHEN km.khuyen_mai_id IS NOT NULL 
-                                AND CURRENT_DATE BETWEEN km.ngay_bat_dau AND km.ngay_ket_thuc 
-                            THEN 
-                                CASE 
-                                    WHEN km.phan_tram_giam > 0 
-                                    THEN sp.gia * (1 - km.phan_tram_giam/100)
-                                    WHEN km.giam_gia > 0 
-                                    THEN sp.gia - km.giam_gia
-                                    ELSE sp.gia
-                                END
-                            ELSE sp.gia
-                        END as gia_sau_khuyen_mai
+                        MIN(hasp.hinh_sp) as hinh
                         FROM chi_tiet_don_hang ctdh
                         JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
                         LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
-                        LEFT JOIN san_pham_khuyen_mai spkm ON sp.san_pham_id = spkm.san_pham_id
-                        LEFT JOIN khuyen_mai km ON spkm.khuyen_mai_id = km.khuyen_mai_id
                         WHERE ctdh.don_hang_id = ?
                         GROUP BY ctdh.chi_tiet_don_hang_id";
                     
@@ -67,8 +50,7 @@ class OrderModel {
                 // Tính toán lại tổng tiền cho từng item
                 $tongDonHang = 0;
                 foreach ($items as &$item) {
-                    $giaSauKM = $item['gia_sau_khuyen_mai'];
-                    $thanhTien = $giaSauKM * $item['so_luong'];
+                    $thanhTien = $item['gia_goc'] * $item['so_luong']; 
                     $item['thanh_tien'] = $thanhTien;
                     $tongDonHang += $thanhTien;
                 }
@@ -135,18 +117,9 @@ class OrderModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getOrderDetails($orderId) {
-        $sql = "SELECT ct.*, sp.ten_san_pham, sp.gia, km.phan_tram_giam,
-                CASE 
-                    WHEN km.khuyen_mai_id IS NOT NULL 
-                    AND km.trang_thai = 1 
-                    AND CURRENT_DATE BETWEEN km.ngay_bat_dau AND km.ngay_ket_thuc 
-                    THEN sp.gia * (1 - km.phan_tram_giam/100)
-                    ELSE sp.gia
-                END as gia_sau_khuyen_mai
+        $sql = "SELECT ct.*, sp.ten_san_pham, sp.gia
                 FROM chi_tiet_don_hang ct
                 JOIN san_pham sp ON ct.san_pham_id = sp.san_pham_id
-                LEFT JOIN san_pham_khuyen_mai spkm ON sp.san_pham_id = spkm.san_pham_id
-                LEFT JOIN khuyen_mai km ON spkm.khuyen_mai_id = km.khuyen_mai_id
                 WHERE ct.don_hang_id = :orderId";
                 
         $stmt = $this->conn->prepare($sql);

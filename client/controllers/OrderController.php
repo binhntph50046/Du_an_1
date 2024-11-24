@@ -86,10 +86,8 @@ class OrderController {
                 $product_price = (float)$_POST['gia'];
                 $quantity = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
                 $ram_id = isset($_POST['ram_id']) ? $_POST['ram_id'] : null;
-                
                 // Tính tổng tiền
                 $total = ($product_price * $quantity) + 30000; // Cộng thêm phí ship 30,000
-                
                 // Tạo đơn hàng mới
                 $order_data = [
                     'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
@@ -201,8 +199,6 @@ class OrderController {
                 header('Location: ?act=my-orders');
                 exit;
             }
-
-            // Chỉ cho phép xóa đơn hàng ở trạng thái "Chờ xác nhận"
             if ($order['trang_thai'] != 1) {
                 $_SESSION['error'] = "Chỉ có thể xóa đơn hàng ở trạng thái chờ xác nhận";
                 header('Location: ?act=my-orders');
