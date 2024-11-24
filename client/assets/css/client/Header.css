@@ -243,9 +243,21 @@ body {
     border-radius: 25px;
     border: none;
     font-size: 15px;
+    color: #c3c6ca; /* Đặt màu chữ */
 }
+
 .custom-input1::placeholder {
-    color: #c3c6ca; 
+    color: #c3c6ca;
+}
+
+.custom-input1:focus {
+    outline: none; /* Loại bỏ viền mặc định */
+    color: #c3c6ca; /* Màu chữ khi nhập */
+    background-color: #374151;
+}
+
+.custom-input1:focus::placeholder {
+    color: #c3c6ca; /* Màu placeholder giữ nguyên */
 }
 
 .btn-search {
