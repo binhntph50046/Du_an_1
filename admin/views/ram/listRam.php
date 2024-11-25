@@ -11,7 +11,7 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Dung lượng RAM</th>
-                                    <th>Mô tả</th>
+                                    <th>Giá tăng</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>
                                 </tr>
@@ -23,7 +23,7 @@
                                         <tr>
                                             <td><?= $key + 1 ?></td>
                                             <td><?= $ram['dung_luong'] ?></td>
-                                            <td><?= $ram['mo_ta'] ?></td>
+                                            <td><?= $ram['gia_tang'] ?></td>
                                             <td><?= $ram['trang_thai'] == 1 ? 'Hoạt động' : 'Ngừng hoạt động' ?></td>
                                             <td>
                                                 <a href="./?act=formEditRam&id=<?= $ram['ram_id'] ?>" 

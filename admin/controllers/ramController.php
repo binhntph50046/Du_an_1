@@ -16,10 +16,10 @@ class RamController {
     public function addRam() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dung_luong = $_POST['dung_luong'];
-            $mo_ta = $_POST['mo_ta'];
+            $gia_tang = $_POST['gia_tang'];
             $trang_thai = $_POST['trang_thai'];
 
-            $result = $this->modelRam->addRam($dung_luong, $mo_ta, $trang_thai);
+            $result = $this->modelRam->addRam($dung_luong, $gia_tang, $trang_thai);
 
             if ($result) {
                 echo "<script>
@@ -77,10 +77,10 @@ class RamController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ram_id = $_POST['ram_id'];
             $dung_luong = $_POST['dung_luong'];
-            $mo_ta = $_POST['mo_ta'];
+            $gia_tang = $_POST['gia_tang'];
             $trang_thai = $_POST['trang_thai'];
 
-            $result = $this->modelRam->updateRam($ram_id, $dung_luong, $mo_ta, $trang_thai);
+            $result = $this->modelRam->updateRam($ram_id, $dung_luong, $gia_tang, $trang_thai);
 
             if ($result) {
                 echo "<script>alert('Cập nhật RAM thành công!'); window.location.href='index.php?act=listRams';</script>";

@@ -29,30 +29,14 @@
                                 <span>Danh mục</span>
                             </button>
                             <div class="category-menu" id="categoryDropdown">
-                                <a class="dropdown-item" href="?act=search&category=iPhone 16">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 16 Series
-                                </a>
-                                <a class="dropdown-item" href="?act=search&category=iPhone 15">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 15 Series
-                                </a>
-                                <a class="dropdown-item" href="?act=search&category=iPhone 14">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 14 Series
-                                </a>
-                                <a class="dropdown-item" href="?act=search&category=iPhone 13">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 13 Series
-                                </a>
-                                <a class="dropdown-item" href="?act=search&category=iPhone 12">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 12 Series
-                                </a>
-                                <a class="dropdown-item" href="?act=search&category=iPhone 11">
-                                    <i class="fab fa-apple"></i>
-                                    iPhone 11 Series
-                                </a>
+                                <?php
+                                $categories = loadAllCategories(); // Fetch categories from the database
+                                foreach ($categories as $category): ?>
+                                    <a class="dropdown-item" href="?act=search&category=<?= urlencode($category['ten_danh_muc']) ?>">
+                                        <i class="fab fa-apple"></i>
+                                        <?= htmlspecialchars($category['ten_danh_muc']) ?> <!-- Display category name -->
+                                    </a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 02:13 PM
+-- Generation Time: Nov 25, 2024 at 05:11 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -170,7 +170,9 @@ INSERT INTO `gio_hang` (`gio_hang_id`, `tai_khoan_id`, `san_pham_id`, `ram_id`, 
 (14, 7, 59, 7, 2, '2024-11-22 05:27:51'),
 (15, 7, 63, 5, 1, '2024-11-22 05:45:52'),
 (16, 7, 63, 6, 1, '2024-11-22 05:48:41'),
-(17, 7, 69, 7, 4, '2024-11-22 07:57:40');
+(17, 7, 69, 7, 4, '2024-11-22 07:57:40'),
+(23, 1, 144, 9, 1, '2024-11-25 15:54:09'),
+(24, 1, 138, 9, 1, '2024-11-25 16:04:20');
 
 -- --------------------------------------------------------
 
@@ -311,6 +313,7 @@ INSERT INTO `khuyen_mai` (`khuyen_mai_id`, `ten_khuyen_mai`, `mo_ta`, `phan_tram
 CREATE TABLE `ram` (
   `ram_id` int(11) NOT NULL,
   `dung_luong` varchar(20) NOT NULL,
+  `gia_tang` int(10) NOT NULL,
   `mo_ta` text DEFAULT NULL,
   `trang_thai` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -319,12 +322,12 @@ CREATE TABLE `ram` (
 -- Dumping data for table `ram`
 --
 
-INSERT INTO `ram` (`ram_id`, `dung_luong`, `mo_ta`, `trang_thai`) VALUES
-(5, '128Gb', 'Dung lượng hợp vừa', 1),
-(6, '256Gb', 'Dung lượng hợp đủ với chụp ảnh', 1),
-(7, '512Gb', 'Dung lượng hợp hợp với quay phim, chụp ảnh, chơi game', 1),
-(8, '64Gb', 'Dung lượng vừa đủ dùng', 1),
-(9, '1TB', 'Dung lượng lớn', 1);
+INSERT INTO `ram` (`ram_id`, `dung_luong`, `gia_tang`, `mo_ta`, `trang_thai`) VALUES
+(5, '128Gb', 0, 'Dung lượng hợp vừaaaa', 1),
+(6, '256Gb', 1500000, 'Dung lượng hợp đủ với chụp ảnh', 1),
+(7, '512Gb', 3000000, 'Dung lượng hợp hợp với quay phim, chụp ảnh, chơi game', 1),
+(9, '1TB', 4500000, 'Dung lượng lớn', 1),
+(11, '2TB', 6000000, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -353,7 +356,7 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (43, 'Iphone 12', 5600000, '2024-11-15', 'iPhone 12: Là phiên bản tiêu chuẩn, sở hữu màn hình 6.1 inch, kích thước lớn hơn Mini nhưng vẫn nhỏ gọn và dễ dùng. Camera kép 12MP chụp ảnh rõ nét, hỗ trợ quay video Dolby Vision HDR, mang đến trải nghiệm hình ảnh chuyên nghiệp. Đặc biệt, iPhone 12 tích hợp MagSafe – hệ thống nam châm hỗ trợ sạc không dây và phụ kiện thông minh, làm nổi bật tính tiện dụng và hiện đại.', 13, 1, 1, 4, NULL),
 (44, 'Iphone 13', 14800000, '2024-11-16', 'iPhone 13: Phiên bản tiêu chuẩn với màn hình 6.1 inch, đáp ứng nhu cầu sử dụng hàng ngày. Camera kép 12MP được nâng cấp với cảm biến lớn hơn và tính năng chống rung quang học (Sensor-Shift OIS) giúp quay chụp ổn định. Thời lượng pin tăng 2.5 giờ so với iPhone 12.', 49, 1, 2, NULL, NULL),
 (45, 'Iphone 14', 34000000, '2024-11-16', 'iPhone 14: Màn hình 6.1 inch, chip A15 Bionic (GPU 5 nhân), camera kép 12MP cải tiến, cho khả năng chụp ảnh thiếu sáng tốt hơn 49% nhờ Photonic Engine. Đây là lựa chọn ổn định cho người dùng phổ thông.', 57, 1, 3, NULL, NULL),
-(50, 'Iphone 15', 30000000, '2024-11-18', 'iPhone 15: Với màn hình 6.1 inch và Dynamic Island (lần đầu có trên bản thường), iPhone 15 nâng tầm trải nghiệm người dùng. Camera chính 48MP mang lại khả năng chụp ảnh sắc nét và linh hoạt hơn, cùng chip A16 Bionic mạnh mẽ, giúp máy hoạt động mượt mà trong mọi tác vụ.', 55, 1, 5, NULL, NULL),
+(50, 'Iphone 15', 30000000, '2024-11-18', 'iPhone 15: Với màn hình 6.1 inch và Dynamic Island (lần đầu có trên bản thường), iPhone 15 nâng tầm trải nghiệm người dùng. Camera chính 48MP mang lại khả năng chụp ảnh sắc nét và linh hoạt hơn, cùng chip A16 Bionic mạnh mẽ, giúp máy hoạt động mượt mà trong mọi tác vụ.', 56, 1, 5, NULL, NULL),
 (55, 'Iphone 12', 24390000, '2024-10-30', 'Iphone 12, Iphone 12 Pro, Iphone 12 Pro Max', 4, 1, 1, NULL, NULL),
 (57, 'Iphone 13', 24390000, '2024-11-06', 'Iphone 13, Iphone 13 Pro, Iphone 13 Pro Max', 2, 1, 2, NULL, NULL),
 (58, 'Iphone 14 ', 24390000, '2024-11-12', 'Iphone 14, Iphone 14 Pro, Iphone 14 Pro Max', 2, 1, 3, NULL, NULL),
@@ -394,7 +397,7 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (99, 'Iphone 12', 11390000, '2024-11-20', 'Iphone 12, Iphone 12 Pro, Iphone 12 Pro Max', 0, 1, 1, NULL, NULL),
 (100, 'Iphone 12', 11390000, '2024-11-07', 'Iphone 12, Iphone 12 Pro, Iphone 12 Pro Max', 0, 1, 1, NULL, NULL),
 (101, 'Iphone 12', 11390000, '2024-11-07', 'Iphone 12, Iphone 12 Pro, Iphone 12 Pro Max', 0, 1, 1, NULL, NULL),
-(103, 'Iphone 11', 8000000, '2024-11-06', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
+(103, 'Iphone 11', 8000000, '2024-11-06', 'Iphone này đẹp lắm ', 1, 1, 6, NULL, NULL),
 (104, 'Iphone 11', 8000000, '2024-11-19', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (105, 'Iphone 11', 8000000, '2024-11-13', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (106, 'Iphone 11', 8000000, '2024-11-06', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
@@ -402,16 +405,16 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (108, 'Iphone 11', 8000000, '2024-11-13', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (109, 'Iphone 11 Pro', 9200000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (110, 'Iphone 11 Pro', 9200000, '2024-11-21', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
-(111, 'Iphone 11 Pro', 9200000, '2024-11-20', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
+(111, 'Iphone 11 Pro', 9200000, '2024-11-20', 'Iphone này đẹp lắm ', 1, 1, 6, NULL, NULL),
 (112, 'Iphone 11 Pro', 9200000, '2024-10-31', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (113, 'Iphone 11 Pro Max', 10200000, '2024-11-13', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (114, 'Iphone 11 Pro Max', 10200000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
 (115, 'Iphone 11 Pro Max', 10200000, '2024-10-30', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
-(116, 'Iphone 11 Pro Max', 10200000, '2024-11-20', 'Iphone này đẹp lắm ', 0, 1, 6, NULL, NULL),
+(116, 'Iphone 11 Pro Max', 10200000, '2024-11-20', 'Iphone này đẹp lắm ', 5, 1, 6, NULL, NULL),
 (117, 'Iphone 13 Pro Max', 17200000, '2024-11-12', 'Iphone này đẹp lắm ', 0, 1, 2, NULL, NULL),
 (118, 'Iphone 13 Pro Max', 17200000, '2024-11-07', 'Iphone này đẹp lắm ', 0, 1, 2, NULL, NULL),
 (119, 'Iphone 13 Pro Max', 17200000, '2024-11-08', 'Iphone này đẹp lắm ', 0, 1, 2, NULL, NULL),
-(120, 'Iphone 13 Pro Max', 17200000, '2024-11-19', 'Iphone này đẹp lắm ', 0, 1, 2, NULL, NULL),
+(120, 'Iphone 13 Pro Max', 17200000, '2024-11-19', 'Iphone này đẹp lắm ', 1, 1, 2, NULL, NULL),
 (121, 'Iphone 13 Pro Max', 17200000, '2024-11-20', 'Iphone này đẹp lắm ', 0, 1, 2, NULL, NULL),
 (122, 'Iphone 15 Plus', 24200000, '2024-11-13', 'Iphone này đẹp lắm ', 0, 1, 5, NULL, NULL),
 (123, 'Iphone 15 Plus', 24200000, '2024-11-07', 'Iphone này đẹp lắm ', 0, 1, 5, NULL, NULL),
@@ -427,15 +430,15 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (133, 'Iphone 16 Plus', 29500000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
 (134, 'Iphone 16 Plus', 29500000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
 (135, 'Iphone 16 Plus', 29500000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(136, 'Iphone 16 Plus', 29500000, '2024-11-13', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(137, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 0, 1, 1, NULL, NULL),
-(138, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(139, 'Iphone 16 Pro', 33500000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
+(136, 'Iphone 16 Plus', 29500000, '2024-11-13', 'Iphone này đẹp lắm ', 2, 1, 7, NULL, NULL),
+(137, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
+(138, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 3, 1, 7, NULL, NULL),
+(139, 'Iphone 16 Pro', 33500000, '2024-11-14', 'Iphone này đẹp lắm ', 2, 1, 7, NULL, NULL),
 (140, 'Iphone 16 Pro', 33500000, '2024-11-06', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(141, 'Iphone 16 Pro Max', 36500000, '2024-11-15', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(142, 'Iphone 16 Pro Max', 36500000, '2024-11-14', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(143, 'Iphone 16 Pro Max', 36500000, '2024-11-07', 'Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL),
-(144, 'Iphone 16 Pro Max', 36500000, '2024-11-22', 'Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm ', 0, 1, 7, NULL, NULL);
+(141, 'Iphone 16 Pro Max', 36500000, '2024-11-15', 'Iphone này đẹp lắm ', 1, 1, 7, NULL, NULL),
+(142, 'Iphone 16 Pro Max', 36500000, '2024-11-14', 'Iphone này đẹp lắm ', 3, 1, 7, NULL, NULL),
+(143, 'Iphone 16 Pro Max', 36500000, '2024-11-07', 'Iphone này đẹp lắm ', 7, 1, 7, NULL, NULL),
+(144, 'Iphone 16 Pro Max', 36500000, '2024-11-22', 'Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm ', 32, 1, 7, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -542,10 +545,13 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (75, 6, 0.00),
 (76, 5, 0.00),
 (76, 6, 0.00),
+(77, 5, 0.00),
 (77, 6, 0.00),
 (77, 7, 0.00),
+(78, 5, 0.00),
 (78, 6, 0.00),
 (78, 7, 0.00),
+(79, 5, 0.00),
 (79, 6, 0.00),
 (79, 7, 0.00),
 (80, 5, 0.00),
@@ -584,6 +590,7 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (91, 5, 0.00),
 (91, 6, 0.00),
 (91, 7, 0.00),
+(92, 5, 0.00),
 (92, 6, 0.00),
 (92, 7, 0.00),
 (93, 5, 0.00),
@@ -604,15 +611,15 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (103, 5, 0.00),
 (103, 6, 0.00),
 (104, 5, 0.00),
-(104, 8, 0.00),
+(104, 6, 0.00),
 (105, 5, 0.00),
-(105, 8, 0.00),
+(105, 6, 0.00),
 (106, 5, 0.00),
-(106, 8, 0.00),
+(106, 6, 0.00),
 (107, 5, 0.00),
-(107, 8, 0.00),
+(107, 6, 0.00),
 (108, 5, 0.00),
-(108, 8, 0.00),
+(108, 6, 0.00),
 (109, 5, 0.00),
 (109, 6, 0.00),
 (110, 5, 0.00),
@@ -634,10 +641,13 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (116, 6, 0.00),
 (117, 5, 0.00),
 (117, 6, 0.00),
+(117, 7, 0.00),
 (118, 5, 0.00),
 (118, 6, 0.00),
+(118, 7, 0.00),
 (119, 5, 0.00),
 (119, 6, 0.00),
+(119, 7, 0.00),
 (120, 5, 0.00),
 (120, 6, 0.00),
 (120, 7, 0.00),
@@ -692,15 +702,19 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (137, 5, 0.00),
 (137, 6, 0.00),
 (137, 7, 0.00),
+(137, 9, 0.00),
+(138, 5, 0.00),
 (138, 6, 0.00),
 (138, 7, 0.00),
 (138, 9, 0.00),
+(139, 5, 0.00),
 (139, 6, 0.00),
 (139, 7, 0.00),
 (139, 9, 0.00),
 (140, 5, 0.00),
 (140, 6, 0.00),
 (140, 9, 0.00),
+(141, 5, 0.00),
 (141, 6, 0.00),
 (141, 7, 0.00),
 (141, 9, 0.00),
@@ -708,9 +722,11 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`, `gia_them`) VALUES
 (142, 6, 0.00),
 (142, 7, 0.00),
 (142, 9, 0.00),
+(143, 5, 0.00),
 (143, 6, 0.00),
 (143, 7, 0.00),
 (143, 9, 0.00),
+(144, 5, 0.00),
 (144, 6, 0.00),
 (144, 7, 0.00),
 (144, 9, 0.00);
@@ -904,7 +920,7 @@ ALTER TABLE `don_hang`
 -- AUTO_INCREMENT for table `gio_hang`
 --
 ALTER TABLE `gio_hang`
-  MODIFY `gio_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `gio_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `hinh_anh_san_pham`
@@ -922,7 +938,7 @@ ALTER TABLE `khuyen_mai`
 -- AUTO_INCREMENT for table `ram`
 --
 ALTER TABLE `ram`
-  MODIFY `ram_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ram_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `san_pham`

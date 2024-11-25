@@ -18,14 +18,14 @@ class Ram {
     }
 
     // Thêm RAM mới
-    public function addRam($dung_luong, $mo_ta, $trang_thai) {
+    public function addRam($dung_luong, $gia_tang, $trang_thai) {
         try {
-            $sql = "INSERT INTO ram (dung_luong, mo_ta, trang_thai) 
-                    VALUES (:dung_luong, :mo_ta, :trang_thai)";
+            $sql = "INSERT INTO ram (dung_luong, gia_tang, trang_thai) 
+                    VALUES (:dung_luong, :gia_tang, :trang_thai)";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':dung_luong', $dung_luong);
-            $stmt->bindParam(':mo_ta', $mo_ta);
+            $stmt->bindParam(':gia_tang', $gia_tang);
             $stmt->bindParam(':trang_thai', $trang_thai);
 
             return $stmt->execute();
@@ -50,18 +50,18 @@ class Ram {
     }
 
     // Cập nhật RAM
-    public function updateRam($ram_id, $dung_luong, $mo_ta, $trang_thai) {
+    public function updateRam($ram_id, $dung_luong, $gia_tang, $trang_thai) {
         try {
             $sql = "UPDATE ram 
                     SET dung_luong = :dung_luong,
-                        mo_ta = :mo_ta,
+                        gia_tang = :gia_tang,
                         trang_thai = :trang_thai
                     WHERE ram_id = :ram_id";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ram_id', $ram_id);
             $stmt->bindParam(':dung_luong', $dung_luong);
-            $stmt->bindParam(':mo_ta', $mo_ta);
+            $stmt->bindParam(':gia_tang', $gia_tang);
             $stmt->bindParam(':trang_thai', $trang_thai);
 
             return $stmt->execute();

@@ -8,8 +8,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="mo_ta" class="form-label">Mô tả</label>
-            <textarea class="form-control" id="mo_ta" name="mo_ta" rows="3"></textarea>
+            <label for="mo_ta" class="form-label">Giá tăng</label>
+            <input class="form-control" id="gia_tang" name="gia_tang"></input>
         </div>
 
         <div class="mb-3">
