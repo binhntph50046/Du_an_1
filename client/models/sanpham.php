@@ -83,3 +83,7 @@ function search_products_by_category($category) {
     
     return $products;
 }
+function loadAllCategories() {
+    $sql = "SELECT * FROM danh_muc WHERE trang_thai = 1 ORDER BY ten_danh_muc ASC"; // Assuming there's a 'trang_thai' field to filter active categories
+    return pdo_query($sql);
+}

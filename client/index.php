@@ -94,7 +94,7 @@ if (isset($_GET['act'])) {
                 error_log("Đang tìm kiếm danh mục: " . $category);
                 
                 $products = search_products_by_category($category);
-                $searchTitle = htmlspecialchars($category) . " Series";
+                $searchTitle = htmlspecialchars($category) ;
                 
                 error_log("Số sản phẩm tìm thấy: " . count($products));
                 
