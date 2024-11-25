@@ -123,6 +123,7 @@
                         <input type="hidden" name="san_pham_id" value="<?= $product['san_pham_id'] ?>">
                         <input type="hidden" name="so_luong" id="cart_quantity" value="1">
                         <input type="hidden" name="ram_id" id="cart_ram_id">
+                        <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
                         <button type="submit" class="btn-add-to-cart">
                             <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
                         </button>
@@ -257,10 +258,12 @@
             const totalPrice = basePrice + additionalPrice;
             
             document.querySelector('.current-price').textContent = 
-                new Intl.NumberFormat('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND'
-                }).format(totalPrice);
+                new Intl.NumberFormat('vi-VN').format(totalPrice) + '₫';
+            
+            document.querySelector('input[name="gia"]').value = totalPrice;
+            
+            document.getElementById('cart_ram_id').value = this.value;
+            document.getElementById('selected_ram').value = this.value;
         });
     });
     </script>

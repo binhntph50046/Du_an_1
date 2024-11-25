@@ -100,20 +100,22 @@
                     $tai_khoan_id = $_SESSION['email']['tai_khoan_id'];
 
                     // Truy vấn lấy thông tin giỏ hàng
-                    $sql = "SELECT g.*, sp.ten_san_pham, sp.gia, hasp.hinh_sp as hinh_sp, r.dung_luong 
-                           FROM gio_hang g
-                           JOIN san_pham sp ON g.san_pham_id = sp.san_pham_id
-                           JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
-                           JOIN ram r ON g.ram_id = r.ram_id
-                           WHERE g.tai_khoan_id = ?
-                           GROUP BY g.gio_hang_id";
+                    $sql = "SELECT g.*, sp.ten_san_pham, sp.gia, hasp.hinh_sp as hinh_sp, 
+                            r.dung_luong, r.gia_tang,
+                            (sp.gia + r.gia_tang) * g.so_luong as thanh_tien
+                            FROM gio_hang g
+                            JOIN san_pham sp ON g.san_pham_id = sp.san_pham_id
+                            JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+                            JOIN ram r ON g.ram_id = r.ram_id
+                            WHERE g.tai_khoan_id = ?
+                            GROUP BY g.gio_hang_id";
 
                     $cartItems = pdo_query($sql, $tai_khoan_id);
 
                     // Tính tổng tiền
                     $totalAmount = 0;
                     foreach ($cartItems as $item) {
-                        $totalAmount += $item['gia'] * $item['so_luong'];
+                        $totalAmount += ($item['gia'] + $item['gia_tang']) * $item['so_luong'];
                     }
                 } catch (PDOException $e) {
                     echo '<div class="alert alert-danger">Có lỗi xảy ra: ' . $e->getMessage() . '</div>';
@@ -129,7 +131,7 @@
                                     <?php foreach ($cartItems as $key => $item): ?>
                                         <div class="row align-items-center mb-4 cart-item">
                                             <div class="col-md-1">
-                                                <input type="checkbox" class="cart-checkbox" data-id="<?= $item['gio_hang_id'] ?>" data-price="<?= $item['gia'] * $item['so_luong'] ?>">
+                                                <input type="checkbox" class="cart-checkbox" data-id="<?= $item['gio_hang_id'] ?>" data-price="<?= ($item['gia'] + $item['gia_tang']) * $item['so_luong'] ?>">
                                             </div>
                                             <div class="col-md-2">
                                                 <img src="<?= $item['hinh_sp'] ?>" class="img-fluid rounded" alt="<?= $item['ten_san_pham'] ?>">
@@ -137,7 +139,9 @@
                                             <div class="col-md-6">
                                                 <h5 class="mb-2"><?= $item['ten_san_pham'] ?></h5>
                                                 <p class="text-muted mb-1">RAM: <?= $item['dung_luong'] ?></p>
-                                                <p class="text-primary fw-bold mb-1"><?= number_format($item['gia'], 0, ',', '.') ?>₫</p>
+                                                <p class="text-primary fw-bold mb-1">
+                                                    <?= number_format($item['gia'] + $item['gia_tang'], 0, ',', '.') ?>₫
+                                                </p>
                                                 <div class="d-flex align-items-center">
                                                     <span class="me-3">Số lượng: <?= $item['so_luong'] ?></span>
                                                     <form action="?act=remove-cart-item" method="POST" class="d-inline">
@@ -229,7 +233,6 @@
             let selectedTotal = 0;
             let selectedItems = [];
 
-            // Cập nhật form khi checkbox thay đổi
             function updateForm() {
                 const form = document.querySelector('form[action="?act=checkout"]');
                 const cartItemsInputs = form.querySelectorAll('input[name="cart_items[]"]');
@@ -259,10 +262,8 @@
                         selectedItems = selectedItems.filter(id => id !== cartId);
                     }
 
-                    // Cập nhật trạng thái nút và tổng tiền
                     confirmOrderBtn.disabled = selectedItems.length === 0;
 
-                    // Cập nhật hiển thị tổng tiền
                     const shippingFee = 30000;
                     const finalTotal = selectedTotal + (selectedItems.length > 0 ? shippingFee : 0);
 
@@ -271,10 +272,8 @@
                     document.querySelector('.total-amount').textContent =
                         new Intl.NumberFormat('vi-VN').format(finalTotal) + '₫';
 
-                    // Cập nhật input hidden tổng tiền
                     document.querySelector('input[name="tong_tien"]').value = finalTotal;
 
-                    // Cập nhật form
                     updateForm();
                 });
             });

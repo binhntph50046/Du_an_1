@@ -63,14 +63,16 @@ class Cart {
 
     public function getCartItems($tai_khoan_id) {
         try {
-            $sql = "SELECT gh.*, sp.ten_san_pham, sp.gia, 
-                    (SELECT hinh FROM hinh_anh_san_pham WHERE san_pham_id = sp.san_pham_id LIMIT 1) as hinh_sp,
-                    r.dung_luong,
-                    (sp.gia * gh.so_luong) as thanh_tien
-                    FROM gio_hang gh
-                    JOIN san_pham sp ON gh.san_pham_id = sp.san_pham_id 
-                    JOIN ram r ON gh.ram_id = r.ram_id
-                    WHERE gh.tai_khoan_id = :tai_khoan_id";
+            $sql = "SELECT g.*, sp.ten_san_pham, sp.gia, hasp.hinh_sp as hinh_sp, 
+                    r.dung_luong, r.gia_tang,
+                    ((sp.gia + r.gia_tang) * g.so_luong) as thanh_tien,
+                    r.gia_tang as ram_gia_tang
+                    FROM gio_hang g
+                    JOIN san_pham sp ON g.san_pham_id = sp.san_pham_id
+                    JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+                    JOIN ram r ON g.ram_id = r.ram_id
+                    WHERE g.tai_khoan_id = ?
+                    GROUP BY g.gio_hang_id";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);

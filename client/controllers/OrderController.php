@@ -49,7 +49,7 @@ class OrderController {
 
                 $total = 0;
                 foreach ($cart_items as $item) {
-                    $total += $item['gia'] * $item['so_luong'];
+                    $total += ($item['gia'] + $item['ram_gia_tang']) * $item['so_luong'];
                 }
 
                 $_SESSION['checkout_data'] = [

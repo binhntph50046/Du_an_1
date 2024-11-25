@@ -22,6 +22,7 @@ class CartController {
                 $san_pham_id = $_POST['san_pham_id'];
                 $ram_id = $_POST['ram_id'];
                 $so_luong = $_POST['so_luong'];
+                $gia = $_POST['gia'];
 
                 // Kiểm tra sản phẩm trong giỏ hàng
                 $check_sql = "SELECT * FROM gio_hang 
@@ -29,13 +30,11 @@ class CartController {
                 $existing_item = pdo_query_one($check_sql, $tai_khoan_id, $san_pham_id, $ram_id);
 
                 if ($existing_item) {
-                    // Cập nhật số lượng nếu đã tồn tại
                     $update_sql = "UPDATE gio_hang 
                                 SET so_luong = so_luong + ? 
                                 WHERE tai_khoan_id = ? AND san_pham_id = ? AND ram_id = ?";
                     pdo_execute($update_sql, $so_luong, $tai_khoan_id, $san_pham_id, $ram_id);
                 } else {
-                    // Thêm mới nếu chưa có
                     $insert_sql = "INSERT INTO gio_hang (tai_khoan_id, san_pham_id, ram_id, so_luong) 
                                 VALUES (?, ?, ?, ?)";
                     pdo_execute($insert_sql, $tai_khoan_id, $san_pham_id, $ram_id, $so_luong);
