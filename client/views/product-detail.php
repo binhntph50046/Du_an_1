@@ -70,7 +70,7 @@
             </div>
                 
                 <!-- Chọn RAM -->
-                <div class="ram-selector">
+                <!-- <div class="ram-selector">
                     <label>Chọn dung lượng RAM:</label>
                     <div class="ram-options">
                         <?php if (!empty($product['rams'])): ?>
@@ -78,6 +78,27 @@
                                 <label class="ram-option">
                                     <input type="radio" name="ram_id" value="<?= $ram['ram_id'] ?>" required>
                                     <span class="ram-label"><?= $ram['dung_luong'] ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div> -->
+
+                <div class="ram-selector">
+                    <label>Chọn dung lượng RAM:</label>
+                    <div class="ram-options">
+                        <?php if (!empty($product['rams'])): ?>
+                            <?php foreach ($product['rams'] as $ram): ?>
+                                <label class="ram-option">
+                                    <input type="radio" name="ram_id" 
+                                           value="<?= $ram['ram_id'] ?>" 
+                                           data-price="<?= $ram['gia_tang'] ?>" required>
+                                    <span class="ram-label">
+                                        <?= $ram['dung_luong'] ?> 
+                                        <!-- <?php if($ram['gia_tang'] > 0): ?>
+                                            (+<?= number_format($ram['gia_tang'], 0, ',', '.') ?>đ)
+                                        <?php endif; ?> -->
+                                    </span>
                                 </label>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -229,6 +250,19 @@
             document.getElementById('selected_ram').value = firstRam.value;
         }
     }
+    document.querySelectorAll('input[name="ram_id"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const basePrice = <?= $product['gia'] ?>;
+            const additionalPrice = parseFloat(this.dataset.price) || 0;
+            const totalPrice = basePrice + additionalPrice;
+            
+            document.querySelector('.current-price').textContent = 
+                new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(totalPrice);
+        });
+    });
     </script>
 </body>
 

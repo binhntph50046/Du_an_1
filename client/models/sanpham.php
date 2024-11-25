@@ -24,6 +24,14 @@ function loadall_sanpham_top10()
             LIMIT 10";
     return pdo_query($sql);
 }
+function getProductRams($san_pham_id) {
+    $sql = "SELECT r.* 
+            FROM ram r
+            INNER JOIN san_pham_ram spr ON r.ram_id = spr.ram_id
+            WHERE spr.san_pham_id = ?";
+            
+    return pdo_query($sql, $san_pham_id);
+}
 function getProductById($id)
 {
     increaseProductView($id);
@@ -36,8 +44,7 @@ function getProductById($id)
     $product = pdo_query_one($sql, $id);
     
     if ($product) {
-        $sql_ram = "SELECT * FROM ram WHERE trang_thai = 1";
-        $product['rams'] = pdo_query($sql_ram);
+        $product['rams'] = getProductRams($id);
     }
     
     return $product;
