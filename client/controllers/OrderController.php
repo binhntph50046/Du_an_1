@@ -104,7 +104,7 @@ class OrderController {
                         'don_hang_id' => $order_id,
                         'san_pham_id' => $item['san_pham_id'],
                         'so_luong' => $item['so_luong'],
-                        'gia' => $item['gia'],
+                        'gia' => $item['gia'] + $item['gia_tang'],
                         'ram_id' => $item['ram_id']
                     ];
                     createOrderDetail($order_detail);
@@ -145,14 +145,16 @@ class OrderController {
         try {
             $pdo = pdo_get_connection();
             
-            $sql = "SELECT dh.*, ct.san_pham_id, ct.so_luong, ct.gia, sp.ten_san_pham, hasp.hinh_sp     
+            $sql = "SELECT dh.*, ct.san_pham_id, ct.so_luong, ct.gia, ct.ram_id, 
+                    sp.ten_san_pham, hasp.hinh_sp, r.dung_luong, r.gia_tang     
                     FROM don_hang dh 
                     JOIN chi_tiet_don_hang ct ON dh.don_hang_id = ct.don_hang_id 
                     JOIN san_pham sp ON ct.san_pham_id = sp.san_pham_id 
-                    LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id 
+                    LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
+                    LEFT JOIN ram r ON ct.ram_id = r.ram_id 
                     WHERE dh.tai_khoan_id = ? 
                     GROUP BY ct.chi_tiet_don_hang_id
-                    ORDER BY dh.ngay_dat DESC";
+                    ORDER BY dh.don_hang_id DESC";
             
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$tai_khoan_id]);
@@ -172,7 +174,9 @@ class OrderController {
                     'ten_san_pham' => $row['ten_san_pham'],
                     'hinh_sp' => $row['hinh_sp'],
                     'so_luong' => $row['so_luong'],
-                    'gia' => $row['gia']
+                    'gia' => $row['gia'],
+                    'dung_luong' => $row['dung_luong'],
+                    'gia_tang' => $row['gia_tang']
                 ];
             }
         } catch(PDOException $e) {

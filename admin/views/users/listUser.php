@@ -13,15 +13,6 @@
             padding: 10px;
         }
 
-        .page-header {
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .table {
             background-color: white;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -91,30 +82,32 @@
         }
 
         .add-user-btn {
-            padding: 8px 20px;
+            padding: 5px 20px;
             border-radius: 5px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
-        .add-user-btn i {
+        /* .add-user-btn i {
             margin-right: 5px;
+        } */
+        .card-body{
+            border: 1px #d2d2d2 solid;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 
-  <div class="container">
-        
-     
-        <div class="page-header">
-            <h4 class="mb-0">Quản lý người dùng</h4>
-            <a href="index.php?act=create" class="btn btn-primary add-user-btn">
-                <i class="fas fa-user-plus"></i> Thêm
-            </a>
+<div class="row">
+<div class="col">
+        <div class="col-12">
+            <h1 class="fs-16 mb-1">Quản lý người dùng</h1>
+            <p class="text-muted mb-0">Danh sách các slide hiện có.</p>
         </div>
-        
-        <?php if(isset($_SESSION['error'])): ?>
+        <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <?= $_SESSION['error'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -122,14 +115,17 @@
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
-        <?php if(isset($_SESSION['success'])): ?>
+        <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?= $_SESSION['success'] ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
-        <div class="table-responsive">
+        <div class="card-body">
+            <a href="index.php?act=create" class="btn btn-primary add-user-btn mb-3">
+                <i class="fas fa-user-plus"></i> Thêm
+            </a>
             <table class="table">
                 <thead>
                     <tr>
@@ -198,6 +194,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

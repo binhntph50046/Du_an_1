@@ -31,15 +31,16 @@ function createOrderDetail($data) {
     try {
         $pdo = pdo_get_connection();
         
-        $sql = "INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia) 
-                VALUES (:don_hang_id, :san_pham_id, :so_luong, :gia)";
+        $sql = "INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia, ram_id) 
+                VALUES (:don_hang_id, :san_pham_id, :so_luong, :gia, :ram_id)";
         
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
             ':don_hang_id' => $data['don_hang_id'],
             ':san_pham_id' => $data['san_pham_id'],
             ':so_luong' => $data['so_luong'],
-            ':gia' => $data['gia']
+            ':gia' => $data['gia'],
+            ':ram_id' => $data['ram_id']
         ]);
     } catch(PDOException $e) {
         return false;

@@ -106,15 +106,33 @@ if (!$order || empty($items)) {
                                     </td>
                                     <td class="text-center"><?= $item['so_luong'] ?></td>
                                     <td class="text-right">
-                                        <?= number_format($item['gia_goc'], 0, ',', '.') ?>đ
+                                        <?php 
+                                        $don_gia = $item['gia_goc'] + $item['gia_tang'];
+                                        echo number_format($don_gia, 0, ',', '.'); 
+                                        ?>đ
                                     </td>
-                                    <td class="text-right font-weight-bold">
-                                        <?= number_format($item['thanh_tien'], 0, ',', '.') ?>đ
+                                    <td class="text-right">
+                                        <?php 
+                                        $thanh_tien = ($item['gia_goc'] + $item['gia_tang']) * $item['so_luong'];
+                                        echo number_format($thanh_tien, 0, ',', '.'); 
+                                        ?>đ
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
                             <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Tạm tính:</strong></td>
+                                    <td class="text-right">
+                                        <strong><?= number_format($order['tong_tien'] - 30000, 0, ',', '.') ?>đ</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Phí vận chuyển:</strong></td>
+                                    <td class="text-right">
+                                        <strong>30.000đ</strong>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td colspan="3" class="text-right"><strong>Tổng cộng:</strong></td>
                                     <td class="text-right">

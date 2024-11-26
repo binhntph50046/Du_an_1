@@ -13,7 +13,7 @@ class OrderModel {
                 LEFT JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
                 LEFT JOIN chi_tiet_don_hang ctdh ON dh.don_hang_id = ctdh.don_hang_id
                 GROUP BY dh.don_hang_id
-                ORDER BY dh.ngay_dat DESC";
+                ORDER BY dh.don_hang_id DESC";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
@@ -36,9 +36,12 @@ class OrderModel {
                         ctdh.*,
                         sp.ten_san_pham,
                         sp.gia as gia_goc,
+                        r.dung_luong,
+                        r.gia_tang,
                         MIN(hasp.hinh_sp) as hinh
                         FROM chi_tiet_don_hang ctdh
                         JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id
+                        LEFT JOIN ram r ON ctdh.ram_id = r.ram_id
                         LEFT JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
                         WHERE ctdh.don_hang_id = ?
                         GROUP BY ctdh.chi_tiet_don_hang_id";
@@ -50,10 +53,13 @@ class OrderModel {
                 // Tính toán lại tổng tiền cho từng item
                 $tongDonHang = 0;
                 foreach ($items as &$item) {
-                    $thanhTien = $item['gia_goc'] * $item['so_luong']; 
+                    $thanhTien = ($item['gia_goc'] + $item['gia_tang']) * $item['so_luong']; 
                     $item['thanh_tien'] = $thanhTien;
                     $tongDonHang += $thanhTien;
                 }
+                
+                // Cộng thêm phí ship
+                $tongDonHang += 30000;
                 
                 // Cập nhật tổng tiền đơn hàng
                 $sqlUpdateTotal = "UPDATE don_hang SET tong_tien = ? WHERE don_hang_id = ?";

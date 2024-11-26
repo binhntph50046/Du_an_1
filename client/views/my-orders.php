@@ -82,7 +82,14 @@
                                     </div>
                                     <div class="product-details ms-3 flex-grow-1">
                                         <h6 class="product-name mb-1"><?php echo $product['ten_san_pham']; ?></h6>
+                                        <p class="product-ram mb-1 text-muted">Dung lượng: <?php echo $product['dung_luong']; ?></p>
                                         <p class="product-quantity mb-1 text-muted">Số lượng: <?php echo $product['so_luong']; ?></p>
+                                        <p class="product-price mb-0 text-danger fw-bold">
+                                            <?php 
+                                            $total_price = $order['tong_tien'];
+                                            echo number_format($total_price, 0, ',', '.'); 
+                                            ?>đ
+                                        </p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -94,7 +101,12 @@
                                 </div>
                                 <div class="order-total">
                                     <span class="me-2">Tổng tiền:</span>
-                                    <span class="text-danger fw-bold fs-5"><?php echo number_format($order['tong_tien'], 0, ',', '.'); ?>đ</span>
+                                    <span class="text-danger fw-bold fs-5">
+                                        <?php 
+                                        $total_price = $order['tong_tien'];
+                                        echo number_format($total_price, 0, ',', '.'); 
+                                        ?>đ
+                                    </span>
                                 </div>
                             </div>
                         </div>
