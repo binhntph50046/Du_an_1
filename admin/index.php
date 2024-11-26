@@ -3,23 +3,23 @@ $act = isset($_GET['act']) ? $_GET['act'] : 'static';
 
 include '../admin/commons/env.php';
 include '../admin/commons/function.php';
-include '../admin/models/Category.php';
-include '../admin/models/Slide.php';
-include '../admin/models/products.php';
-include '../admin/models/users.php';
-include '../admin/models/OrderModel.php';
-include '../admin/models/comment.php';
-include '../admin/models/ram.php';
-include '../admin/models/DashboardModel.php';
+require_once '../admin/models/Category.php';
+require_once '../admin/models/Slide.php';
+require_once '../admin/models/products.php';
+require_once '../admin/models/users.php';
+require_once '../admin/models/OrderModel.php';
+require_once '../admin/models/comment.php';
+require_once '../admin/models/ram.php';
+require_once '../admin/models/DashboardModel.php';
 
-include '../admin/controllers/categoryController.php';
-include '../admin/controllers/slideController.php';
-include '../admin/controllers/productsController.php';
-include '../admin/controllers/userController.php';
-include '../admin/controllers/OrderController.php';
-include '../admin/controllers/commentController.php';
-include '../admin/controllers/DashboardController.php';
-include '../admin/controllers/ramController.php';
+require_once '../admin/controllers/categoryController.php';
+require_once '../admin/controllers/slideController.php';
+require_once '../admin/controllers/productsController.php';
+require_once '../admin/controllers/userController.php';
+require_once '../admin/controllers/OrderController.php';
+require_once '../admin/controllers/commentController.php';
+require_once '../admin/controllers/DashboardController.php';
+require_once '../admin/controllers/ramController.php';
 
 
 include './views/layout/header.php';
