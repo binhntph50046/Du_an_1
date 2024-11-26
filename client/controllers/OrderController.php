@@ -12,30 +12,33 @@ class OrderController {
             if (isset($_POST['buy-now'])) {
                 $san_pham_id = $_POST['san_pham_id'];
                 $so_luong = $_POST['so_luong'];
-                $gia = $_POST['gia'];
                 $ram_id = $_POST['ram_id'];
 
-                // Lấy thông tin sản phẩm
-                $sql = "SELECT sp.*, hasp.hinh_sp, r.dung_luong 
+                // Lấy thông tin sản phẩm và RAM
+                $sql = "SELECT sp.*, hasp.hinh_sp, r.dung_luong, r.gia_tang 
                        FROM san_pham sp
                        JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
                        LEFT JOIN ram r ON r.ram_id = ?
                        WHERE sp.san_pham_id = ?
+                       GROUP BY sp.san_pham_id
                        LIMIT 1";
                 $product = pdo_query_one($sql, $ram_id, $san_pham_id);
 
                 if ($product) {
+                    $gia_cuoi = $product['gia'] + $product['gia_tang'];
+                    
                     $_SESSION['checkout_data'] = [
                         'cart_items' => [[
                             'san_pham_id' => $san_pham_id,
                             'so_luong' => $so_luong,
-                            'gia' => $gia,
+                            'gia' => $product['gia'],
+                            'gia_tang' => $product['gia_tang'],
                             'ram_id' => $ram_id,
                             'ten_san_pham' => $product['ten_san_pham'],
                             'hinh_sp' => $product['hinh_sp'],
                             'dung_luong' => $product['dung_luong']
                         ]],
-                        'total' => $gia * $so_luong,
+                        'total' => $gia_cuoi * $so_luong,
                         'dia_chi' => $_SESSION['email']['dia_chi'],
                         'so_dien_thoai' => $_SESSION['email']['so_dien_thoai']
                     ];
@@ -49,7 +52,7 @@ class OrderController {
 
                 $total = 0;
                 foreach ($cart_items as $item) {
-                    $total += ($item['gia'] + $item['ram_gia_tang']) * $item['so_luong'];
+                    $total += ($item['gia'] + $item['gia_tang']) * $item['so_luong'];
                 }
 
                 $_SESSION['checkout_data'] = [

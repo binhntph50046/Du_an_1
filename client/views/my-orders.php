@@ -83,7 +83,6 @@
                                     <div class="product-details ms-3 flex-grow-1">
                                         <h6 class="product-name mb-1"><?php echo $product['ten_san_pham']; ?></h6>
                                         <p class="product-quantity mb-1 text-muted">Số lượng: <?php echo $product['so_luong']; ?></p>
-                                        <p class="product-price mb-0 text-danger fw-bold"><?php echo number_format($product['gia'], 0, ',', '.'); ?>đ</p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
