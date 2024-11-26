@@ -10,7 +10,7 @@ include '../admin/models/users.php';
 include '../admin/models/OrderModel.php';
 include '../admin/models/comment.php';
 include '../admin/models/ram.php';
-
+include '../admin/models/DashboardModel.php';
 
 include '../admin/controllers/categoryController.php';
 include '../admin/controllers/slideController.php';

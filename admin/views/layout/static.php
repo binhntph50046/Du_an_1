@@ -63,7 +63,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-users stat-icon"></i>
                         <h5 class="card-title">Tổng số người dùng</h5>
-                        <h2 class="card-text" id="userCount">230</h2>
+                        <h2 class="card-text" id="userCount"><?= number_format($statistics['total_users']) ?></h2>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-shopping-cart stat-icon"></i>
                         <h5 class="card-title">Tổng số đơn hàng</h5>
-                        <h2 class="card-text" id="orderCount">120</h2>
+                        <h2 class="card-text" id="orderCount"><?= number_format($statistics['total_orders']) ?></h2>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-dollar-sign stat-icon"></i>
                         <h5 class="card-title">Tổng doanh thu</h5>
-                        <h2 class="card-text" id="revenue">12,345,000đ</h2>
+                        <h2 class="card-text" id="revenue"><?= number_format($statistics['total_revenue'], 0, ',', '.') ?>đ</h2>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                     <div class="card-body text-center">
                         <i class="fas fa-eye stat-icon"></i>
                         <h5 class="card-title">Lượt truy cập</h5>
-                        <h2 class="card-text" id="visitCount">200</h2>
+                        <h2 class="card-text" id="visitCount"><?= number_format($statistics['total_views']) ?></h2>
                     </div>
                 </div>
             </div>
