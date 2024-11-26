@@ -8,6 +8,7 @@ class DashboardController {
 
     public function index() {
         $statistics = $this->dashboardModel->getStatistics();
+        $recentOrders = $this->dashboardModel->getRecentOrders();
         require_once './views/layout/static.php';
     }
 }
