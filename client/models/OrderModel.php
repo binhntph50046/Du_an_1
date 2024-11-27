@@ -1,15 +1,16 @@
 <?php
 require_once 'pdo.php';
 
-function createOrder($data) {
+function createOrder($data)
+{
     try {
         $pdo = pdo_get_connection();
-        
+
         $sql = "INSERT INTO don_hang (tai_khoan_id, ho_va_ten, email, so_dien_thoai, dia_chi, 
                 tong_tien, phuong_thuc_thanh_toan, ngay_dat) 
                 VALUES (:tai_khoan_id, :ho_va_ten, :email, :so_dien_thoai, :dia_chi, 
                 :tong_tien, :phuong_thuc_thanh_toan, NOW())";
-        
+
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':tai_khoan_id' => $data['tai_khoan_id'],
@@ -20,20 +21,21 @@ function createOrder($data) {
             ':tong_tien' => $data['tong_tien'],
             ':phuong_thuc_thanh_toan' => $data['phuong_thuc_thanh_toan']
         ]);
-        
+
         return $pdo->lastInsertId();
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         return false;
     }
 }
 
-function createOrderDetail($data) {
+function createOrderDetail($data)
+{
     try {
         $pdo = pdo_get_connection();
-        
+
         $sql = "INSERT INTO chi_tiet_don_hang (don_hang_id, san_pham_id, so_luong, gia, ram_id) 
                 VALUES (:don_hang_id, :san_pham_id, :so_luong, :gia, :ram_id)";
-        
+
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
             ':don_hang_id' => $data['don_hang_id'],
@@ -42,63 +44,67 @@ function createOrderDetail($data) {
             ':gia' => $data['gia'],
             ':ram_id' => $data['ram_id']
         ]);
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         return false;
     }
 }
 
-function getRamById($ram_id) {
+function getRamById($ram_id)
+{
     try {
         $pdo = pdo_get_connection();
         $sql = "SELECT * FROM ram WHERE ram_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$ram_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         return false;
     }
 }
 
-function getOrderById($order_id) {
+function getOrderById($order_id)
+{
     try {
         $pdo = pdo_get_connection();
         $sql = "SELECT * FROM don_hang WHERE don_hang_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$order_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         return false;
     }
 }
 
-function deleteOrder($order_id) {
+function deleteOrder($order_id)
+{
     try {
         $pdo = pdo_get_connection();
-        
+
         // Bắt đầu transaction
         $pdo->beginTransaction();
-        
+
         // Xóa chi tiết đơn hàng trước
         $sql = "DELETE FROM chi_tiet_don_hang WHERE don_hang_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$order_id]);
-        
+
         // Sau đó xóa đơn hàng
         $sql = "DELETE FROM don_hang WHERE don_hang_id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$order_id]);
-        
+
         // Commit transaction
         $pdo->commit();
         return true;
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         // Rollback nếu có lỗi
         $pdo->rollBack();
         return false;
     }
 }
 
-function getMyOrders($tai_khoan_id) {
+function getMyOrders($tai_khoan_id)
+{
     try {
         $sql = "SELECT dh.*, ctdh.*, sp.ten_san_pham, sp.hinh_sp, sp.gia 
                 FROM don_hang dh 
@@ -106,10 +112,10 @@ function getMyOrders($tai_khoan_id) {
                 LEFT JOIN san_pham sp ON ctdh.san_pham_id = sp.san_pham_id 
                 WHERE dh.tai_khoan_id = ? 
                 ORDER BY dh.ngay_dat DESC, dh.don_hang_id DESC";
-                
+
         $orders = [];
         $result = pdo_query($sql, $tai_khoan_id);
-        
+
         foreach ($result as $row) {
             if (!isset($orders[$row['don_hang_id']])) {
                 $orders[$row['don_hang_id']] = [
@@ -122,7 +128,7 @@ function getMyOrders($tai_khoan_id) {
                     'products' => []
                 ];
             }
-            
+
             if ($row['san_pham_id']) {
                 $orders[$row['don_hang_id']]['products'][] = [
                     'ten_san_pham' => $row['ten_san_pham'],
@@ -132,9 +138,9 @@ function getMyOrders($tai_khoan_id) {
                 ];
             }
         }
-        
+
         return array_values($orders);
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         return [];
     }
 }
