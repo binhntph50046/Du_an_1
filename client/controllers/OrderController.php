@@ -1,6 +1,8 @@
 <?php
-class OrderController {
-    public function checkout() {
+class OrderController
+{
+    public function checkout()
+    {
         if (!isset($_SESSION['email'])) {
             $_SESSION['error'] = "Vui lòng đăng nhập để mua hàng";
             header('Location: ?act=login');
@@ -26,7 +28,7 @@ class OrderController {
 
                 if ($product) {
                     $gia_cuoi = $product['gia'] + $product['gia_tang'];
-                    
+
                     $_SESSION['checkout_data'] = [
                         'cart_items' => [[
                             'san_pham_id' => $san_pham_id,
@@ -46,7 +48,7 @@ class OrderController {
             }
             // Xử lý mua từ giỏ hàng 
             else if (isset($_POST['cart_items'])) {
-                $cart_items = array_map(function($item) {
+                $cart_items = array_map(function ($item) {
                     return json_decode(htmlspecialchars_decode($item), true);
                 }, $_POST['cart_items']);
 
@@ -66,12 +68,13 @@ class OrderController {
             include "./views/checkout.php";
             return;
         }
-        
+
         header('Location: ?act=cart');
         exit;
     }
 
-    public function placeOrder() {
+    public function placeOrder()
+    {
         if (!isset($_SESSION['email']) || !isset($_SESSION['checkout_data'])) {
             $_SESSION['error'] = "Có lỗi xảy ra, vui lòng thử lại";
             header('Location: ?act=cart');
@@ -80,11 +83,11 @@ class OrderController {
 
         try {
             $checkout_data = $_SESSION['checkout_data'];
-            
+
             // Tạo đơn hàng mới
             $order_data = [
                 'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
-                'ho_va_ten' => $_SESSION['email']['ho_va_ten'], 
+                'ho_va_ten' => $_SESSION['email']['ho_va_ten'],
                 'email' => $_SESSION['email']['email'],
                 'so_dien_thoai' => $checkout_data['so_dien_thoai'],
                 'dia_chi' => $checkout_data['dia_chi'],
@@ -98,7 +101,7 @@ class OrderController {
             if ($order_id) {
                 // Tạo mảng chứa các ID sản phẩm đã chọn
                 $selected_items = [];
-                
+
                 foreach ($checkout_data['cart_items'] as $item) {
                     $order_detail = [
                         'don_hang_id' => $order_id,
@@ -108,7 +111,7 @@ class OrderController {
                         'ram_id' => $item['ram_id']
                     ];
                     createOrderDetail($order_detail);
-                    
+
                     // Thêm vào mảng sản phẩm đã chọn
                     $selected_items[] = "tai_khoan_id = {$_SESSION['email']['tai_khoan_id']} AND san_pham_id = {$item['san_pham_id']} AND ram_id = {$item['ram_id']}";
                 }
@@ -132,7 +135,8 @@ class OrderController {
         }
     }
 
-    public function getMyOrders() {
+    public function getMyOrders()
+    {
         if (!isset($_SESSION['email'])) {
             $_SESSION['error'] = "Vui lòng đăng nhập để xem đơn hàng";
             header('Location: ?act=login');
@@ -144,7 +148,7 @@ class OrderController {
 
         try {
             $pdo = pdo_get_connection();
-            
+
             $sql = "SELECT dh.*, ct.san_pham_id, ct.so_luong, ct.gia, ct.ram_id, 
                     sp.ten_san_pham, hasp.hinh_sp, r.dung_luong, r.gia_tang     
                     FROM don_hang dh 
@@ -155,10 +159,10 @@ class OrderController {
                     WHERE dh.tai_khoan_id = ? 
                     GROUP BY ct.chi_tiet_don_hang_id
                     ORDER BY dh.don_hang_id DESC";
-            
+
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$tai_khoan_id]);
-            
+
             while ($row = $stmt->fetch()) {
                 if (!isset($orders[$row['don_hang_id']])) {
                     $orders[$row['don_hang_id']] = [
@@ -169,7 +173,7 @@ class OrderController {
                         'products' => []
                     ];
                 }
-                
+
                 $orders[$row['don_hang_id']]['products'][] = [
                     'ten_san_pham' => $row['ten_san_pham'],
                     'hinh_sp' => $row['hinh_sp'],
@@ -179,14 +183,15 @@ class OrderController {
                     'gia_tang' => $row['gia_tang']
                 ];
             }
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             $_SESSION['error'] = "Có lỗi xảy ra khi lấy thông tin đơn hàng";
         }
 
         include "./views/my-orders.php";
     }
 
-    public function deleteOrder() {
+    public function deleteOrder()
+    {
         if (!isset($_SESSION['email'])) {
             $_SESSION['error'] = "Vui lòng đăng nhập để thực hiện chức năng này";
             header('Location: ?act=login');
@@ -199,7 +204,7 @@ class OrderController {
 
             // Kiểm tra xem đơn hàng có thuộc về người dùng hiện tại không
             $order = getOrderById($order_id);
-            
+
             if (!$order || $order['tai_khoan_id'] != $tai_khoan_id) {
                 $_SESSION['error'] = "Không tìm thấy đơn hàng hoặc bạn không có quyền xóa đơn hàng này";
                 header('Location: ?act=my-orders');
@@ -222,7 +227,8 @@ class OrderController {
         exit;
     }
 
-    public function processCartOrder() {
+    public function processCartOrder()
+    {
         if (!isset($_SESSION['email'])) {
             $_SESSION['error'] = "Vui lòng đăng nhập để mua hàng";
             header('Location: ?act=login');
@@ -231,12 +237,12 @@ class OrderController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                $cart_items = array_map(function($item) {
+                $cart_items = array_map(function ($item) {
                     return json_decode(htmlspecialchars_decode($item), true);
                 }, $_POST['cart_items']);
 
                 $total = $_POST['tong_tien'];
-                
+
                 // Tạo đơn hàng mới
                 $order_data = [
                     'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],
@@ -275,7 +281,6 @@ class OrderController {
                 $_SESSION['error'] = "Có lỗi xảy ra khi đặt hàng!";
                 header('Location: ?act=cart');
                 exit;
-
             } catch (Exception $e) {
                 $_SESSION['error'] = "Có lỗi xảy ra: " . $e->getMessage();
                 header('Location: ?act=cart');

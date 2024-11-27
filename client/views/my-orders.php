@@ -86,7 +86,7 @@
                                         <p class="product-quantity mb-1 text-muted">Số lượng: <?php echo $product['so_luong']; ?></p>
                                         <p class="product-price mb-0 text-danger fw-bold">
                                             <?php 
-                                            $total_price = $order['tong_tien'];
+                                            $total_price = $product['gia'];
                                             echo number_format($total_price, 0, ',', '.'); 
                                             ?>đ
                                         </p>
