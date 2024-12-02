@@ -102,9 +102,15 @@
             <?php endforeach; ?>
 
             <div class="total-section">
+                <?php 
+                $tong_tam_tinh = 0;
+                foreach ($_SESSION['checkout_data']['cart_items'] as $item) {
+                    $tong_tam_tinh += ($item['gia'] + $item['gia_tang']) * $item['so_luong'];
+                }
+                ?>
                 <div class="d-flex justify-content-between mb-2">
                     <span>Tạm tính:</span>
-                    <span><?= number_format(($item['gia'] + $item['gia_tang']) * $item['so_luong'], 0, ',', '.') ?>₫</span>
+                    <span><?= number_format($tong_tam_tinh, 0, ',', '.') ?>₫</span>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
                     <span>Phí vận chuyển:</span>
@@ -112,7 +118,7 @@
                 </div>
                 <div class="d-flex justify-content-between fw-bold">
                     <span>Tổng cộng:</span>
-                    <span><?= number_format(($item['gia'] + $item['gia_tang']) * $item['so_luong'] + 30000, 0, ',', '.') ?>₫</span>
+                    <span><?= number_format($tong_tam_tinh + 30000, 0, ',', '.') ?>₫</span>
                 </div>
             </div>
         </div>
