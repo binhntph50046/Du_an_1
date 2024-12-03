@@ -26,9 +26,9 @@ class CategoryController
             $ten_danh_muc = $_POST['ten_danh_muc'];
             $mo_ta = $_POST['mo_ta'];
             $trang_thai = $_POST['trang_thai'];
-            
+
             $img = uploadFile($_FILES['hinh'], '../Upload/Category/');
-            
+
             if ($this->modelCategory->addCategory($ten_danh_muc, $img, $mo_ta, $trang_thai)) {
                 $_SESSION['message'] = "Thêm danh mục thành công!";
                 $_SESSION['message_type'] = "success";
@@ -36,7 +36,7 @@ class CategoryController
                 exit();
             } else {
                 $_SESSION['message'] = "Thêm danh mục thất bại!";
-                $_SESSION['message_type'] = "danger"; 
+                $_SESSION['message_type'] = "danger";
                 header('Location: ./?act=form-add-category');
                 exit();
             }
@@ -86,17 +86,17 @@ class CategoryController
     public function postDeleteCategory()
     {
         $danh_muc_id = $_GET['danh_muc_id'];
-        
+
         // Kiểm tra ràng buộc trước khi xóa
         $constraints = $this->modelCategory->checkCategoryConstraints($danh_muc_id);
-        
+
         if ($constraints['has_products']) {
             $_SESSION['message'] = "Không thể xóa vì danh mục này đang có sản phẩm!";
             $_SESSION['message_type'] = "danger";
             header('Location: ?act=list-category');
             exit();
         }
-        
+
         if ($constraints['has_orders']) {
             $_SESSION['message'] = "Không thể xóa vì danh mục này có đơn hàng!";
             $_SESSION['message_type'] = "danger";

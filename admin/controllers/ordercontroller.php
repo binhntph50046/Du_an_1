@@ -22,7 +22,8 @@ class OrderController {
             // Truyền dữ liệu sang view
             $data = [
                 'order' => $orderData['order'],
-                'items' => $orderData['items']
+                'items' => $orderData['items'],
+                'currentStatus' => $orderData['order']['trang_thai']
             ];
             include_once 'views/orders/view.php';
         } else {

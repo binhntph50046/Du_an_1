@@ -28,7 +28,7 @@
 
     <div class="orders-container">
         <h2 class="section-title mb-4">Đơn hàng của tôi</h2>
-        
+
         <div class="orders-list">
             <?php if (!empty($orders)): ?>
                 <?php foreach ($orders as $order): ?>
@@ -49,14 +49,18 @@
                                             $statusText = 'Chờ xử lý';
                                             break;
                                         case 2:
-                                            $statusClass = 'bg-info';
-                                            $statusText = 'Đang xử lý';
+                                            $statusClass = 'bg-primary';
+                                            $statusText = 'Đã xác nhận';
                                             break;
                                         case 3:
+                                            $statusClass = 'bg-info';
+                                            $statusText = 'Đang giao';
+                                            break;
+                                        case 4:
                                             $statusClass = 'bg-success';
                                             $statusText = 'Đã hoàn thành';
                                             break;
-                                        case 4:
+                                        case 5:
                                             $statusClass = 'bg-danger';
                                             $statusText = 'Đã hủy';
                                             break;
@@ -67,10 +71,12 @@
                                     ?>
                                     <span class="badge <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
                                 </div>
-                                <?php if ($order['trang_thai'] == 1): // Chỉ cho phép xóa đơn hàng ở trạng thái "Chờ xác nhận" ?>
-                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?php echo $order['ma_don_hang']; ?>)">
-                                        <i class="fas fa-trash"></i>
+                                <?php if ($order['trang_thai'] == 1 || $order['trang_thai'] == 2):  ?>
+                                    <button class="btn btn-danger btn-sm" onclick="confirmCancel(<?php echo $order['ma_don_hang']; ?>)">
+                                        Hủy đơn hàng
                                     </button>
+                                <?php elseif ($order['trang_thai'] == 5):  ?>
+                                    <span class="text-muted">Đơn hàng đã hủy</span>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -85,15 +91,15 @@
                                         <p class="product-ram mb-1 text-muted">Dung lượng: <?php echo $product['dung_luong']; ?></p>
                                         <p class="product-quantity mb-1 text-muted">Số lượng: <?php echo $product['so_luong']; ?></p>
                                         <p class="product-price mb-0 text-danger fw-bold">
-                                            <?php 
+                                            <?php
                                             $total_price = $product['gia'];
-                                            echo number_format($total_price, 0, ',', '.'); 
+                                            echo number_format($total_price, 0, ',', '.');
                                             ?>đ
                                         </p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                            
+
                             <div class="order-footer mt-3 d-flex justify-content-between align-items-center">
                                 <div class="order-date">
                                     <i class="fas fa-calendar-alt text-muted me-2"></i>
@@ -102,9 +108,9 @@
                                 <div class="order-total">
                                     <span class="me-2">Tổng tiền:</span>
                                     <span class="text-danger fw-bold fs-5">
-                                        <?php 
+                                        <?php
                                         $total_price = $order['tong_tien'];
-                                        echo number_format($total_price, 0, ',', '.'); 
+                                        echo number_format($total_price, 0, ',', '.');
                                         ?>đ
                                     </span>
                                 </div>
@@ -126,100 +132,100 @@
 </div>
 
 <style>
-.order-item {
-    border: 1px solid #ddd;
-    transition: all 0.3s ease;
-}
-
-.order-item:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.order-product-image {
-    border-radius: 8px;
-}
-
-.order-status {
-    font-weight: 600;
-}
-
-.product-image {
-    width: 80px;
-    height: 80px;
-    min-width: 80px;
-    margin-right: 15px;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 1px solid #eee;
-}
-
-.product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.product-item {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-}
-
-.product-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-}
-
-.product-details {
-    flex: 1;
-}
-
-.product-name {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.product-quantity {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.product-price {
-    font-size: 16px;
-    font-weight: 600;
-    color: #dc3545;
-}
-
-@media (max-width: 576px) {
-    .product-image {
-        width: 60px;
-        height: 60px;
-        min-width: 60px;
+    .order-item {
+        border: 1px solid #ddd;
+        transition: all 0.3s ease;
     }
-}
-</style> 
+
+    .order-item:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-product-image {
+        border-radius: 8px;
+    }
+
+    .order-status {
+        font-weight: 600;
+    }
+
+    .product-image {
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        margin-right: 15px;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .product-item {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+    }
+
+    .product-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .product-details {
+        flex: 1;
+    }
+
+    .product-name {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .product-quantity {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .product-price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #dc3545;
+    }
+
+    @media (max-width: 576px) {
+        .product-image {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+        }
+    }
+</style>
 
 <script>
-function confirmDelete(orderId) {
-    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?')) {
-        window.location.href = `?act=delete-order&id=${orderId}`;
+    function confirmCancel(orderId) {
+        if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
+            window.location.href = `?act=cancel-order&id=${orderId}`;
+        }
     }
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-        var alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
-            var bsAlert = new bootstrap.Alert(alert);
-            bsAlert.close();
-        });
-    }, 3000);
-});
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 3000);
+    });
 </script>
 <?php include 'footer.php'; ?>

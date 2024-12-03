@@ -62,9 +62,10 @@ if (!$order || empty($items)) {
                                     <input type="hidden" name="order_id" value="<?= $order['don_hang_id'] ?>">
                                     <select name="status" class="form-control" onchange="this.form.submit()">
                                         <option value="1" <?= (!$order['trang_thai'] || $order['trang_thai'] == 1) ? 'selected' : '' ?>>Chờ xử lý</option>
-                                        <option value="2" <?= $order['trang_thai'] == 2 ? 'selected' : '' ?>>Đang xử lý</option>
-                                        <option value="3" <?= $order['trang_thai'] == 3 ? 'selected' : '' ?>>Đã hoàn thành</option>
-                                        <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hủy</option>
+                                        <option value="2" <?= $order['trang_thai'] == 2 ? 'selected' : '' ?>>Đã xác nhận</option>
+                                        <option value="3" <?= $order['trang_thai'] == 3 ? 'selected' : '' ?>>Đang giao</option>
+                                        <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hoàn thành</option>
+                                        <option value="5" <?= $order['trang_thai'] == 5 ? 'selected' : '' ?> <?= !in_array($order['trang_thai'], [1, 2]) ? 'disabled' : '' ?>>Đã hủy</option>
                                     </select>
                                 </form>
                             </td>

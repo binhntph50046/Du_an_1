@@ -190,7 +190,7 @@ class OrderController
         include "./views/my-orders.php";
     }
 
-    public function deleteOrder()
+    public function cancelOrder()
     {
         if (!isset($_SESSION['email'])) {
             $_SESSION['error'] = "Vui lòng đăng nhập để thực hiện chức năng này";
@@ -206,20 +206,20 @@ class OrderController
             $order = getOrderById($order_id);
 
             if (!$order || $order['tai_khoan_id'] != $tai_khoan_id) {
-                $_SESSION['error'] = "Không tìm thấy đơn hàng hoặc bạn không có quyền xóa đơn hàng này";
+                $_SESSION['error'] = "Không tìm thấy đơn hàng hoặc bạn không có quyền hủy đơn hàng này";
                 header('Location: ?act=my-orders');
                 exit;
             }
-            if ($order['trang_thai'] != 1) {
-                $_SESSION['error'] = "Chỉ có thể xóa đơn hàng ở trạng thái chờ xác nhận";
+            if ($order['trang_thai'] != 1 && $order['trang_thai'] != 2) {
+                $_SESSION['error'] = "Chỉ có thể hủy đơn hàng ở trạng thái chờ xác nhận hoặc đã xác nhận";
                 header('Location: ?act=my-orders');
                 exit;
             }
 
-            if (deleteOrder($order_id)) {
-                $_SESSION['success'] = "Đã xóa đơn hàng thành công";
+            if (cancelOrder($order_id)) {
+                $_SESSION['success'] = "Đã hủy đơn hàng thành công";
             } else {
-                $_SESSION['error'] = "Có li xảy ra khi xóa đơn hàng";
+                $_SESSION['error'] = "Có lỗi xảy ra khi hủy đơn hàng";
             }
         }
 

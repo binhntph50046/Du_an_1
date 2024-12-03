@@ -1,12 +1,15 @@
 <?php
-class DashboardModel {
+class DashboardModel
+{
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conn = connectDB();
     }
 
-    public function getStatistics() {
+    public function getStatistics()
+    {
         try {
             // tổng số người dùng
             $userQuery = "SELECT COUNT(*) as total_users FROM tai_khoan WHERE vai_tro = 0";
@@ -30,17 +33,18 @@ class DashboardModel {
 
             return [
                 'total_users' => $totalUsers,
-                'total_orders' => $totalOrders, 
+                'total_orders' => $totalOrders,
                 'total_revenue' => $totalRevenue,
                 'total_views' => $totalViews
             ];
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             error_log("Lỗi thống kê: " . $e->getMessage());
             return false;
         }
     }
 
-    public function getRecentOrders() {
+    public function getRecentOrders()
+    {
         try {
             $sql = "SELECT 
                     dh.don_hang_id as id,
@@ -64,21 +68,25 @@ class DashboardModel {
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // xử lý trạng thái và class tương ứng
-            foreach($orders as &$order) {
-                switch($order['trang_thai']) {
+            foreach ($orders as &$order) {
+                switch ($order['trang_thai']) {
                     case 1:
                         $order['status'] = 'Chờ xử lý';
                         $order['status_class'] = 'warning';
                         break;
                     case 2:
-                        $order['status'] = 'Đang xử lý';
+                        $order['status'] = 'Đã xác nhận';
                         $order['status_class'] = 'primary';
                         break;
                     case 3:
+                        $order['status'] = 'Đang giao';
+                        $order['status_class'] = 'info';
+                        break;
+                    case 4:
                         $order['status'] = 'Hoàn thành';
                         $order['status_class'] = 'success';
                         break;
-                    case 4:
+                    case 5:
                         $order['status'] = 'Đã hủy';
                         $order['status_class'] = 'danger';
                         break;
@@ -86,9 +94,9 @@ class DashboardModel {
             }
 
             return $orders;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             error_log("Lỗi lấy đơn hàng gần đây: " . $e->getMessage());
             return [];
         }
     }
-} 
+}

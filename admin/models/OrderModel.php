@@ -88,12 +88,27 @@ class OrderModel {
         return $stmt->fetch(PDO::FETCH_ASSOC)['phuong_thuc_thanh_toan'];
     }
     public function updateOrderStatus($orderId, $status) {
+        $currentStatus = $this->getOrderStatus($orderId);
+    
+        // Điều kiện kiểm tra logic cập nhật trạng thái
+        if (($currentStatus == 1 && $status != 2 && $status != 5) || // Chờ xử lý: chỉ cho phép sang Đã xác nhận hoặc Đã hủy
+            ($currentStatus == 2 && $status != 3 && $status != 5) || // Đã xác nhận: chỉ cho phép sang Đang giao hoặc Đã hủy
+            ($currentStatus == 3 && $status != 4) || // Đang giao: chỉ cho phép sang Đã hoàn thành
+            ($currentStatus >= 4)) { // Đã hoàn thành hoặc đã hủy: không cho phép cập nhật
+            return false; // Không cho phép cập nhật
+        }
+    
+        // Thực hiện cập nhật trạng thái đơn hàng
         $sql = "UPDATE don_hang 
-                SET trang_thai = $status, ngay_xu_ly = CURRENT_DATE 
-                WHERE don_hang_id = $orderId";
+                SET trang_thai = :status, ngay_xu_ly = CURRENT_DATE 
+                WHERE don_hang_id = :orderId";
         $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':status', $status, PDO::PARAM_INT);
+        $stmt->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+    
         return $stmt->execute();
     }
+    
     public function getOrdersByUserId($userId) {
         $sql = "SELECT dh.*, COUNT(ctdh.don_hang_id) as total_items 
                 FROM don_hang dh 
@@ -133,9 +148,9 @@ class OrderModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function getOrderStatus($orderId) {
-        $sql = "SELECT trang_thai FROM don_hang WHERE don_hang_id = $orderId";
+        $sql = "SELECT trang_thai FROM don_hang WHERE don_hang_id = :orderId";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$orderId]);
+        $stmt->execute([':orderId' => $orderId]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['trang_thai'] : null;
     }

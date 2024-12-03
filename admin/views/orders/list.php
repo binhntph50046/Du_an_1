@@ -52,9 +52,10 @@
                                     <?php
                                     $trang_thai = [
                                         1 => '<span class="badge bg-warning">Chờ xử lý</span>',
-                                        2 => '<span class="badge bg-info">Đang xử lý</span>',
-                                        3 => '<span class="badge bg-success">Đã hoàn thành</span>',
-                                        4 => '<span class="badge bg-danger">Đã hủy</span>'
+                                        2 => '<span class="badge bg-primary">Đã xác nhận</span>',
+                                        3 => '<span class="badge bg-info">Đang giao</span>',
+                                        4 => '<span class="badge bg-success">Đã hoàn thành</span>',
+                                        5 => '<span class="badge bg-danger">Đã hủy</span>'
                                     ];
                                     echo $trang_thai[$order['trang_thai']] ?? $trang_thai[1];
                                     ?>

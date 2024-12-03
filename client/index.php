@@ -79,7 +79,7 @@ if (isset($_GET['act'])) {
             break;
         case 'delete-order':
             $orderController = new OrderController();
-            $orderController->deleteOrder();
+            $orderController->cancelOrder();
             break;
 
         case 'search':
@@ -126,6 +126,11 @@ if (isset($_GET['act'])) {
         case 'place-order':
             $orderController = new OrderController();
             $orderController->placeOrder();
+            break;
+
+        case 'cancel-order':
+            $orderController = new OrderController();
+            $orderController->cancelOrder();
             break;
 
         default:

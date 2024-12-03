@@ -144,3 +144,19 @@ function getMyOrders($tai_khoan_id)
         return [];
     }
 }
+
+function cancelOrder($order_id)
+{
+    try {
+        $pdo = pdo_get_connection();
+
+        // Update the order status to "canceled"
+        $sql = "UPDATE don_hang SET trang_thai = 5 WHERE don_hang_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+
+        return true;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
