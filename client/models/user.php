@@ -108,16 +108,5 @@ class User {
             return false;
         }
     }
-
-    public function getById($id) {
-        try {
-            $sql = "SELECT * FROM tai_khoan WHERE tai_khoan_id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $id]);
-            return $stmt->fetch();
-        } catch(PDOException $e) {
-            return false;
-        }
-    }
 }
 ?>
