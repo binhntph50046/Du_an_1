@@ -24,11 +24,10 @@
                     <div class="signin-image">
                         <figure>
                             <?php
-                            $defaultImage = "./auth/images/default.png"; // Ảnh mặc định
+                            $defaultImage = "./auth/images/default.png"; 
                             $loginImage = "./auth/images/signin-image.jpg";
-                            $imagePath = file_exists($loginImage) ? $loginImage : $defaultImage;
                             ?>
-                            <img src="<?php echo $imagePath; ?>" alt="sign in image" onerror="this.src='<?php echo $defaultImage; ?>'">
+                            <img src="<?php echo $loginImage; ?>" alt="sign in image" onerror="this.src='<?php echo $defaultImage; ?>'">
                         </figure>
                         <a href="./?act=register" class="signup-image-link">Create an account</a>
                     </div>
@@ -55,9 +54,6 @@
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit" value="Log in" />
                             </div>
-                            <!-- <div class="form-group">
-                                <a href="?act=forgot-password" class="text-primary">Quên mật khẩu?</a>
-                            </div> -->
                         </form>
                         <div class="social-login">
                             <span class="social-label">Or login with</span>
