@@ -76,7 +76,7 @@
                                         Hủy đơn hàng
                                     </button>
                                 <?php elseif ($order['trang_thai'] == 5):  ?>
-                                    <span class="text-muted">Đơn hàng đã hủy</span>
+                                    <!-- <span class="text-muted">Đơn hàng đã hủy</span> -->
                                 <?php endif; ?>
                             </div>
                         </div>
