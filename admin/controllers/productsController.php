@@ -49,7 +49,7 @@ class ProductsController
                 $hinh = $_FILES['hinh_sp'];
                 $ngay_nhap = $_POST['ngay_nhap'];
                 $mo_ta = $_POST['mo_ta'];
-                $trang_thai = $_POST['trang_thai'];
+                $trang_thai = $_POST['stock'] > 0 ? 1 : 0;
                 $danh_muc_id = isset($_POST['danh_muc']) ? $_POST['danh_muc'] : NULL;
                 
 
@@ -64,7 +64,7 @@ class ProductsController
                 ], true));
 
                 // Thêm sản phẩm và lấy ID
-                $result = $this->modelProducts->addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id);
+                $result = $this->modelProducts->addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id, $_POST['stock']);
                 
                 if (!$result) {
                     throw new Exception("Không thể thêm sản phẩm");
@@ -169,7 +169,8 @@ class ProductsController
                 $ngay_nhap,
                 $mo_ta,
                 $trang_thai,
-                $danh_muc_id
+                $danh_muc_id,
+                $_POST['stock']
             );
 
             // Cập nhật RAM của sản phẩm

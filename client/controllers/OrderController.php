@@ -112,6 +112,9 @@ class OrderController
                     ];
                     createOrderDetail($order_detail);
 
+                    // Giảm số lượng tồn kho
+                    decreaseProductStock($item['san_pham_id'], $item['so_luong']);
+
                     // Thêm vào mảng sản phẩm đã chọn
                     $selected_items[] = "tai_khoan_id = {$_SESSION['email']['tai_khoan_id']} AND san_pham_id = {$item['san_pham_id']} AND ram_id = {$item['ram_id']}";
                 }
@@ -214,6 +217,12 @@ class OrderController
                 $_SESSION['error'] = "Chỉ có thể hủy đơn hàng ở trạng thái chờ xác nhận hoặc đã xác nhận";
                 header('Location: ?act=my-orders');
                 exit;
+            }
+
+            // Restore stock for each product in the order
+            $order_details = getOrderDetails($order_id); // Assuming this function retrieves order details
+            foreach ($order_details as $detail) {
+                increaseProductStock($detail['san_pham_id'], $detail['so_luong']); // Restore stock
             }
 
             if (cancelOrder($order_id)) {

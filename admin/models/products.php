@@ -39,12 +39,12 @@ class Products
         }
     }
 
-    public function addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id)
+    public function addProduct($ten_san_pham, $gia, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id, $stock)
     {
         try {
             // Debug SQL và parameters
-            $sql = "INSERT INTO san_pham (ten_san_pham, gia, ngay_nhap, mo_ta, trang_thai, danh_muc_id) 
-                    VALUES (:ten_san_pham, :gia, :ngay_nhap, :mo_ta, :trang_thai, :danh_muc_id)";
+            $sql = "INSERT INTO san_pham (ten_san_pham, gia, ngay_nhap, mo_ta, trang_thai, danh_muc_id, stock) 
+                    VALUES (:ten_san_pham, :gia, :ngay_nhap, :mo_ta, :trang_thai, :danh_muc_id, :stock)";
             
             error_log("SQL Query: " . $sql);
             error_log("Parameters: " . print_r([
@@ -53,7 +53,8 @@ class Products
                 ':ngay_nhap' => $ngay_nhap,
                 ':mo_ta' => $mo_ta,
                 ':trang_thai' => $trang_thai,
-                ':danh_muc_id' => $danh_muc_id
+                ':danh_muc_id' => $danh_muc_id,
+                ':stock' => $stock
             ], true));
             
             $this->conn->beginTransaction();
@@ -64,7 +65,8 @@ class Products
                 ':ngay_nhap' => $ngay_nhap,
                 ':mo_ta' => $mo_ta,
                 ':trang_thai' => $trang_thai,
-                ':danh_muc_id' => $danh_muc_id
+                ':danh_muc_id' => $danh_muc_id,
+                ':stock' => $stock
             ]);
             
             error_log("Execute result: " . ($result ? "Success" : "Failed"));
@@ -136,15 +138,19 @@ class Products
         }
     }
 
-    public function updateProductWithRelations($san_pham_id, $ten_san_pham, $gia, $hinh_id, $hinh_path, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id) {
+    public function updateProductWithRelations($san_pham_id, $ten_san_pham, $gia, $hinh_id, $hinh_path, $ngay_nhap, $mo_ta, $trang_thai, $danh_muc_id, $stock) {
         try {
+            // Check stock and update status
+            $trang_thai = $stock > 0 ? 1 : 0; // Set status to 1 if in stock, 0 if out of stock
+
             $sql = "UPDATE san_pham SET 
                     ten_san_pham = :ten_san_pham,
                     gia = :gia,
                     ngay_nhap = :ngay_nhap,
                     mo_ta = :mo_ta,
                     trang_thai = :trang_thai,
-                    danh_muc_id = :danh_muc_id
+                    danh_muc_id = :danh_muc_id,
+                    stock = :stock
                     WHERE san_pham_id = :san_pham_id";
                     
             $stmt = $this->conn->prepare($sql);
@@ -154,8 +160,9 @@ class Products
                 ':gia' => $gia,
                 ':ngay_nhap' => $ngay_nhap,
                 ':mo_ta' => $mo_ta,
-                ':trang_thai' => $trang_thai,
-                ':danh_muc_id' => $danh_muc_id
+                ':trang_thai' => $trang_thai, // Use updated status
+                ':danh_muc_id' => $danh_muc_id,
+                ':stock' => $stock
             ]);
 
             // Cập nhật hình ảnh nếu có

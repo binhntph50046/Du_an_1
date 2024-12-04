@@ -77,6 +77,11 @@
                             <small class="form-text text-muted">Giữ Ctrl để chọn nhiều RAM</small>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Tồn Kho</label>
+                            <input type="number" class="form-control" id="stock" name="stock" required>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Thêm Sản Phẩm</button>
                         <a href="?act=listProducts" class="btn btn-secondary">Quay lại Danh
                             Sách</a>

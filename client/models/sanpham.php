@@ -37,7 +37,8 @@ function getProductById($id)
     increaseProductView($id);
     
     $sql = "SELECT sp.*, dm.ten_danh_muc,
-            (SELECT hinh_sp FROM hinh_anh_san_pham WHERE san_pham_id = sp.san_pham_id LIMIT 1) as hinh_sp
+            (SELECT hinh_sp FROM hinh_anh_san_pham WHERE san_pham_id = sp.san_pham_id LIMIT 1) as hinh_sp,
+            sp.stock
             FROM san_pham sp
             LEFT JOIN danh_muc dm ON sp.danh_muc_id = dm.danh_muc_id
             WHERE sp.san_pham_id = ?";
@@ -93,4 +94,8 @@ function search_products_by_category($category) {
 function loadAllCategories() {
     $sql = "SELECT * FROM danh_muc WHERE trang_thai = 1 ORDER BY ten_danh_muc ASC"; // Assuming there's a 'trang_thai' field to filter active categories
     return pdo_query($sql);
+}
+function decreaseProductStock($san_pham_id, $quantity) {
+    $sql = "UPDATE san_pham SET stock = stock - ? WHERE san_pham_id = ?";
+    return pdo_execute($sql, $quantity, $san_pham_id);
 }

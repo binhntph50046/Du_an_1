@@ -101,6 +101,10 @@
                                     ?>
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Tồn Kho</label>
+                                <input type="number" class="form-control" id="stock" name="stock" value="<?= $product['stock'] ?>" required>
+                            </div>
                             <button type="submit" class="btn btn-primary">Cập Nhật</button>
                             <a href="?act=listProducts" class="btn btn-secondary">Quay lại Danh
                                 Sách</a>

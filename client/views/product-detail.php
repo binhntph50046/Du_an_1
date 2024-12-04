@@ -116,6 +116,9 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
+                    <div class="stock-info">
+                        Tồn kho: <span id="stockQuantity"><?= $product['stock'] ?></span> sản phẩm
+                    </div>
                 </div>
 
                 <div class="button-group">
@@ -124,7 +127,7 @@
                         <input type="hidden" name="so_luong" id="cart_quantity" value="1">
                         <input type="hidden" name="ram_id" id="cart_ram_id">
                         <input type="hidden" name="gia" value="<?= $product['gia'] ?>">
-                        <button type="submit" class="btn-add-to-cart">
+                        <button type="button" class="btn-add-to-cart" id="addToCartButton"  onclick="handleAddToCart()">
                             <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
                         </button>
                     </form>
@@ -135,7 +138,7 @@
                         <input type="hidden" name="so_luong" id="buy_quantity" value="1">
                         <input type="hidden" name="ram_id" id="selected_ram">
                         <input type="hidden" name="buy-now" value="1">
-                        <button type="submit" class="btn-buy-now">
+                        <button type="button" class="btn-buy-now" id="buyNowButton"  onclick="handleBuyNow()">
                             <i class="fas fa-bolt"></i> Mua ngay
                         </button>
                     </form>
@@ -194,6 +197,7 @@
         </div>
     </div>
 
+    <div id="stockMessage" style="color: red; display: none;">Sản phẩm này hết hàng.</div>
 
     <?php include "views/footer.php"; ?>
 
@@ -216,7 +220,7 @@
         var cartQuantityInput = document.getElementById('cart_quantity');
         var buyQuantityInput = document.getElementById('buy_quantity');
         var value = parseInt(input.value);
-        if (value < 10) {
+        if (value < 20) {
             value = value + 1;
             input.value = value;
             cartQuantityInput.value = value;
@@ -266,6 +270,26 @@
             document.getElementById('selected_ram').value = this.value;
         });
     });
+
+    function handleAddToCart() {
+        var stockQuantity = <?= $product['stock'] ?>;
+        if (stockQuantity <= 0) {
+            document.getElementById('stockMessage').style.display = 'block';
+            alert('Sản phẩm này hết hàng.');
+        } else {
+            document.querySelector('form[action="?act=add-to-cart"]').submit();
+        }
+    }
+
+    function handleBuyNow() {
+        var stockQuantity = <?= $product['stock'] ?>;
+        if (stockQuantity <= 0) {
+            document.getElementById('stockMessage').style.display = 'block';
+            alert('Sản phẩm này hết hàng.');
+        } else {
+            document.querySelector('form[action="?act=checkout"]').submit();
+        }
+    }
     </script>
 </body>
 

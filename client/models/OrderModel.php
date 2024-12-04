@@ -160,3 +160,22 @@ function cancelOrder($order_id)
         return false;
     }
 }
+
+function increaseProductStock($san_pham_id, $quantity) {
+    $sql = "UPDATE san_pham SET stock = stock + ? WHERE san_pham_id = ?";
+    return pdo_execute($sql, $quantity, $san_pham_id);
+}
+
+function getOrderDetails($order_id)
+{
+    try {
+        $pdo = pdo_get_connection();
+        $sql = "SELECT * FROM chi_tiet_don_hang WHERE don_hang_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
