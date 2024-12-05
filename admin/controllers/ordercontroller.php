@@ -37,7 +37,8 @@ class OrderController {
             
             $this->orderModel->updateOrderStatus($orderId, $status);
         }
-        header("Location: index.php?act=list-orders");
+        // Chuyển hướng về trang chi tiết đơn hàng
+        header("Location: index.php?act=view-order&id=" . $orderId);
         exit();
     }
 }
