@@ -91,11 +91,11 @@ class OrderModel {
         $currentStatus = $this->getOrderStatus($orderId);
     
         // Điều kiện kiểm tra logic cập nhật trạng thái
-        if (($currentStatus == 1 && $status != 2 && $status != 5) || // Chờ xử lý: chỉ cho phép sang Đã xác nhận hoặc Đã hủy
-            ($currentStatus == 2 && $status != 3 && $status != 5) || // Đã xác nhận: chỉ cho phép sang Đang giao hoặc Đã hủy
-            ($currentStatus == 3 && $status != 4) || // Đang giao: chỉ cho phép sang Đã hoàn thành
-            ($currentStatus >= 4)) { // Đã hoàn thành hoặc đã hủy: không cho phép cập nhật
-            return false; // Không cho phép cập nhật
+        if (($currentStatus == 1 && $status != 2 && $status != 5) || 
+            ($currentStatus == 2 && $status != 3 && $status != 5) || 
+            ($currentStatus == 3 && $status != 4) ||
+            ($currentStatus >= 4)) { 
+            return false; 
         }
     
         // Thực hiện cập nhật trạng thái đơn hàng

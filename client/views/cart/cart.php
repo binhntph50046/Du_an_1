@@ -108,7 +108,8 @@
                             JOIN hinh_anh_san_pham hasp ON sp.san_pham_id = hasp.san_pham_id
                             JOIN ram r ON g.ram_id = r.ram_id
                             WHERE g.tai_khoan_id = ?
-                            GROUP BY g.gio_hang_id";
+                            GROUP BY g.gio_hang_id
+                            ORDER BY g.gio_hang_id DESC";
 
                     $cartItems = pdo_query($sql, $tai_khoan_id);
 

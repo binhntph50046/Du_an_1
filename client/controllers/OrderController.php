@@ -205,7 +205,6 @@ class OrderController
             $order_id = $_GET['id'];
             $tai_khoan_id = $_SESSION['email']['tai_khoan_id'];
 
-            // Kiểm tra xem đơn hàng có thuộc về người dùng hiện tại không
             $order = getOrderById($order_id);
 
             if (!$order || $order['tai_khoan_id'] != $tai_khoan_id) {
@@ -219,8 +218,7 @@ class OrderController
                 exit;
             }
 
-            // Restore stock for each product in the order
-            $order_details = getOrderDetails($order_id); // Assuming this function retrieves order details
+            $order_details = getOrderDetails($order_id); 
             foreach ($order_details as $detail) {
                 increaseProductStock($detail['san_pham_id'], $detail['so_luong']); // Restore stock
             }
