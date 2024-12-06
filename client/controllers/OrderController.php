@@ -84,6 +84,15 @@ class OrderController
         try {
             $checkout_data = $_SESSION['checkout_data'];
 
+            // Kiểm tra tồn kho cho từng sản phẩm
+            foreach ($checkout_data['cart_items'] as $item) {
+                if (!checkProductStock($item['san_pham_id'], $item['so_luong'])) {
+                    $_SESSION['error'] = "Sản phẩm '{$item['ten_san_pham']}' đã hết hàng.";
+                    header('Location: ?act=cart');
+                    exit;
+                }
+            }
+
             // Tạo đơn hàng mới
             $order_data = [
                 'tai_khoan_id' => $_SESSION['email']['tai_khoan_id'],

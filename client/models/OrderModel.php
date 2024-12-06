@@ -179,3 +179,16 @@ function getOrderDetails($order_id)
     }
 }
 
+function checkProductStock($san_pham_id, $quantity) {
+    try {
+        $pdo = pdo_get_connection();
+        $sql = "SELECT stock FROM san_pham WHERE san_pham_id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$san_pham_id]);
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $product && $product['stock'] >= $quantity; // Kiểm tra tồn kho
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
