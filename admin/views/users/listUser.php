@@ -105,7 +105,7 @@
 <div class="col">
         <div class="col-12">
             <h1 class="fs-16 mb-1">Quản lý người dùng</h1>
-            <p class="text-muted mb-0">Danh sách các slide hiện có.</p>
+            <p class="text-muted mb-0">Danh sách người dùng hiện có.</p>
         </div>
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -177,17 +177,17 @@
                                     title="Chi tiết">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="index.php?act=updateUser&id=<?= $user['tai_khoan_id'] ?>"
+                                <!-- <a href="index.php?act=updateUser&id=<?= $user['tai_khoan_id'] ?>"
                                     class="btn btn-warning btn-action"
                                     title="Sửa">
                                     <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="index.php?act=delete&id=<?= $user['tai_khoan_id'] ?>"
+                                </a> -->
+                                <!-- <a href="index.php?act=delete&id=<?= $user['tai_khoan_id'] ?>"
                                     class="btn btn-danger btn-action"
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')"
                                     title="Xóa">
                                     <i class="fas fa-trash"></i>
-                                </a>
+                                </a> -->
                             </td>
                         </tr>
                     <?php endforeach; ?>

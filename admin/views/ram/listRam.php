@@ -29,11 +29,11 @@
                                                    class="btn btn-warning btn-sm">
                                                    <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="./?act=deleteRam&id=<?= $ram['ram_id'] ?>"
+                                                <!-- <a href="./?act=deleteRam&id=<?= $ram['ram_id'] ?>"
                                                    onclick="return confirm('Bạn có muốn xóa RAM này không?')"
                                                    class="btn btn-danger btn-sm">
                                                    <i class="fas fa-trash"></i>
-                                                </a>
+                                                </a> -->
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

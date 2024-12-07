@@ -52,8 +52,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tên Danh Mục</th>
-                                <th>Hình ảnh</th>
-                                <th>Mô Tả</th>
+                                <!-- <th>Hình ảnh</th>
+                                <th>Mô Tả</th> -->
                                 <th>Trạng Thái</th>
                                 <th>Hành Động</th>
                             </tr>
@@ -63,8 +63,8 @@
                                 <tr>
                                     <td><?= $Category['danh_muc_id'] ?></td>
                                     <td><?= $Category['ten_danh_muc'] ?></td>
-                                    <td><img src="<?= $Category['hinh'] ?>" style="width: 100px;"></td>
-                                    <td><?= $Category['mo_ta'] ?></td>
+                                    <!-- <td><img src="<?= $Category['hinh'] ?>" style="width: 100px;"></td>
+                                    <td><?= $Category['mo_ta'] ?></td> -->
                                     <td>
                                         <span class="status-badge <?= $Category['trang_thai'] == 1 ? 'status-active' : 'status-locked' ?>">
                                             <?= $Category['trang_thai'] == 1 ? 'Hoạt động' : 'Ngừng hoạt động' ?>
