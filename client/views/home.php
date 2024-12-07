@@ -53,7 +53,7 @@
                 <div class="product-list">
                     <?php foreach ($products as $product): ?>
                         <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">
-                            <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>">
+                            <img src="<?= $product['hinh_sp'] ?>" alt="<?= $product['ten_san_pham'] ?>"><div class="product__sale-tag">New</div>
                             <div class="product-infor">
                                 <div class="product-name"><?= $product['ten_san_pham'] ?></div>
                                 <div class="product-price"><?= number_format($product['gia'], 0, ',', '.') ?><span>₫</span></div>
