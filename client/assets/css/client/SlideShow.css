@@ -50,7 +50,7 @@
 } 
 /* Thêm vào file SlideShow.css */
 .fade {
-    animation: fade 1.8s ease-in-out;
+    animation: fade 3.1s ease-in-out;
 }
 
 @media (max-width: 1200px) {

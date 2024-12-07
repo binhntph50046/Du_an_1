@@ -20,10 +20,10 @@
 
 <div class="container my-5">
     <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
+        <!-- <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">Đơn hàng của tôi</li>
-        </ol>
+        </ol> -->
     </nav>
 
     <div class="orders-container">

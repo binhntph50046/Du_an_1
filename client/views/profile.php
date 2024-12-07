@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Số điện thoại</label>
-                                    <input type="number" name="so_dien_thoai"  class="form-control"
+                                    <input type="number" name="so_dien_thoai" class="form-control"
                                         value="<?php echo $_SESSION['email']['so_dien_thoai']; ?>" required>
                                 </div>
                                 <div class="mb-3">
@@ -81,8 +81,12 @@
                                 <div class="text-end">
                                     <button type="button" class="btn btn-secondary" onclick="toggleEdit()">Hủy</button>
                                     <button type="submit" name="update" class="btn btn-primary">Cập nhật</button>
+
                                 </div>
                             </div>
+                        </form>
+                        <form action="?act=delete-account" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản?');">Xóa tài khoản</button>
                         </form>
                     </div>
                 </div>

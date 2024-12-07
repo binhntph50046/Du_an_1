@@ -108,5 +108,16 @@ class User {
             return false;
         }
     }
+
+    public function deleteByEmail($email) {
+        try {
+            $sql = "DELETE FROM tai_khoan WHERE email = :email";
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute(['email' => $email]);
+        } catch(PDOException $e) {
+            echo "Lỗi khi xóa tài khoản: " . $e->getMessage();
+            return false;
+        }
+    }
 }
 ?>

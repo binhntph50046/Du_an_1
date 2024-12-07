@@ -28,5 +28,5 @@ let slideIndex = 1;
         // Auto slide
         setInterval(function() {
             plusSlides(1);
-        }, 1500);
+        }, 3000);
         

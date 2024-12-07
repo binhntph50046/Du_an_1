@@ -12,4 +12,9 @@ function themBinhLuan($san_pham_id, $tai_khoan_id, $noi_dung) {
     $sql = "INSERT INTO binh_luan(san_pham_id, tai_khoan_id, noi_dung) 
             VALUES (?, ?, ?)";
     pdo_execute($sql, $san_pham_id, $tai_khoan_id, $noi_dung);
+}
+
+function xoaBinhLuan($binh_luan_id) {
+    $sql = "DELETE FROM binh_luan WHERE binh_luan_id = ?";
+    pdo_execute($sql, $binh_luan_id);
 } 

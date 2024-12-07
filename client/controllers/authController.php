@@ -121,4 +121,21 @@ class AuthController {
         header('Location: ?act=profile');
         exit;
     }
+
+    public function deleteAccount() {
+        if (!isset($_SESSION['email'])) {
+            header('Location: ?act=login');
+            exit;
+        }
+
+        $email = $_SESSION['email']['email'];
+        if ($this->userModel->deleteByEmail($email)) {
+            unset($_SESSION['email']);
+            $_SESSION['success_message'] = "Tài khoản đã được xóa thành công!";
+            header('Location: index.php');
+            exit;
+        } else {
+            $_SESSION['error'] = "Có lỗi xảy ra khi xóa tài khoản!";
+        }
+    }
 } 
