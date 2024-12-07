@@ -23,7 +23,8 @@ class OrderController {
             $data = [
                 'order' => $orderData['order'],
                 'items' => $orderData['items'],
-                'currentStatus' => $orderData['order']['trang_thai']
+                'currentStatus' => $orderData['order']['trang_thai'],
+                'cancelReason' => $orderData['order']['ly_do_huy'] ?? ''
             ];
             include_once 'views/orders/view.php';
         } else {
@@ -35,7 +36,19 @@ class OrderController {
             $orderId = $_POST['order_id'];
             $status = $_POST['status'];
             
-            $this->orderModel->updateOrderStatus($orderId, $status);
+            if ($status == 5 && empty($_POST['reason'])) {
+                // Nếu trạng thái là hủy và lý do để trống
+                $_SESSION['error'] = "Bạn chưa nhập lý do hủy và không thể hủy.";
+                header("Location: index.php?act=view-order&id=" . $orderId);
+                exit();
+            }
+
+            if ($status == 5) {
+                $reason = $_POST['reason'];
+                $this->orderModel->cancelOrder($orderId, $reason);
+            } else {
+                $this->orderModel->updateOrderStatus($orderId, $status);
+            }
         }
         // Chuyển hướng về trang chi tiết đơn hàng
         header("Location: index.php?act=view-order&id=" . $orderId);

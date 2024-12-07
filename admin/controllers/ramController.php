@@ -19,6 +19,15 @@ class RamController {
             $gia_tang = $_POST['gia_tang'];
             $trang_thai = $_POST['trang_thai'];
 
+            $existingRam = $this->modelRam->checkRamExists($dung_luong);
+            if ($existingRam) {
+                echo "<script>
+                    alert('Biến thể này đã có rồi!'); 
+                    window.location.href='index.php?act=formAddRam';
+                </script>";
+                return;
+            }
+
             $result = $this->modelRam->addRam($dung_luong, $gia_tang, $trang_thai);
 
             if ($result) {

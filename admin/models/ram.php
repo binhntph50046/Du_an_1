@@ -95,5 +95,19 @@ class Ram {
             return false;
         }
     }
+
+    // Kiểm tra xem RAM đã tồn tại chưa
+    public function checkRamExists($dung_luong) {
+        try {
+            $sql = "SELECT * FROM ram WHERE dung_luong = :dung_luong";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':dung_luong', $dung_luong);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC) !== false; // Trả về true nếu tồn tại
+        } catch(PDOException $e) {
+            error_log("Lỗi kiểm tra RAM: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

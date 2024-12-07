@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 26, 2024 at 08:27 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 07, 2024 lúc 04:09 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `du_an_1`
+-- Cơ sở dữ liệu: `du_an_1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `binh_luan`
+-- Cấu trúc bảng cho bảng `binh_luan`
 --
 
 CREATE TABLE `binh_luan` (
@@ -37,7 +37,7 @@ CREATE TABLE `binh_luan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `binh_luan`
+-- Đang đổ dữ liệu cho bảng `binh_luan`
 --
 
 INSERT INTO `binh_luan` (`binh_luan_id`, `noi_dung`, `tai_khoan_id`, `san_pham_id`, `ngay_binh_luan`, `trang_thai`) VALUES
@@ -51,12 +51,13 @@ INSERT INTO `binh_luan` (`binh_luan_id`, `noi_dung`, `tai_khoan_id`, `san_pham_i
 (11, 'hay lắm nhaaaa', 1, 45, '2024-11-21 17:16:19', 1),
 (12, 'oke nhaaa\r\n', 1, 45, '2024-11-21 20:07:39', 1),
 (14, 'ok đấy', 7, 59, '2024-11-22 12:11:23', 1),
-(15, 'đẹp keng\r\n', 7, 69, '2024-11-22 14:59:37', 1);
+(15, 'đẹp keng\r\n', 7, 69, '2024-11-22 14:59:37', 1),
+(16, 'đẹp', 7, 144, '2024-12-07 21:05:27', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chi_tiet_don_hang`
+-- Cấu trúc bảng cho bảng `chi_tiet_don_hang`
 --
 
 CREATE TABLE `chi_tiet_don_hang` (
@@ -70,25 +71,35 @@ CREATE TABLE `chi_tiet_don_hang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chi_tiet_don_hang`
+-- Đang đổ dữ liệu cho bảng `chi_tiet_don_hang`
 --
 
 INSERT INTO `chi_tiet_don_hang` (`chi_tiet_don_hang_id`, `don_hang_id`, `san_pham_id`, `ram_id`, `so_luong`, `gia`, `tong_tien`) VALUES
-(2, 1, 44, 0, 1, 4300, 4750),
-(3, 1, 45, 0, 3, 3000, 7650),
-(7, 2, 50, 0, 1, 504550, NULL),
-(9, 5, 44, 0, 3, 4300, NULL),
-(73, 71, 138, 6, 2, 35000000, NULL),
-(74, 72, 43, 6, 1, 7100000, NULL),
-(75, 73, 69, 6, 2, 14890000, NULL),
-(76, 74, 58, 6, 2, 25890000, NULL),
-(77, 75, 114, 6, 2, 11700000, NULL),
-(78, 76, 101, 6, 1, 12890000, NULL);
+(81, 79, 144, 5, 6, 36500000, NULL),
+(82, 80, 144, 5, 5, 36500000, NULL),
+(83, 81, 144, 5, 1, 36500000, NULL),
+(84, 82, 144, 5, 4, 36500000, NULL),
+(85, 83, 144, 0, 1, 36500000, NULL),
+(86, 84, 144, 5, 1, 36500000, NULL),
+(87, 85, 144, 5, 1, 36500000, NULL),
+(88, 86, 144, 5, 3, 36500000, NULL),
+(89, 87, 143, 9, 1, 41000000, NULL),
+(90, 88, 143, 5, 1, 36500000, NULL),
+(91, 89, 143, 5, 1, 36500000, NULL),
+(92, 90, 143, 5, 1, 36500000, NULL),
+(93, 91, 143, 5, 1, 36500000, NULL),
+(94, 92, 143, 5, 1, 36500000, NULL),
+(95, 93, 143, 5, 1, 36500000, NULL),
+(96, 94, 143, 5, 1, 36500000, NULL),
+(97, 95, 143, 5, 1, 36500000, NULL),
+(98, 96, 143, 0, 1, 36500000, NULL),
+(99, 97, 143, 0, 1, 36500000, NULL),
+(100, 98, 143, 5, 1, 36500000, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `danh_muc`
+-- Cấu trúc bảng cho bảng `danh_muc`
 --
 
 CREATE TABLE `danh_muc` (
@@ -100,7 +111,7 @@ CREATE TABLE `danh_muc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `danh_muc`
+-- Đang đổ dữ liệu cho bảng `danh_muc`
 --
 
 INSERT INTO `danh_muc` (`danh_muc_id`, `ten_danh_muc`, `hinh`, `mo_ta`, `trang_thai`) VALUES
@@ -114,7 +125,7 @@ INSERT INTO `danh_muc` (`danh_muc_id`, `ten_danh_muc`, `hinh`, `mo_ta`, `trang_t
 -- --------------------------------------------------------
 
 --
--- Table structure for table `don_hang`
+-- Cấu trúc bảng cho bảng `don_hang`
 --
 
 CREATE TABLE `don_hang` (
@@ -128,28 +139,40 @@ CREATE TABLE `don_hang` (
   `tong_tien` int(11) DEFAULT NULL,
   `phuong_thuc_thanh_toan` tinyint(1) DEFAULT 1,
   `trang_thai` tinyint(1) DEFAULT 1,
+  `ly_do_huy` text DEFAULT NULL,
   `ngay_xu_ly` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `don_hang`
+-- Đang đổ dữ liệu cho bảng `don_hang`
 --
 
-INSERT INTO `don_hang` (`don_hang_id`, `tai_khoan_id`, `ho_va_ten`, `dia_chi`, `so_dien_thoai`, `email`, `ngay_dat`, `tong_tien`, `phuong_thuc_thanh_toan`, `trang_thai`, `ngay_xu_ly`) VALUES
-(1, 1, 'Nguyễn Văn A', '123 Đường ABC, Quận 1, TP.HCM', '0901234567', 'nguyenvana@gmail.com', '2024-03-20', 128030000, 1, 3, '2024-11-27'),
-(2, 2, 'Trần Thị B', '456 Đường XYZ, Quận 2, TP.HCM', '0909876543', 'tranthib@gmail.com', '2024-03-19', 30000000, 2, 2, '2024-11-21'),
-(5, 3, '', NULL, '', '', '2024-11-18', 44430000, 0, 3, '2024-11-21'),
-(71, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 70030000, 1, 2, '2024-11-27'),
-(72, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 7130000, 1, 1, NULL),
-(73, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 29810000, 1, 1, NULL),
-(74, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 51810000, 1, 1, NULL),
-(75, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 23430000, 1, 1, NULL),
-(76, 1, 'vandai yêu bìnhh', 'haaaaa', '098765432', 'admin@gmail.com', '2024-11-27', 12920000, 1, 1, NULL);
+INSERT INTO `don_hang` (`don_hang_id`, `tai_khoan_id`, `ho_va_ten`, `dia_chi`, `so_dien_thoai`, `email`, `ngay_dat`, `tong_tien`, `phuong_thuc_thanh_toan`, `trang_thai`, `ly_do_huy`, `ngay_xu_ly`) VALUES
+(79, 12, 'Nguyễn Bảo Anh', 'Phú Thọ', '1234556788', 'banhhhh123@gmail.com', '2024-12-05', 219030000, 1, 4, NULL, '2024-12-05'),
+(80, 12, 'Nguyễn Bảo Anh', 'Phú Thọ', '1234556788', 'banhhhh123@gmail.com', '2024-12-05', 182530000, 1, 4, NULL, '2024-12-05'),
+(81, 12, 'Nguyễn Bảo Anh', 'Phú Thọ', '1234556788', 'banhhhh123@gmail.com', '2024-12-05', 36530000, 1, 4, NULL, '2024-12-05'),
+(82, 12, 'Nguyễn Bảo Anh', 'Phú Thọ', '1234556788', 'banhhhh123@gmail.com', '2024-12-05', 146030000, 1, 5, NULL, NULL),
+(83, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-05', 36530000, 1, 4, NULL, '2024-12-05'),
+(84, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-06', 36530000, 1, 5, '', '2024-12-07'),
+(85, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-06', 36530000, 1, 4, NULL, '2024-12-07'),
+(86, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-06', 109530000, 1, 5, '', '2024-12-07'),
+(87, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 41030000, 1, 5, NULL, '2024-12-07'),
+(88, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', '2024-12-07'),
+(89, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', '2024-12-07'),
+(90, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 4, NULL, '2024-12-07'),
+(91, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 4, NULL, '2024-12-07'),
+(92, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', '2024-12-07'),
+(93, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', NULL),
+(94, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 4, NULL, '2024-12-07'),
+(95, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', NULL),
+(96, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 1, NULL, NULL),
+(97, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 1, NULL, NULL),
+(98, 7, 'Bình Nguyễn Thanh', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 'binhntph50046@gmail.com', '2024-12-07', 36530000, 1, 5, 'vì mày nguuuuu', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gio_hang`
+-- Cấu trúc bảng cho bảng `gio_hang`
 --
 
 CREATE TABLE `gio_hang` (
@@ -162,23 +185,17 @@ CREATE TABLE `gio_hang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `gio_hang`
+-- Đang đổ dữ liệu cho bảng `gio_hang`
 --
 
 INSERT INTO `gio_hang` (`gio_hang_id`, `tai_khoan_id`, `san_pham_id`, `ram_id`, `so_luong`, `ngay_them_vao`) VALUES
 (7, 2, 50, 5, 1, '2024-11-21 20:07:39'),
-(9, 5, 44, 5, 3, '2024-11-21 20:07:39'),
-(12, 7, 59, 5, 1, '2024-11-22 05:09:15'),
-(13, 7, 59, 6, 7, '2024-11-22 05:13:10'),
-(14, 7, 59, 7, 2, '2024-11-22 05:27:51'),
-(15, 7, 63, 5, 1, '2024-11-22 05:45:52'),
-(16, 7, 63, 6, 1, '2024-11-22 05:48:41'),
-(17, 7, 69, 7, 4, '2024-11-22 07:57:40');
+(9, 5, 44, 5, 3, '2024-11-21 20:07:39');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hinh_anh_san_pham`
+-- Cấu trúc bảng cho bảng `hinh_anh_san_pham`
 --
 
 CREATE TABLE `hinh_anh_san_pham` (
@@ -188,7 +205,7 @@ CREATE TABLE `hinh_anh_san_pham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `hinh_anh_san_pham`
+-- Đang đổ dữ liệu cho bảng `hinh_anh_san_pham`
 --
 
 INSERT INTO `hinh_anh_san_pham` (`hinh_anh_id`, `hinh_sp`, `san_pham_id`) VALUES
@@ -272,7 +289,6 @@ INSERT INTO `hinh_anh_san_pham` (`hinh_anh_id`, `hinh_sp`, `san_pham_id`) VALUES
 (106, '../Upload/Product/1732452583_iphone_16_plus_white_1a1863c098.png', 136),
 (107, '../Upload/Product/1732452625_iphone_16_pro_black_titan_1f65ba95c7.png', 137),
 (108, '../Upload/Product/1732452685_iphone_16_pro_desert_titan_de8448c1fe.png', 138),
-(109, '../Upload/Product/1732452703_iphone_16_pro_natural_titan_412b47e840.png', 139),
 (110, '../Upload/Product/1732452722_iphone_16_pro_white_titan_4f21b4f56e.png', 140),
 (111, '../Upload/Product/1732452756_iphone_16_pro_max_black_titan_b3274fbf05.png', 141),
 (112, '../Upload/Product/1732452772_iphone_16_pro_max_desert_titan_3552a28ae0.png', 142),
@@ -282,7 +298,7 @@ INSERT INTO `hinh_anh_san_pham` (`hinh_anh_id`, `hinh_sp`, `san_pham_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `khuyen_mai`
+-- Cấu trúc bảng cho bảng `khuyen_mai`
 --
 
 CREATE TABLE `khuyen_mai` (
@@ -296,7 +312,7 @@ CREATE TABLE `khuyen_mai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `khuyen_mai`
+-- Đang đổ dữ liệu cho bảng `khuyen_mai`
 --
 
 INSERT INTO `khuyen_mai` (`khuyen_mai_id`, `ten_khuyen_mai`, `mo_ta`, `phan_tram_giam`, `giam_gia`, `ngay_bat_dau`, `ngay_ket_thuc`) VALUES
@@ -308,7 +324,7 @@ INSERT INTO `khuyen_mai` (`khuyen_mai_id`, `ten_khuyen_mai`, `mo_ta`, `phan_tram
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ram`
+-- Cấu trúc bảng cho bảng `ram`
 --
 
 CREATE TABLE `ram` (
@@ -320,7 +336,7 @@ CREATE TABLE `ram` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ram`
+-- Đang đổ dữ liệu cho bảng `ram`
 --
 
 INSERT INTO `ram` (`ram_id`, `dung_luong`, `gia_tang`, `mo_ta`, `trang_thai`) VALUES
@@ -328,12 +344,14 @@ INSERT INTO `ram` (`ram_id`, `dung_luong`, `gia_tang`, `mo_ta`, `trang_thai`) VA
 (6, '256Gb', 1500000, 'Dung lượng hợp đủ với chụp ảnh', 1),
 (7, '512Gb', 3000000, 'Dung lượng hợp hợp với quay phim, chụp ảnh, chơi game', 1),
 (9, '1TB', 4500000, 'Dung lượng lớn', 1),
-(11, '2TB', 6000000, NULL, 1);
+(14, '8', 0, NULL, 1),
+(15, '128hhh', 0, NULL, 1),
+(16, '8GB', 15000000, NULL, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `san_pham`
+-- Cấu trúc bảng cho bảng `san_pham`
 --
 
 CREATE TABLE `san_pham` (
@@ -347,11 +365,11 @@ CREATE TABLE `san_pham` (
   `danh_muc_id` int(11) NOT NULL,
   `khuyen_mai_id` int(11) DEFAULT NULL,
   `gia_khuyen_mai` decimal(10,2) DEFAULT NULL,
-  `stock` INT(11) NOT NULL DEFAULT 0
+  `stock` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `san_pham`
+-- Đang đổ dữ liệu cho bảng `san_pham`
 --
 
 INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_ta`, `so_luot_xem`, `trang_thai`, `danh_muc_id`, `khuyen_mai_id`, `gia_khuyen_mai`, `stock`) VALUES
@@ -362,7 +380,7 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (55, 'Iphone 12', 24390000, '2024-10-30', 'Iphone 12, Iphone 12 Pro, Iphone 12 Pro Max', 5, 1, 1, NULL, NULL, 0),
 (57, 'Iphone 13', 24390000, '2024-11-06', 'Iphone 13, Iphone 13 Pro, Iphone 13 Pro Max', 2, 1, 2, NULL, NULL, 0),
 (58, 'Iphone 14 ', 24390000, '2024-11-12', 'Iphone 14, Iphone 14 Pro, Iphone 14 Pro Max', 3, 1, 3, NULL, NULL, 0),
-(59, 'Iphone 15 Pro Max', 24390000, '2024-11-06', 'Iphone 15, Iphone 15 Plus, Iphone 15 Pro, Iphone 15 Pro Max', 130, 1, 5, NULL, NULL, 0),
+(59, 'Iphone 15 Pro Max', 24390000, '2024-11-06', 'Iphone 15, Iphone 15 Plus, Iphone 15 Pro, Iphone 15 Pro Max', 131, 1, 5, NULL, NULL, 0),
 (62, 'Iphone 15 Pro Max', 24390000, '2024-10-30', 'Iphone 15, Iphone 15 Plus, Iphone 15 Pro, Iphone 15 Pro Max', 5, 1, 5, NULL, NULL, 0),
 (63, 'Iphone 15 Pro Max', 24390000, '2024-11-06', 'Iphone 15, Iphone 15 Plus, Iphone 15 Pro, Iphone 15 Pro Max', 7, 1, 5, NULL, NULL, 0),
 (64, 'Iphone 15 Pro Max', 24390000, '2024-11-13', 'Iphone 15, Iphone 15 Plus, Iphone 15 Pro, Iphone 15 Pro Max', 16, 1, 5, NULL, NULL, 0),
@@ -435,17 +453,16 @@ INSERT INTO `san_pham` (`san_pham_id`, `ten_san_pham`, `gia`, `ngay_nhap`, `mo_t
 (136, 'Iphone 16 Plus', 29500000, '2024-11-13', 'Iphone này đẹp lắm ', 10, 1, 7, NULL, NULL, 0),
 (137, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 2, 1, 7, NULL, NULL, 0),
 (138, 'Iphone 16 Pro', 33500000, '2024-11-15', 'Iphone này đẹp lắm ', 9, 1, 7, NULL, NULL, 0),
-(139, 'Iphone 16 Pro', 33500000, '2024-11-14', 'Iphone này đẹp lắm ', 2, 1, 7, NULL, NULL, 0),
 (140, 'Iphone 16 Pro', 33500000, '2024-11-06', 'Iphone này đẹp lắm ', 4, 1, 7, NULL, NULL, 0),
 (141, 'Iphone 16 Pro Max', 36500000, '2024-11-15', 'Iphone này đẹp lắm ', 6, 1, 7, NULL, NULL, 0),
-(142, 'Iphone 16 Pro Max', 36500000, '2024-11-14', 'Iphone này đẹp lắm ', 18, 1, 7, NULL, NULL, 0),
-(143, 'Iphone 16 Pro Max', 36500000, '2024-11-07', 'Iphone này đẹp lắm ', 32, 1, 7, NULL, NULL, 0),
-(144, 'Iphone 16 Pro Max', 36500000, '2024-11-22', 'Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm ', 54, 1, 7, NULL, NULL, 0);
+(142, 'Iphone 16 plus', 36500000, '2024-11-14', 'Iphone này đẹp lắm ', 19, 1, 7, NULL, NULL, 666),
+(143, 'Iphone 16 ', 36500000, '2024-11-07', 'Iphone này đẹp lắm ', 51, 1, 7, NULL, NULL, 111),
+(144, 'Iphone 16 Pro Max', 36500000, '2024-11-22', 'Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm Iphone này đẹp lắm ', 103, 0, 7, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `san_pham_khuyen_mai`
+-- Cấu trúc bảng cho bảng `san_pham_khuyen_mai`
 --
 
 CREATE TABLE `san_pham_khuyen_mai` (
@@ -455,7 +472,7 @@ CREATE TABLE `san_pham_khuyen_mai` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `san_pham_khuyen_mai`
+-- Đang đổ dữ liệu cho bảng `san_pham_khuyen_mai`
 --
 
 INSERT INTO `san_pham_khuyen_mai` (`san_pham_id`, `khuyen_mai_id`, `ngay_them`) VALUES
@@ -466,7 +483,7 @@ INSERT INTO `san_pham_khuyen_mai` (`san_pham_id`, `khuyen_mai_id`, `ngay_them`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `san_pham_ram`
+-- Cấu trúc bảng cho bảng `san_pham_ram`
 --
 
 CREATE TABLE `san_pham_ram` (
@@ -475,7 +492,7 @@ CREATE TABLE `san_pham_ram` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `san_pham_ram`
+-- Đang đổ dữ liệu cho bảng `san_pham_ram`
 --
 
 INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`) VALUES
@@ -708,10 +725,6 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`) VALUES
 (138, 6),
 (138, 7),
 (138, 9),
-(139, 5),
-(139, 6),
-(139, 7),
-(139, 9),
 (140, 5),
 (140, 6),
 (140, 9),
@@ -735,7 +748,7 @@ INSERT INTO `san_pham_ram` (`san_pham_id`, `ram_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `slides`
+-- Cấu trúc bảng cho bảng `slides`
 --
 
 CREATE TABLE `slides` (
@@ -745,7 +758,7 @@ CREATE TABLE `slides` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `slides`
+-- Đang đổ dữ liệu cho bảng `slides`
 --
 
 INSERT INTO `slides` (`slide_id`, `img`, `trang_thai`) VALUES
@@ -760,7 +773,7 @@ INSERT INTO `slides` (`slide_id`, `img`, `trang_thai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tai_khoan`
+-- Cấu trúc bảng cho bảng `tai_khoan`
 --
 
 CREATE TABLE `tai_khoan` (
@@ -778,28 +791,29 @@ CREATE TABLE `tai_khoan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tai_khoan`
+-- Đang đổ dữ liệu cho bảng `tai_khoan`
 --
 
 INSERT INTO `tai_khoan` (`tai_khoan_id`, `ho_va_ten`, `email`, `mat_khau`, `dia_chi`, `so_dien_thoai`, `gioi_tinh`, `hinh`, `vai_tro`, `ngay_dang_ky`, `trang_thai`) VALUES
 (1, 'vandai yêu bìnhh', 'admin@gmail.com', '123123', 'haaaaa', '098765432', 0, '../Upload/User/1731751753_avatar.png', 1, '2024-11-18', 1),
 (2, 'Nguyễn Văn Cường ken', 'cuongkend123@gmail.com', '123456', 'hà nam', '0901234567', 0, '../Upload/User/1731758123_icon-account-info.png', 0, '2024-11-18', 1),
 (3, 'Trần Thị B', 'tranthib@gmail.com', '123456', '456 Đường XYZ, Quận 2, TP.HCM', '0909876543', 0, '../Upload/User/1731758134_add-to-cart.png', 0, '2024-11-16', 1),
-(4, 'Lê Văn C', 'levanc@gmail.com', '123456', '789 Đường DEF, Quận 3, TP.HCM', '0908765432', 0, '../Upload/User/1731758149_icon-account-home.png', 0, '2024-11-16', 1),
 (5, 'Bình boong', 'binhbong123@gmail.com', '123123', 'hiệp hòa', '098765432', 0, '../Upload/User/1731872512_1731097720nam.jpg', 0, '2024-11-18', 1),
 (6, 'Bảo Anh Nguyễn', 'banhday@gmail.com', '123456', 'Phú Thọ', '0368706552', 0, '../Upload/User/1732373301_banhdeptrai.jpg', 0, NULL, 1),
 (7, 'Bình Nguyễn Thanh', 'binhntph50046@gmail.com', '88888888', 'Ngõ 123/7, Phương Canh, Nam Từ Liêm, Hà Nội', '0849371414', 0, '../Upload/User/nam.jpg', 1, NULL, 1),
 (8, 'Ngọc Bảo Anh Nguyễn', 'admin2005@gmail.com', '123123', 'Phú Thọ', '0368706552', 0, '../Upload/User/nam.jpg', 0, NULL, 1),
 (9, 'Ngọc Bảo Anh Nguyễn', 'admin2005@gmail.com', '1234567', 'Phú Thọ', '0368706552', 0, '../Upload/User/nam.jpg', 0, NULL, 1),
 (10, 'Ngọc Bảo Anh Nguyễn', 'admin2005@gmail.com', '1234567', 'Phú Thọ', '0368706552', 0, '../Upload/User/nam.jpg', 0, NULL, 1),
-(11, 'Ngọc Bảo Anh Nguyễn', 'admin2005@gmail.com', 'sdfgbhnjm,', 'Phú Thọ', '0368706552', 0, '../Upload/User/nam.jpg', 0, NULL, 1);
+(11, 'Ngọc Bảo Anh Nguyễn', 'admin2005@gmail.com', 'sdfgbhnjm,', 'Phú Thọ', '0368706552', 0, '../Upload/User/nam.jpg', 0, NULL, 1),
+(12, 'Nguyễn Bảo Anh', 'banhhhh123@gmail.com', '00000000', 'Phú Thọ', '1234556788', 0, '../Upload/User/nam.jpg', 0, NULL, 1),
+(13, 'Nguyễn Van Tam', 'binhntph50046@gmail.com', '00000000', 'okokok', '123456789', 0, '../Upload/User/1733496750_Dự án 1 db.png', 0, '2024-12-06', 1);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `binh_luan`
+-- Chỉ mục cho bảng `binh_luan`
 --
 ALTER TABLE `binh_luan`
   ADD PRIMARY KEY (`binh_luan_id`),
@@ -807,7 +821,7 @@ ALTER TABLE `binh_luan`
   ADD KEY `san_pham_id` (`san_pham_id`);
 
 --
--- Indexes for table `chi_tiet_don_hang`
+-- Chỉ mục cho bảng `chi_tiet_don_hang`
 --
 ALTER TABLE `chi_tiet_don_hang`
   ADD PRIMARY KEY (`chi_tiet_don_hang_id`),
@@ -815,20 +829,20 @@ ALTER TABLE `chi_tiet_don_hang`
   ADD KEY `san_pham_id` (`san_pham_id`);
 
 --
--- Indexes for table `danh_muc`
+-- Chỉ mục cho bảng `danh_muc`
 --
 ALTER TABLE `danh_muc`
   ADD PRIMARY KEY (`danh_muc_id`);
 
 --
--- Indexes for table `don_hang`
+-- Chỉ mục cho bảng `don_hang`
 --
 ALTER TABLE `don_hang`
   ADD PRIMARY KEY (`don_hang_id`),
   ADD KEY `tai_khoan_id` (`tai_khoan_id`);
 
 --
--- Indexes for table `gio_hang`
+-- Chỉ mục cho bảng `gio_hang`
 --
 ALTER TABLE `gio_hang`
   ADD PRIMARY KEY (`gio_hang_id`),
@@ -837,26 +851,26 @@ ALTER TABLE `gio_hang`
   ADD KEY `gio_hang_ibfk_3` (`ram_id`);
 
 --
--- Indexes for table `hinh_anh_san_pham`
+-- Chỉ mục cho bảng `hinh_anh_san_pham`
 --
 ALTER TABLE `hinh_anh_san_pham`
   ADD PRIMARY KEY (`hinh_anh_id`),
   ADD KEY `san_pham_id` (`san_pham_id`);
 
 --
--- Indexes for table `khuyen_mai`
+-- Chỉ mục cho bảng `khuyen_mai`
 --
 ALTER TABLE `khuyen_mai`
   ADD PRIMARY KEY (`khuyen_mai_id`);
 
 --
--- Indexes for table `ram`
+-- Chỉ mục cho bảng `ram`
 --
 ALTER TABLE `ram`
   ADD PRIMARY KEY (`ram_id`);
 
 --
--- Indexes for table `san_pham`
+-- Chỉ mục cho bảng `san_pham`
 --
 ALTER TABLE `san_pham`
   ADD PRIMARY KEY (`san_pham_id`),
@@ -864,127 +878,127 @@ ALTER TABLE `san_pham`
   ADD KEY `san_pham_khuyen_mai_fk` (`khuyen_mai_id`);
 
 --
--- Indexes for table `san_pham_khuyen_mai`
+-- Chỉ mục cho bảng `san_pham_khuyen_mai`
 --
 ALTER TABLE `san_pham_khuyen_mai`
   ADD PRIMARY KEY (`san_pham_id`,`khuyen_mai_id`),
   ADD KEY `khuyen_mai_id` (`khuyen_mai_id`);
 
 --
--- Indexes for table `san_pham_ram`
+-- Chỉ mục cho bảng `san_pham_ram`
 --
 ALTER TABLE `san_pham_ram`
   ADD PRIMARY KEY (`san_pham_id`,`ram_id`),
   ADD KEY `ram_id` (`ram_id`);
 
 --
--- Indexes for table `slides`
+-- Chỉ mục cho bảng `slides`
 --
 ALTER TABLE `slides`
   ADD PRIMARY KEY (`slide_id`);
 
 --
--- Indexes for table `tai_khoan`
+-- Chỉ mục cho bảng `tai_khoan`
 --
 ALTER TABLE `tai_khoan`
   ADD PRIMARY KEY (`tai_khoan_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `binh_luan`
+-- AUTO_INCREMENT cho bảng `binh_luan`
 --
 ALTER TABLE `binh_luan`
-  MODIFY `binh_luan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `binh_luan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `chi_tiet_don_hang`
+-- AUTO_INCREMENT cho bảng `chi_tiet_don_hang`
 --
 ALTER TABLE `chi_tiet_don_hang`
-  MODIFY `chi_tiet_don_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `chi_tiet_don_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
--- AUTO_INCREMENT for table `danh_muc`
+-- AUTO_INCREMENT cho bảng `danh_muc`
 --
 ALTER TABLE `danh_muc`
-  MODIFY `danh_muc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `danh_muc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `don_hang`
+-- AUTO_INCREMENT cho bảng `don_hang`
 --
 ALTER TABLE `don_hang`
-  MODIFY `don_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `don_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
--- AUTO_INCREMENT for table `gio_hang`
+-- AUTO_INCREMENT cho bảng `gio_hang`
 --
 ALTER TABLE `gio_hang`
-  MODIFY `gio_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `gio_hang_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
--- AUTO_INCREMENT for table `hinh_anh_san_pham`
+-- AUTO_INCREMENT cho bảng `hinh_anh_san_pham`
 --
 ALTER TABLE `hinh_anh_san_pham`
-  MODIFY `hinh_anh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `hinh_anh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
--- AUTO_INCREMENT for table `khuyen_mai`
+-- AUTO_INCREMENT cho bảng `khuyen_mai`
 --
 ALTER TABLE `khuyen_mai`
   MODIFY `khuyen_mai_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `ram`
+-- AUTO_INCREMENT cho bảng `ram`
 --
 ALTER TABLE `ram`
-  MODIFY `ram_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ram_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `san_pham`
+-- AUTO_INCREMENT cho bảng `san_pham`
 --
 ALTER TABLE `san_pham`
-  MODIFY `san_pham_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `san_pham_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
--- AUTO_INCREMENT for table `slides`
+-- AUTO_INCREMENT cho bảng `slides`
 --
 ALTER TABLE `slides`
   MODIFY `slide_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tai_khoan`
+-- AUTO_INCREMENT cho bảng `tai_khoan`
 --
 ALTER TABLE `tai_khoan`
-  MODIFY `tai_khoan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `tai_khoan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `binh_luan`
+-- Các ràng buộc cho bảng `binh_luan`
 --
 ALTER TABLE `binh_luan`
   ADD CONSTRAINT `binh_luan_ibfk_1` FOREIGN KEY (`tai_khoan_id`) REFERENCES `tai_khoan` (`tai_khoan_id`),
   ADD CONSTRAINT `binh_luan_ibfk_2` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`san_pham_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `chi_tiet_don_hang`
+-- Các ràng buộc cho bảng `chi_tiet_don_hang`
 --
 ALTER TABLE `chi_tiet_don_hang`
   ADD CONSTRAINT `chi_tiet_don_hang_ibfk_1` FOREIGN KEY (`don_hang_id`) REFERENCES `don_hang` (`don_hang_id`),
   ADD CONSTRAINT `chi_tiet_don_hang_ibfk_2` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`san_pham_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `don_hang`
+-- Các ràng buộc cho bảng `don_hang`
 --
 ALTER TABLE `don_hang`
   ADD CONSTRAINT `don_hang_ibfk_1` FOREIGN KEY (`tai_khoan_id`) REFERENCES `tai_khoan` (`tai_khoan_id`);
 
 --
--- Constraints for table `gio_hang`
+-- Các ràng buộc cho bảng `gio_hang`
 --
 ALTER TABLE `gio_hang`
   ADD CONSTRAINT `gio_hang_ibfk_1` FOREIGN KEY (`tai_khoan_id`) REFERENCES `tai_khoan` (`tai_khoan_id`),
@@ -992,27 +1006,27 @@ ALTER TABLE `gio_hang`
   ADD CONSTRAINT `gio_hang_ibfk_3` FOREIGN KEY (`ram_id`) REFERENCES `ram` (`ram_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `hinh_anh_san_pham`
+-- Các ràng buộc cho bảng `hinh_anh_san_pham`
 --
 ALTER TABLE `hinh_anh_san_pham`
   ADD CONSTRAINT `hinh_anh_san_pham_ibfk_1` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`san_pham_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `san_pham`
+-- Các ràng buộc cho bảng `san_pham`
 --
 ALTER TABLE `san_pham`
   ADD CONSTRAINT `san_pham_ibfk_1` FOREIGN KEY (`danh_muc_id`) REFERENCES `danh_muc` (`danh_muc_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `san_pham_khuyen_mai_fk` FOREIGN KEY (`khuyen_mai_id`) REFERENCES `khuyen_mai` (`khuyen_mai_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `san_pham_khuyen_mai`
+-- Các ràng buộc cho bảng `san_pham_khuyen_mai`
 --
 ALTER TABLE `san_pham_khuyen_mai`
   ADD CONSTRAINT `san_pham_khuyen_mai_ibfk_1` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`san_pham_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `san_pham_khuyen_mai_ibfk_2` FOREIGN KEY (`khuyen_mai_id`) REFERENCES `khuyen_mai` (`khuyen_mai_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `san_pham_ram`
+-- Các ràng buộc cho bảng `san_pham_ram`
 --
 ALTER TABLE `san_pham_ram`
   ADD CONSTRAINT `san_pham_ram_ibfk_1` FOREIGN KEY (`san_pham_id`) REFERENCES `san_pham` (`san_pham_id`) ON DELETE CASCADE,

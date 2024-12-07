@@ -2,6 +2,14 @@
 // Kiểm tra và lấy dữ liệu từ biến $data
 $order = $data['order'] ?? null;
 $items = $data['items'] ?? [];
+$currentStatus = $data['currentStatus'] ?? null;
+$cancelReason = $data['cancelReason'] ?? null;
+
+// Hiển thị thông báo lỗi nếu có
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']);
+}
 
 if (!$order || empty($items)) {
     echo "Không có dữ liệu đơn hàng";
@@ -67,9 +75,18 @@ if (!$order || empty($items)) {
                                         <option value="4" <?= $order['trang_thai'] == 4 ? 'selected' : '' ?>>Đã hoàn thành</option>
                                         <option value="5" <?= $order['trang_thai'] == 5 ? 'selected' : '' ?> <?= !in_array($order['trang_thai'], [1, 2]) ? 'disabled' : '' ?>>Đã hủy</option>
                                     </select>
+                                    <?php if (in_array($order['trang_thai'], [1, 2])): ?>
+                                        <input type="text" name="reason" placeholder="Nhập lý do hủy" class="form-control mt-2" />
+                                    <?php endif; ?>
                                 </form>
                             </td>
                         </tr>
+                        <?php if ($currentStatus == 5 && !empty($cancelReason)): ?>
+                        <tr>
+                            <th>Lý do hủy:</th>
+                            <td><?= htmlspecialchars($cancelReason) ?></td>
+                        </tr>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>

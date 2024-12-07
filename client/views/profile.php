@@ -85,9 +85,9 @@
                                 </div>
                             </div>
                         </form>
-                        <form action="?act=delete-account" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản?');">Xóa tài khoản</button>
-                        </form>
+                            <!-- <form action="?act=delete-account" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản?');">Xóa tài khoản</button>
+                            </form> -->
                     </div>
                 </div>
             </div>
