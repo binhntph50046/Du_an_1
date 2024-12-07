@@ -77,6 +77,9 @@
                                     </button>
                                 <?php elseif ($order['trang_thai'] == 5):  ?>
                                     <!-- <span class="text-muted">Đơn hàng đã hủy</span> -->
+                                    <?php if (isset($order['ly_do_huy']) && !empty($order['ly_do_huy'])): ?>
+                                        <p class="text-muted" style="margin-top: 15px;">Lý do hủy: <?php echo $order['ly_do_huy']; ?></p>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>

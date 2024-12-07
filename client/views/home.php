@@ -64,7 +64,7 @@
             </div>
 
             <div class="category-item">
-                <h4>TOP 10 SẢN PHẨM</h4>
+                <h4>TOP 10 SẢN PHẨM ĐƯỢC QUAN TÂM NHẤT</h4>
                 <div class="product-list">
                     <?php foreach ($dstop10 as $product): ?>
                         <a href="?act=product-detail&id=<?= $product['san_pham_id'] ?>" class="product-box">

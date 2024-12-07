@@ -125,6 +125,7 @@ function getMyOrders($tai_khoan_id)
                     'tong_tien' => $row['tong_tien'],
                     'dia_chi' => $row['dia_chi'],
                     'so_dien_thoai' => $row['so_dien_thoai'],
+                    'ly_do_huy' => $row['ly_do_huy'],
                     'products' => []
                 ];
             }

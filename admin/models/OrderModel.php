@@ -22,7 +22,7 @@ class OrderModel {
     public function getOrderDetail($id) {
         try {
             // Lấy thông tin đơn hàng và khách hàng
-            $sql = "SELECT dh.*, tk.ho_va_ten, tk.email, tk.so_dien_thoai, tk.dia_chi 
+            $sql = "SELECT dh.*, tk.ho_va_ten, tk.email, tk.so_dien_thoai, tk.dia_chi, dh.ly_do_huy 
                     FROM don_hang dh
                     JOIN tai_khoan tk ON dh.tai_khoan_id = tk.tai_khoan_id
                     WHERE dh.don_hang_id = :id";
@@ -153,5 +153,15 @@ class OrderModel {
         $stmt->execute([':orderId' => $orderId]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['trang_thai'] : null;
+    }
+    public function cancelOrder($orderId, $reason) {
+        if (empty($reason)) {
+            return false; // Không thể hủy nếu lý do để trống
+        }
+        $sql = "UPDATE don_hang SET trang_thai = 5, ly_do_huy = :reason WHERE don_hang_id = :orderId";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':reason', $reason);
+        $stmt->bindParam(':orderId', $orderId);
+        return $stmt->execute();
     }
 }

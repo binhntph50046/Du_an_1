@@ -182,6 +182,7 @@ class OrderController
                         'ngay_dat' => $row['ngay_dat'],
                         'trang_thai' => $row['trang_thai'],
                         'tong_tien' => $row['tong_tien'],
+                        'ly_do_huy' => $row['ly_do_huy'],
                         'products' => []
                     ];
                 }
@@ -303,5 +304,19 @@ class OrderController
                 exit;
             }
         }
+    }
+
+    public function myOrders()
+    {
+        if (!isset($_SESSION['email'])) {
+            $_SESSION['error'] = "Vui lòng đăng nhập để xem đơn hàng của bạn";
+            header('Location: ?act=login');
+            exit;
+        }
+
+        $tai_khoan_id = $_SESSION['email']['tai_khoan_id'];
+        $orders = getMyOrders($tai_khoan_id);
+
+        include "./views/my-orders.php";
     }
 }

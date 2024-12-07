@@ -33,10 +33,6 @@ if (isset($_GET['act'])) {
             include "./views/profile.php";
             break;
 
-        case 'delete-account':
-            $authController->deleteAccount();
-            break;
-
         case 'update-profile':
             $authController->updateProfile();
             break;
@@ -67,15 +63,6 @@ if (isset($_GET['act'])) {
             }
             break;
 
-        case 'delete-comment':
-            if (isset($_POST['binh_luan_id'])) {
-                $binh_luan_id = $_POST['binh_luan_id'];
-                xoaBinhLuan($binh_luan_id);
-                header("Location: " . $_SERVER['HTTP_REFERER']);
-                exit();
-            }
-            break;
-
         case 'checkout':
             $orderController = new OrderController();
             $orderController->checkout();
@@ -90,7 +77,6 @@ if (isset($_GET['act'])) {
             $orderController = new OrderController();
             $orderController->getMyOrders();
             break;
-
         case 'delete-order':
             $orderController = new OrderController();
             $orderController->cancelOrder();
@@ -118,7 +104,6 @@ if (isset($_GET['act'])) {
             }
 
             break;
-
         case 'cart':
             $cartController->showCart();
             break;
@@ -129,6 +114,21 @@ if (isset($_GET['act'])) {
 
         case 'remove-cart-item':
             $cartController->removeCartItem();
+            break;
+
+        case 'checkout':
+            $orderController = new OrderController();
+            $orderController->checkout();
+            break;
+
+        case 'place-order':
+            $orderController = new OrderController();
+            $orderController->placeOrder();
+            break;
+
+        case 'cancel-order':
+            $orderController = new OrderController();
+            $orderController->cancelOrder();
             break;
 
         default:
