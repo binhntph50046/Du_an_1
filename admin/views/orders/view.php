@@ -48,7 +48,7 @@ if (!$order || empty($items)) {
                         <tr>
                             <th>Phương thức thanh toán:</th>
                             <td>
-                                <?php if($order['phuong_thuc_thanh_toan'] == 'online'): ?>
+                                <?php if ($order['phuong_thuc_thanh_toan'] == 'online'): ?>
                                     <span class="btn btn-success">Thanh toán Online</span>
                                 <?php else: ?>
                                     <span class="btn btn-info">Thanh toán khi nhận hàng (COD)</span>
@@ -94,31 +94,32 @@ if (!$order || empty($items)) {
                             </thead>
                             <tbody>
                                 <?php foreach ($items as $item): ?>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <?php if (!empty($item['hinh'])): ?>
-                                                <img src="<?= $item['hinh'] ?>" class="product-img mr-2" alt="<?= $item['ten_san_pham'] ?>">
-                                            <?php endif; ?>
-                                            <div>
-                                                <div class="font-weight-bold"><?= $item['ten_san_pham'] ?></div>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <?php if (!empty($item['hinh'])): ?>
+                                                    <img src="<?= $item['hinh'] ?>" class="product-img mr-2" alt="<?= $item['ten_san_pham'] ?>">
+                                                <?php endif; ?>
+                                                <div>
+                                                    <div class="font-weight-bold"><?= $item['ten_san_pham'] ?></div>
+                                                    <small class="text-muted">Dung lượng: <?= $item['dung_luong'] ?></small>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center"><?= $item['so_luong'] ?></td>
-                                    <td class="text-right">
-                                        <?php 
-                                        $don_gia = $item['gia_goc'] + $item['gia_tang'];
-                                        echo number_format($don_gia, 0, ',', '.'); 
-                                        ?>đ
-                                    </td>
-                                    <td class="text-right">
-                                        <?php 
-                                        $thanh_tien = ($item['gia_goc'] + $item['gia_tang']) * $item['so_luong'];
-                                        echo number_format($thanh_tien, 0, ',', '.'); 
-                                        ?>đ
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="text-center"><?= $item['so_luong'] ?></td>
+                                        <td class="text-right">
+                                            <?php
+                                            $don_gia = $item['gia_goc'] + $item['gia_tang'];
+                                            echo number_format($don_gia, 0, ',', '.');
+                                            ?>đ
+                                        </td>
+                                        <td class="text-right">
+                                            <?php
+                                            $thanh_tien = ($item['gia_goc'] + $item['gia_tang']) * $item['so_luong'];
+                                            echo number_format($thanh_tien, 0, ',', '.');
+                                            ?>đ
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             </tbody>
                             <tfoot>
@@ -141,55 +142,54 @@ if (!$order || empty($items)) {
                                     </td>
                                 </tr>
                             </tfoot>
+
                         </table>
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </div>
 </div>
 
 <style>
-.product-img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-}
+    .product-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
 
-.table th {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
-}
+    .table th {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+    }
 
-.btn {
-    padding: 8px 12px;
-    font-weight: 500;
-}
+    .btn {
+        padding: 8px 12px;
+        font-weight: 500;
+    }
 
-.table-borderless td, 
-.table-borderless th {
-    border: 0;
-    padding: 12px 8px;
-}
+    .table-borderless td,
+    .table-borderless th {
+        border: 0;
+        padding: 12px 8px;
+    }
 
-.form-control {
-    border-radius: 4px;
-}
+    .form-control {
+        border-radius: 4px;
+    }
 
-tfoot tr td {
-    border-top: 2px solid #dee2e6;
-}
+    tfoot tr td {
+        border-top: 2px solid #dee2e6;
+    }
 
-.text-primary {
-    color: #4e73df !important;
-}
+    .text-primary {
+        color: #4e73df !important;
+    }
 
-.btn-secondary {
-    background-color: #858796;
-    border-color: #858796;
-}
-
-
+    .btn-secondary {
+        background-color: #858796;
+        border-color: #858796;
+    }
 </style>
