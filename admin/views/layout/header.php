@@ -132,6 +132,8 @@
                                         <?php
                                         if (isset($_SESSION['email']) && is_array($_SESSION['email'])) {
                                             echo htmlspecialchars($_SESSION['email']['ho_va_ten']);
+                                        }else{
+                                            header("Location: ../index.php");
                                         }
                                         ?>
                                     </span>
