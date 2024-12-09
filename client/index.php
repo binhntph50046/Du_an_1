@@ -62,6 +62,15 @@ if (isset($_GET['act'])) {
                 header("Location: ?act=product-detail&id=" . $san_pham_id);
             }
             break;
+        case 'delete-comment': // Thêm trường hợp xóa bình luận
+            if (isset($_POST['binh_luan_id'])) {
+                $binh_luan_id = $_POST['binh_luan_id'];
+                xoaBinhLuan($binh_luan_id);
+                header("Location: " . $_SERVER['HTTP_REFERER']);
+                exit();
+            }
+            break;
+
 
         case 'checkout':
             $orderController = new OrderController();

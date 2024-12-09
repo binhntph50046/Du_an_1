@@ -209,7 +209,7 @@
                             </div>
                         </div>
                         <div class="comment-delete">
-                            <?php if ($_SESSION['email']['tai_khoan_id'] == $comment['tai_khoan_id']): ?>
+                            <?php if (isset($_SESSION['email']) && $_SESSION['email']['tai_khoan_id'] == $comment['tai_khoan_id']): ?>
                                 <form action="?act=delete-comment" method="POST" style="display:inline;">
                                     <input type="hidden" name="binh_luan_id" value="<?= $comment['binh_luan_id'] ?>">
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn chắc chứ')">Xóa</button>

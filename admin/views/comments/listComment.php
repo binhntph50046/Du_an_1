@@ -42,9 +42,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>User</th>
+                                    <th>Product</th>
                                     <th>Content</th>
-                                    <th>ID User</th>
-                                    <th>ID Product</th>
                                     <th>Date Comment</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,12 +53,12 @@
                                 <?php foreach ($listComment as $key => $Comment) : ?>
                                     <tr>
                                         <td><?= $Comment['binh_luan_id'] ?></td>
+                                        <td><?= $Comment['ho_va_ten'] ?></td>
+                                        <td><?= $Comment['ten_san_pham'] ?></td>
                                         <td><?= $Comment['noi_dung'] ?></td>
-                                        <td><?= $Comment['tai_khoan_id'] ?></td>
-                                        <td><?= $Comment['san_pham_id'] ?></td>
                                         <td><?= $Comment['ngay_binh_luan'] ?></td>
                                         <td>
-                                            <a href="?act=deleteComments&binh_luan_id=<?php echo $Comment['binh_luan_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this comment !?')"><i class="fas fa-trash"></i></a>
+                                            <a href="?act=deleteComments&binh_luan_id=<?php echo $Comment['binh_luan_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?')"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

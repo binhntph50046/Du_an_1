@@ -11,7 +11,11 @@ class comment
     public function getComment()
     {
         try {
-            $sql = 'SELECT * FROM binh_luan ORDER BY binh_luan_id ASC';
+            $sql = 'SELECT b.*, t.ho_va_ten, s.ten_san_pham 
+                    FROM binh_luan b 
+                    JOIN tai_khoan t ON b.tai_khoan_id = t.tai_khoan_id 
+                    JOIN san_pham s ON b.san_pham_id = s.san_pham_id 
+                    ORDER BY b.binh_luan_id ASC';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
