@@ -67,8 +67,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Số điện thoại</label>
-                                    <input type="number" name="so_dien_thoai" class="form-control"
-                                        value="<?php echo $_SESSION['email']['so_dien_thoai']; ?>" required>
+                                    <input type="tel" name="so_dien_thoai" class="form-control"
+                                        value="<?php echo $_SESSION['email']['so_dien_thoai']; ?>" required pattern="[0-9]{10}" title="Vui lòng nhập số điện thoại hợp lệ 10 chữ số)">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Địa chỉ</label>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </form>
-                            <!-- <form action="?act=delete-account" method="POST" style="display:inline;">
+                        <!-- <form action="?act=delete-account" method="POST" style="display:inline;">
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản?');">Xóa tài khoản</button>
                             </form> -->
                     </div>
