@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="phonenumber"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="number" name="phonenumber" id="phonenumber" placeholder="Phone Number" required />
+                                <input type="tel" name="phonenumber" id="phonenumber" placeholder="Phone Number" pattern="[0-9]{10}" title="Vui lòng nhập số điện thoại hợp lệ 10 chữ số" required />
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="submit" id="submit" class="form-submit" value="Register" />
