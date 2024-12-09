@@ -179,7 +179,7 @@
                         <div class="form-group">
                             <textarea name="noi_dung" class="form-control" rows="3" placeholder="Viết bình luận của bạn..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 456px;">Gửi bình luận</button>
+                        <button type="submit" class="btn btn-primary btn-sm my-3" style="margin-left: 456px;">Gửi bình luận</button>
                     </form>
                 </div>
             <?php else: ?>
