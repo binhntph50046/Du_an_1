@@ -1,10 +1,10 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Sửa RAM</h2>
+    <h2 class="text-center mb-4">Sửa Dung Lượng</h2>
     <form action="index.php?act=editRam" method="POST">
         <input type="hidden" name="ram_id" value="<?= $ram['ram_id'] ?>">
         
         <div class="mb-3">
-            <label for="dung_luong" class="form-label">Dung lượng RAM</label>
+            <label for="dung_luong" class="form-label">Dung lượng</label>
             <input type="text" class="form-control" id="dung_luong" 
                 name="dung_luong" value="<?= $ram['dung_luong'] ?>" required>
         </div>

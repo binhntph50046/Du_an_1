@@ -2,7 +2,7 @@
     <div class="col">
         <div class="h-100">
             <div class="container" style="max-width:100%">
-                <h1>Danh Sách Ram</h1>
+                <h1>Danh Sách Dung Lượng</h1>
                 <a href="./?act=formAddRam" class="btn btn-primary" style="width: 170px;margin: 10px 0px;">Thêm RAM</a>
                 <div class="card">
                     <div class="card-body">
@@ -10,7 +10,7 @@
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Dung lượng RAM</th>
+                                    <th>Dung lượng</th>
                                     <th>Giá tăng</th>
                                     <th>Trạng thái</th>
                                     <th>Thao tác</th>

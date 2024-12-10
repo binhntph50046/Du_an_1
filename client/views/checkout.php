@@ -92,7 +92,7 @@
                     </div>
                     <div class="product-details">
                         <h5><?= $item['ten_san_pham'] ?></h5>
-                        <p class="mb-1">RAM: <?= $item['dung_luong'] ?></p>
+                        <p class="mb-1">Dung lượng: <?= $item['dung_luong'] ?></p>
                         <p class="mb-1">Số lượng: <?= $item['so_luong'] ?></p>
                         <p class="text-primary mb-0">
                             Giá: <?= number_format($item['gia'] + $item['gia_tang'], 0, ',', '.') ?>₫

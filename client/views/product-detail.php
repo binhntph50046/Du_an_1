@@ -102,7 +102,7 @@
                 </div> -->
 
             <div class="ram-selector">
-                <label>Chọn dung lượng RAM:</label>
+                <label>Chọn dung lượng:</label>
                 <div class="ram-options">
                     <?php if (!empty($product['rams'])): ?>
                         <?php foreach ($product['rams'] as $ram): ?>

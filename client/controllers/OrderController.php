@@ -87,8 +87,8 @@ class OrderController
             // Kiểm tra tồn kho cho từng sản phẩm
             foreach ($checkout_data['cart_items'] as $item) {
                 if (!checkProductStock($item['san_pham_id'], $item['so_luong'])) {
-                    $_SESSION['error'] = "Sản phẩm '{$item['ten_san_pham']}' đã hết hàng.";
-                    header('Location: ?act=cart');
+                    $_SESSION['error'] = "Sản phẩm '{$item['ten_san_pham']}' không đủ số lượng tồn kho.";
+                    header('Location: index.php?act=product-detail&id=' . $item['san_pham_id'] );
                     exit;
                 }
             }

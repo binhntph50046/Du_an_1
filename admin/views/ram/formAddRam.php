@@ -1,8 +1,8 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Thêm RAM</h2>
+    <h2 class="text-center mb-4">Thêm Dung lượng</h2>
     <form action="index.php?act=addRam" method="POST" onsubmit="return validateInput()">
         <div class="mb-3">
-            <label for="dung_luong" class="form-label">Dung lượng RAM</label>
+            <label for="dung_luong" class="form-label">Dung lượng</label>
             <input type="text" class="form-control" id="dung_luong" 
                 name="dung_luong" placeholder="Ví dụ: 8GB" required oninput="validateInput()">
             <div id="error-message" class="text-danger" style="display:none;"></div>
@@ -21,7 +21,7 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Thêm RAM</button>
+        <button type="submit" class="btn btn-primary">Thêm Dung lượng</button>
         <a href="index.php?act=listRams" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
