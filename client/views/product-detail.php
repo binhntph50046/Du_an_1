@@ -227,6 +227,16 @@
     <?php include "views/footer.php"; ?>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 3000);
+        });
+
         function decreaseQuantity() {
             var input = document.querySelector('input[name="so_luong"]');
             var cartQuantityInput = document.getElementById('cart_quantity');
