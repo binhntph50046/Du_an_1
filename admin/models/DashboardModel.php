@@ -22,7 +22,7 @@ class DashboardModel
             $totalOrders = $orderStmt->fetch(PDO::FETCH_ASSOC)['total_orders'];
 
             // tổng doanh thu
-            $revenueQuery = "SELECT SUM(tong_tien) as total_revenue FROM don_hang WHERE trang_thai = 3";
+            $revenueQuery = "SELECT SUM(tong_tien) as total_revenue FROM don_hang WHERE trang_thai = 4";
             $revenueStmt = $this->conn->query($revenueQuery);
             $totalRevenue = $revenueStmt->fetch(PDO::FETCH_ASSOC)['total_revenue'];
 
